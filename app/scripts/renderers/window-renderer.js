@@ -2,7 +2,6 @@
 
 const electron = require('electron');
 const electronConfig = require('electron-config');
-const childProcess = require('child_process');
 
 const appConfig = require('../../configs/application.json');
 const releaseMeta = require('../../../release.json');
@@ -14,6 +13,8 @@ import Root from '../components/Root.js';
     const remote = electron.remote;
     const shell = electron.shell;
 
+    const webSocket = new WebSocket(`ws://localhost:${appConfig.ocsManagerPort}`);
+
     const statusManager = new StatusManager();
     const root = new Root(document.querySelector('[data-component="Root"]'));
     const browseWebview = root.mainArea.browsePage.element.querySelector('[data-webview="browse"]');
@@ -21,6 +22,22 @@ import Root from '../components/Root.js';
     let isStartup = true;
 
     document.title = appConfig.title;
+
+    function setupWebSocket() {
+        webSocket.onopen = (event) => {
+        };
+
+        webSocket.onclose = (event) => {
+        };
+
+        webSocket.onmessage = (event) => {
+            console.log(event.data);
+        };
+
+        webSocket.onerror = (event) => {
+            console.error(event.data);
+        };
+    }
 
     function setupComponent() {
         root.mainArea.changePage('browsePage');
@@ -160,14 +177,13 @@ import Root from '../components/Root.js';
     }
 
     function _openOcsUrl(ocsUrl) {
-        const ocsUrlPath = `${remote.app.getAppPath()}/${appConfig.ocsUrlBin}`;
-        childProcess.exec(`${ocsUrlPath} "${ocsUrl}"`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(error);
-            }
-        });
+        webSocket.send(JSON.stringify({
+            func: 'ItemHandler::getItemByOcsUrl',
+            data: [ocsUrl]
+        }));
     }
 
+    setupWebSocket();
     setupComponent();
     setupWebView();
     setupStatusManager();
