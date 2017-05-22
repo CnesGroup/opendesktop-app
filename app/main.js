@@ -2,10 +2,13 @@
 
 const electron = require('electron');
 const electronConfig = require('electron-config');
+const childProcess = require('child_process');
 
 const appConfig = require('./configs/application.json');
 
 let mainWindow = null;
+
+let ocsManager = null;
 
 {
     const app = electron.app;
@@ -34,9 +37,21 @@ let mainWindow = null;
             mainWindow.setMenu(null);
         }
 
+        ocsManager = childProcess.execFile(
+            `${app.getAppPath()}/${appConfig.ocsManagerBin}`,
+            ['-p', appConfig.ocsManagerPort],
+            (error, stdout, stderr) => {
+                if (error) {
+                    console.error(error);
+                }
+            }
+        );
+
         mainWindow.on('close', () => {
             const config = new electronConfig({name: 'application'});
             config.set('windowBounds', mainWindow.getBounds());
+
+            ocsManager.kill();
         });
 
         mainWindow.on('closed', () => {
