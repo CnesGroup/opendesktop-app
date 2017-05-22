@@ -3,7 +3,7 @@
 import Component from 'js/Component.js';
 
 import ToolBar from './ToolBar.js';
-//import StatusBar from './StatusBar.js';
+import StatusBar from './StatusBar.js';
 
 export default class BrowsePage extends Component {
 
@@ -11,7 +11,7 @@ export default class BrowsePage extends Component {
         return `
             <header data-component="ToolBar"></header>
             <webview data-webview="browse"></webview>
-            <!--<footer data-component="StatusBar"></footer>-->
+            <footer data-component="StatusBar"></footer>
         `;
     }
 
@@ -42,7 +42,7 @@ export default class BrowsePage extends Component {
             this.element.querySelector('[data-component="ToolBar"]'),
             {navigation: true, menu: true}
         );
-        //this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
+        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }
