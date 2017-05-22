@@ -31,7 +31,58 @@ import Root from '../components/Root.js';
         };
 
         webSocket.onmessage = (event) => {
-            console.log(event.data);
+            const data = JSON.parse(event.data);
+            console.log(['WebSocket message received', data]);
+
+            if (data.func === 'ItemHandler::metadataSetChanged') {
+                sendWebSocketMessage('', 'ItemHandler::metadataSet', []);
+            }
+            else if (data.func === 'ItemHandler::metadataSet') {
+                    console.log(data.data);
+            }
+            else if (data.func === 'ItemHandler::downloadStarted') {
+                if (data.data[0].status !== 'success_downloadstart') {
+                    console.error(data.data[0].message);
+                }
+            }
+            else if (data.func === 'ItemHandler::downloadFinished') {
+                if (data.data[0].status !== 'success_download') {
+                    console.error(data.data[0].message);
+                }
+            }
+            else if (data.func === 'ItemHandler::downloadProgress') {
+                    console.log(data.data);
+            }
+            else if (data.func === 'ItemHandler::saveStarted') {
+                if (data.data[0].status !== 'success_savestart') {
+                    console.error(data.data[0].message);
+                }
+            }
+            else if (data.func === 'ItemHandler::saveFinished') {
+                if (data.data[0].status !== 'success_save') {
+                    console.error(data.data[0].message);
+                }
+            }
+            else if (data.func === 'ItemHandler::installStarted') {
+                if (data.data[0].status !== 'success_installstart') {
+                    console.error(data.data[0].message);
+                }
+            }
+            else if (data.func === 'ItemHandler::installFinished') {
+                if (data.data[0].status !== 'success_install') {
+                    console.error(data.data[0].message);
+                }
+            }
+            else if (data.func === 'ItemHandler::uninstallStarted') {
+                if (data.data[0].status !== 'success_uninstallstart') {
+                    console.error(data.data[0].message);
+                }
+            }
+            else if (data.func === 'ItemHandler::uninstallFinished') {
+                if (data.data[0].status !== 'success_uninstall') {
+                    console.error(data.data[0].message);
+                }
+            }
         };
 
         webSocket.onerror = (event) => {
@@ -78,7 +129,7 @@ import Root from '../components/Root.js';
         browseWebview.addEventListener('ipc-message', (event) => {
             console.log(['ipc-message', event.channel, event.args]);
             if (event.channel === 'ocs-url') {
-                _openOcsUrl(event.args[0]);
+                sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [event.args[0]]);
             }
             else if (event.channel === 'external-url') {
                 shell.openExternal(event.args[0]);
@@ -115,7 +166,7 @@ import Root from '../components/Root.js';
         });
 
         statusManager.registerAction('ocs-url', (resolve, reject, params) => {
-            _openOcsUrl(params.ocsUrl);
+            sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
         });
 
         statusManager.registerAction('menu', () => {
@@ -176,10 +227,11 @@ import Root from '../components/Root.js';
         }, false);
     }
 
-    function _openOcsUrl(ocsUrl) {
+    function sendWebSocketMessage(id, func, data) {
         webSocket.send(JSON.stringify({
-            func: 'ItemHandler::getItemByOcsUrl',
-            data: [ocsUrl]
+            id: id,
+            func: func,
+            data: data
         }));
     }
 
