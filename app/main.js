@@ -6,15 +6,33 @@ const childProcess = require('child_process');
 
 const appConfig = require('./configs/application.json');
 
-let mainWindow = null;
-
 let ocsManager = null;
+
+let mainWindow = null;
 
 {
     const app = electron.app;
     const BrowserWindow = electron.BrowserWindow;
 
     const debug = process.argv.indexOf('--debug') !== -1 ? true : false;
+
+    function startOcsManager() {
+        ocsManager = childProcess.execFile(
+            `${app.getAppPath()}/${appConfig.ocsManagerBin}`,
+            ['-p', appConfig.ocsManagerPort],
+            (error, stdout, stderr) => {
+                if (error) {
+                    console.error(error);
+                }
+            }
+        );
+    }
+
+    function stopOcsManager() {
+        if (ocsManager) {
+            ocsManager.kill();
+        }
+    }
 
     function createWindow() {
         const config = new electronConfig({name: 'application', defaults: appConfig.defaults});
@@ -37,21 +55,9 @@ let ocsManager = null;
             mainWindow.setMenu(null);
         }
 
-        ocsManager = childProcess.execFile(
-            `${app.getAppPath()}/${appConfig.ocsManagerBin}`,
-            ['-p', appConfig.ocsManagerPort],
-            (error, stdout, stderr) => {
-                if (error) {
-                    console.error(error);
-                }
-            }
-        );
-
         mainWindow.on('close', () => {
             const config = new electronConfig({name: 'application'});
             config.set('windowBounds', mainWindow.getBounds());
-
-            ocsManager.kill();
         });
 
         mainWindow.on('closed', () => {
@@ -59,7 +65,14 @@ let ocsManager = null;
         });
     }
 
-    app.on('ready', createWindow);
+    app.on('ready', () => {
+        startOcsManager();
+        createWindow();
+    });
+
+    app.on('quit', () => {
+        stopOcsManager();
+    });
 
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') {
