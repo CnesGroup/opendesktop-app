@@ -197,6 +197,10 @@ import Root from '../components/Root.js';
             root.mainArea.changePage('browsePage');
         });
 
+        statusManager.registerAction('downloads', () => {
+            root.mainArea.changePage('downloadsPage');
+        });
+
         statusManager.registerAction('about', () => {
             root.mainArea.changePage('aboutPage');
         });
