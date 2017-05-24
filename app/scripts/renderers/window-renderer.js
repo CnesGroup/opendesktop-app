@@ -11,7 +11,6 @@ import Root from '../components/Root.js';
 
 {
     const remote = electron.remote;
-    const shell = electron.shell;
 
     const webSocket = new WebSocket(`ws://localhost:${appConfig.ocsManagerPort}`);
     const statusManager = new StatusManager();
@@ -162,7 +161,7 @@ import Root from '../components/Root.js';
                 sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [event.args[0]]);
             }
             else if (event.channel === 'external-url') {
-                shell.openExternal(event.args[0]);
+                sendWebSocketMessage('', 'SystemHandler::openUrl', [event.args[0]]);
             }
         });
     }
@@ -234,7 +233,7 @@ import Root from '../components/Root.js';
         });
 
         statusManager.registerAction('open-file', (resolve, reject, params) => {
-            shell.openItem(params.path);
+            sendWebSocketMessage('', 'SystemHandler::openUrl', [`file://${params.path}`]);
         });
 
         statusManager.registerAction('apply-file', (resolve, reject, params) => {
@@ -279,7 +278,7 @@ import Root from '../components/Root.js';
             else if (event.target.closest('a[target]')) {
                 event.preventDefault();
                 event.stopPropagation();
-                shell.openExternal(event.target.closest('a[target]').getAttribute('href'));
+                sendWebSocketMessage('', 'SystemHandler::openUrl', [event.target.closest('a[target]').getAttribute('href')]);
             }
         }, false);
     }
