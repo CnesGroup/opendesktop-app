@@ -18,8 +18,22 @@ export default class InstalledItemsPage extends Component {
             if (this.state.installedItems[itemKey].install_type === type) {
                 for (const file of this.state.installedItems[itemKey].files) {
                     const path = `${this.state.installTypes[type].destination}/${file}`;
-                    const params = JSON.stringify({path: path, installType: type});
-                    list += `<li><a href="#" data-dispatch="open-file" data-params='${params}'>${file}</a></li>`;
+                    const openFileParams = JSON.stringify({path: path});
+                    const applyFileParams = JSON.stringify({path: path, installType: type});
+                    const removeFileParams = JSON.stringify({itemKey: itemKey});
+                    let applyButton = '';
+                    if (this.state.isApplicableType) {
+                        applyButton = `<button data-dispatch="apply-file" data-params='${applyFileParams}'>Apply</button>`;
+                    }
+                    list += `
+                        <li>
+                        <a href="#" data-dispatch="open-file" data-params='${openFileParams}'>
+                        ${file}
+                        ${applyButton}
+                        <button data-dispatch="remove-file" data-params='${removeFileParams}'>Remove</button>
+                        </a>
+                        </li>
+                    `;
                 }
             }
         }

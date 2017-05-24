@@ -49,6 +49,14 @@ import Root from '../components/Root.js';
                     installTypes: installTypes,
                     installedItems: installedItems
                 });
+                if (root.mainArea.installedItemsPage.state) {
+                    root.mainArea.installedItemsPage.update({
+                        installType: root.mainArea.installedItemsPage.state.installType,
+                        isApplicableType: root.mainArea.installedItemsPage.state.isApplicableType,
+                        installTypes: installTypes,
+                        installedItems: installedItems
+                    });
+                }
             }
             else if (data.func === 'SystemHandler::isApplicableType') {
                 root.mainArea.installedItemsPage.update({
@@ -233,11 +241,16 @@ import Root from '../components/Root.js';
         });
 
         statusManager.registerAction('open-file', (resolve, reject, params) => {
-            sendWebSocketMessage('', 'SystemHandler::openUrl', [`file://${params.path}`]);
+            const url = `file://${params.path}`;
+            sendWebSocketMessage(url, 'SystemHandler::openUrl', [url]);
         });
 
         statusManager.registerAction('apply-file', (resolve, reject, params) => {
             sendWebSocketMessage(params.path, 'SystemHandler::applyFile', [params.path, params.installType]);
+        });
+
+        statusManager.registerAction('remove-file', (resolve, reject, params) => {
+            sendWebSocketMessage(params.itemKey, 'ItemHandler::uninstall', [params.itemKey]);
         });
 
         statusManager.registerAction('about', () => {
