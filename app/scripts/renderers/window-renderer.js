@@ -20,11 +20,15 @@ import Root from '../components/Root.js';
 
     let isStartup = true;
 
+    let installTypes = null;
+    let installedItems = null;
+
     document.title = appConfig.title;
 
     function setupWebSocket() {
         webSocket.onopen = () => {
             console.log('WebSocket open');
+            sendWebSocketMessage('', 'ConfigHandler::getAppConfigInstallTypes', []);
         };
 
         webSocket.onclose = () => {
@@ -32,11 +36,22 @@ import Root from '../components/Root.js';
         };
 
         webSocket.onmessage = (event) => {
-            console.log(['WebSocket message received', event.data]);
-
             const data = JSON.parse(event.data);
 
-            if (data.func === 'ItemHandler::metadataSetChanged') {
+            console.log(['WebSocket message received', data]);
+
+            if (data.func === 'ConfigHandler::getAppConfigInstallTypes') {
+                installTypes = data.data[0];
+                sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
+            }
+            else if (data.func === 'ConfigHandler::getUsrConfigInstalledItems') {
+                installedItems = data.data[0];
+                root.mainArea.downloadsPage.update({
+                    installTypes: installTypes,
+                    installedItems: installedItems
+                });
+            }
+            else if (data.func === 'ItemHandler::metadataSetChanged') {
                 sendWebSocketMessage('', 'ItemHandler::metadataSet', []);
             }
             else if (data.func === 'ItemHandler::metadataSet') {
@@ -73,7 +88,9 @@ import Root from '../components/Root.js';
             else if (data.func === 'ItemHandler::installFinished') {
                 if (data.data[0].status !== 'success_install') {
                     console.error(data.data[0].message);
+                    return;
                 }
+                sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
             }
             else if (data.func === 'ItemHandler::uninstallStarted') {
                 if (data.data[0].status !== 'success_uninstallstart') {
@@ -83,7 +100,9 @@ import Root from '../components/Root.js';
             else if (data.func === 'ItemHandler::uninstallFinished') {
                 if (data.data[0].status !== 'success_uninstall') {
                     console.error(data.data[0].message);
+                    return;
                 }
+                sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
             }
         };
 
@@ -218,6 +237,17 @@ import Root from '../components/Root.js';
                 event.preventDefault();
                 event.stopPropagation();
                 const targetElement = event.target.closest('button[data-dispatch]');
+                const type = targetElement.getAttribute('data-dispatch');
+                let params = {};
+                if (targetElement.getAttribute('data-params')) {
+                    params = JSON.parse(targetElement.getAttribute('data-params'));
+                }
+                statusManager.dispatch(type, params);
+            }
+            else if (event.target.closest('a[data-dispatch]')) {
+                event.preventDefault();
+                event.stopPropagation();
+                const targetElement = event.target.closest('a[data-dispatch]');
                 const type = targetElement.getAttribute('data-dispatch');
                 let params = {};
                 if (targetElement.getAttribute('data-params')) {

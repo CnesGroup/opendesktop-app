@@ -11,8 +11,19 @@ export default class DownloadsPage extends Component {
             return '';
         }
 
+        let installTypes = {};
+        for (const key of Object.keys(this.state.installedItems)) {
+            const type = this.state.installedItems[key].install_type;
+            if (!installTypes[type]) {
+                installTypes[type] = this.state.installTypes[type].name;
+            }
+        }
+
         let list = '';
-        // for () {}
+        for (const type of Object.keys(installTypes)) {
+            const params = JSON.stringify({installType: type});
+            list += `<li><a href="#" data-dispatch="installed-items" data-params='${params}'>${installTypes[type]}</a></li>`;
+        }
 
         return `
             <header data-component="ToolBar"></header>
@@ -39,6 +50,37 @@ export default class DownloadsPage extends Component {
                 display: flex;
                 flex-flow: column nowrap;
                 align-items: center;
+            }
+
+            .downloads-page-content .title {
+                margin: 2em 0;
+            }
+
+            .downloads-page-content .installtypes {
+                width: 480px;
+                border: 2px solid rgba(0,0,0,0.1);
+                /*border-radius: 0.6em;*/
+                list-style: none;
+            }
+
+            .downloads-page-content .installtypes li {
+                border-top: 2px solid rgba(0,0,0,0.1);
+            }
+            .downloads-page-content .installtypes li:first-child {
+                border-top-width: 0;
+            }
+
+            .downloads-page-content .installtypes li a {
+                display: block;
+                padding: 0.6em;
+                background-color: transparent;
+                color: #222222;
+                text-decoration: none;
+                transition: background-color 0.3s ease-out;
+            }
+            .downloads-page-content .installtypes li a:hover,
+            .downloads-page-content .installtypes li a:active {
+                background-color: #03a9f4;
             }
         `;
     }
