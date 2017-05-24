@@ -233,6 +233,10 @@ import Root from '../components/Root.js';
             sendWebSocketMessage(params.installType, 'SystemHandler::isApplicableType', [params.installType]);
         });
 
+        statusManager.registerAction('open-file', (resolve, reject, params) => {
+            shell.openItem(params.path);
+        });
+
         statusManager.registerAction('apply-file', (resolve, reject, params) => {
             sendWebSocketMessage(params.path, 'SystemHandler::applyFile', [params.path, params.installType]);
         });

@@ -19,7 +19,7 @@ export default class InstalledItemsPage extends Component {
                 for (const file of this.state.installedItems[itemKey].files) {
                     const path = `${this.state.installTypes[type].destination}/${file}`;
                     const params = JSON.stringify({path: path, installType: type});
-                    list += `<li><a href="#" data-dispatch="apply-file" data-params='${params}'>${file}</a></li>`;
+                    list += `<li><a href="#" data-dispatch="open-file" data-params='${params}'>${file}</a></li>`;
                 }
             }
         }
