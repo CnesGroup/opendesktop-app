@@ -14,7 +14,6 @@ import Root from '../components/Root.js';
     const shell = electron.shell;
 
     const webSocket = new WebSocket(`ws://localhost:${appConfig.ocsManagerPort}`);
-
     const statusManager = new StatusManager();
     const root = new Root(document.querySelector('[data-component="Root"]'));
     const browseWebview = root.mainArea.browsePage.element.querySelector('[data-webview="browse"]');
@@ -24,15 +23,18 @@ import Root from '../components/Root.js';
     document.title = appConfig.title;
 
     function setupWebSocket() {
-        webSocket.onopen = (event) => {
+        webSocket.onopen = () => {
+            console.log('WebSocket open');
         };
 
-        webSocket.onclose = (event) => {
+        webSocket.onclose = () => {
+            console.log('WebSocket close');
         };
 
         webSocket.onmessage = (event) => {
+            console.log(['WebSocket message received', event.data]);
+
             const data = JSON.parse(event.data);
-            console.log(['WebSocket message received', data]);
 
             if (data.func === 'ItemHandler::metadataSetChanged') {
                 sendWebSocketMessage('', 'ItemHandler::metadataSet', []);
@@ -99,8 +101,8 @@ import Root from '../components/Root.js';
     }
 
     function setupWebView() {
-        // Should webview display to load specific page
         const config = new electronConfig({name: 'application'});
+
         browseWebview.setAttribute('src', config.get('startPage'));
         browseWebview.setAttribute('preload', './scripts/renderers/ipc-renderer.js');
         browseWebview.setAttribute('autosize', 'on');

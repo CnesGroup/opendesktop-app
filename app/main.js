@@ -37,6 +37,7 @@ let mainWindow = null;
     function createWindow() {
         const config = new electronConfig({name: 'application', defaults: appConfig.defaults});
         const windowBounds = config.get('windowBounds');
+
         mainWindow = new BrowserWindow({
             title: appConfig.title,
             icon: `${__dirname}/images/app-icons/opendesktop-app.png`,

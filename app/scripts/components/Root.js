@@ -12,7 +12,6 @@ export default class Root extends Component {
     }
 
     complete() {
-        //console.log(this);
         console.log('Component building completed');
     }
 
