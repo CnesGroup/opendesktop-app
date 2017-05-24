@@ -51,6 +51,15 @@ import Root from '../components/Root.js';
                     installedItems: installedItems
                 });
             }
+            else if (data.func === 'SystemHandler::isApplicableType') {
+                root.mainArea.installedItemsPage.update({
+                    installType: data.id,
+                    isApplicableType: data.data[0],
+                    installTypes: installTypes,
+                    installedItems: installedItems
+                });
+                root.mainArea.changePage('installedItemsPage');
+            }
             else if (data.func === 'ItemHandler::metadataSetChanged') {
                 sendWebSocketMessage('', 'ItemHandler::metadataSet', []);
             }
@@ -218,6 +227,14 @@ import Root from '../components/Root.js';
 
         statusManager.registerAction('downloads', () => {
             root.mainArea.changePage('downloadsPage');
+        });
+
+        statusManager.registerAction('installed-items', (resolve, reject, params) => {
+            sendWebSocketMessage(params.installType, 'SystemHandler::isApplicableType', [params.installType]);
+        });
+
+        statusManager.registerAction('apply-file', (resolve, reject, params) => {
+            sendWebSocketMessage(params.path, 'SystemHandler::applyFile', [params.path, params.installType]);
         });
 
         statusManager.registerAction('about', () => {
