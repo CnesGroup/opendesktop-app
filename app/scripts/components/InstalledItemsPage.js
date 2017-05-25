@@ -71,6 +71,7 @@ export default class InstalledItemsPage extends Component {
                 display: flex;
                 flex-flow: column nowrap;
                 align-items: center;
+                overflow: auto;
             }
 
             .installeditems-page-content .title {

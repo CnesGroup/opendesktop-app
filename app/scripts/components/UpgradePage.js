@@ -64,6 +64,7 @@ export default class UpgradePage extends Component {
                 display: flex;
                 flex-flow: column nowrap;
                 align-items: center;
+                overflow: auto;
             }
 
             .upgrade-page-content .banner {

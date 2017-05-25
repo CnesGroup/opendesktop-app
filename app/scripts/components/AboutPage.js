@@ -49,6 +49,7 @@ export default class AboutPage extends Component {
                 display: flex;
                 flex-flow: column nowrap;
                 align-items: center;
+                overflow: auto;
             }
 
             .about-page-content .banner {

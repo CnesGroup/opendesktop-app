@@ -58,6 +58,7 @@ export default class DownloadsPage extends Component {
                 display: flex;
                 flex-flow: column nowrap;
                 align-items: center;
+                overflow: auto;
             }
 
             .downloads-page-content .title {
