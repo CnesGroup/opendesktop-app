@@ -114,7 +114,7 @@ export default class InstalledItemsPage extends Component {
     script() {
         this.toolBar = new ToolBar(
             this.element.querySelector('[data-component="ToolBar"]'),
-            {navigation: false, menu: true}
+            {backAction: 'downloads'}
         );
         this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }

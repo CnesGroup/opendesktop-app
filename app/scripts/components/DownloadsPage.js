@@ -93,10 +93,7 @@ export default class DownloadsPage extends Component {
     }
 
     script() {
-        this.toolBar = new ToolBar(
-            this.element.querySelector('[data-component="ToolBar"]'),
-            {navigation: false, menu: true}
-        );
+        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'));
         this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 

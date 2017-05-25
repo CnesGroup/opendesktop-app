@@ -40,7 +40,7 @@ export default class BrowsePage extends Component {
     script() {
         this.toolBar = new ToolBar(
             this.element.querySelector('[data-component="ToolBar"]'),
-            {navigation: true, menu: true}
+            {backAction: 'browse-webview-back', forwardAction: 'browse-webview-forward'}
         );
         this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
