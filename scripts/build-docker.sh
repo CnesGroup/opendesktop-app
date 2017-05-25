@@ -38,9 +38,9 @@ transfer_file() {
 }
 
 build_ubuntu() {
-    # docker-image: ubuntu:14.04
+    # docker-image: ubuntu:16.04
     apt update -qq
-    apt -y install build-essential qt5-default libqt5svg5-dev qtdeclarative5-dev
+    apt -y install build-essential qt5-default libqt5websockets5-dev
     apt -y install git nodejs npm devscripts debhelper fakeroot
     apt -y install curl
 
@@ -57,16 +57,16 @@ build_ubuntu() {
 
 build_fedora() {
     # docker-image: fedora:20
-    yum -y distro-sync # workaround
-    yum -y install make automake gcc gcc-c++ libtool qt5-qtbase-devel qt5-qtsvg-devel qt5-qtdeclarative-devel
+    yum -y distro-sync
+    yum -y install make automake gcc gcc-c++ libtool qt5-qtbase-devel qt5-qtwebsockets-devel
     yum -y install git nodejs npm rpm-build
     yum -y install curl
     # docker-image: fedora:22
-    #dnf -y install make automake gcc gcc-c++ libtool qt5-qtbase-devel qt5-qtsvg-devel qt5-qtdeclarative-devel
+    #dnf -y install make automake gcc gcc-c++ libtool qt5-qtbase-devel qt5-qtwebsockets-devel
     #dnf -y install git nodejs npm rpm-build
     #dnf -y install curl
 
-    ln -sf /usr/bin/qmake-qt5 /usr/bin/qmake  # workaround
+    ln -sf /usr/bin/qmake-qt5 /usr/bin/qmake
 
     install_nodejs
 
@@ -82,11 +82,11 @@ build_fedora() {
 build_opensuse() {
     # docker-image: opensuse:42.1
     zypper --non-interactive refresh
-    zypper --non-interactive install make automake gcc gcc-c++ libtool libqt5-qtbase-devel libqt5-qtsvg-devel libqt5-qtdeclarative-devel
+    zypper --non-interactive install make automake gcc gcc-c++ libtool libqt5-qtbase-devel libQt5Gui-devel libqt5-qtwebsockets-devel libQt5DBus-devel
     zypper --non-interactive install git nodejs npm rpm-build
     zypper --non-interactive install curl
 
-    ln -sf /usr/bin/qmake-qt5 /usr/bin/qmake  # workaround
+    ln -sf /usr/bin/qmake-qt5 /usr/bin/qmake
 
     install_nodejs
 
@@ -102,7 +102,7 @@ build_opensuse() {
 build_archlinux() {
     # docker-image: base/archlinux:latest
     pacman -Syu --noconfirm
-    pacman -S --noconfirm base-devel qt5-base qt5-svg qt5-declarative qt5-quickcontrols
+    pacman -S --noconfirm base-devel qt5-base qt5-websockets
     pacman -S --noconfirm git nodejs npm
     pacman -S --noconfirm curl
 
@@ -120,7 +120,7 @@ build_archlinux() {
 build_snap() {
     # docker-image: ubuntu:16.04
     apt update -qq
-    apt -y install build-essential qt5-default libqt5svg5-dev qtdeclarative5-dev
+    apt -y install build-essential qt5-default libqt5websockets5-dev
     apt -y install git nodejs npm snapcraft
     apt -y install curl
 
@@ -136,9 +136,9 @@ build_snap() {
 }
 
 build_appimage() {
-    # docker-image: ubuntu:14.04
+    # docker-image: ubuntu:16.04
     apt update -qq
-    apt -y install build-essential qt5-default libqt5svg5-dev qtdeclarative5-dev
+    apt -y install build-essential qt5-default libqt5websockets5-dev
     apt -y install git nodejs npm fuse zsync desktop-file-utils
     apt -y install curl
 
