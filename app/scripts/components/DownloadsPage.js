@@ -3,6 +3,7 @@
 import Component from 'js/Component.js';
 
 import ToolBar from './ToolBar.js';
+import StatusBar from './StatusBar.js';
 
 export default class DownloadsPage extends Component {
 
@@ -31,6 +32,7 @@ export default class DownloadsPage extends Component {
             <h1 class="title">Downloads</h1>
             <ul class="installtypes">${list}</ul>
             </div>
+            <footer data-component="StatusBar"></footer>
         `;
     }
 
@@ -40,6 +42,12 @@ export default class DownloadsPage extends Component {
                 flex: 0 0 auto;
                 width: 100%;
                 height: 48px;
+            }
+
+            [data-component="StatusBar"] {
+                flex: 0 0 auto;
+                width: 100%;
+                height: 24px;
             }
 
             .downloads-page-content {
@@ -90,6 +98,7 @@ export default class DownloadsPage extends Component {
             this.element.querySelector('[data-component="ToolBar"]'),
             {navigation: false, menu: true}
         );
+        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }

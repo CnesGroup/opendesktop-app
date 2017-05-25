@@ -3,6 +3,7 @@
 import Component from 'js/Component.js';
 
 import ToolBar from './ToolBar.js';
+import StatusBar from './StatusBar.js';
 
 import appConfig from '../../configs/application.json';
 
@@ -37,6 +38,7 @@ export default class UpgradePage extends Component {
             <dl class="releasefiles">${list}</dl>
             <p>Visit <a href="${this.state.releasepage}" target="_blank">${this.state.releasepage}</a> for more details.</p>
             </div>
+            <footer data-component="StatusBar"></footer>
         `;
     }
 
@@ -46,6 +48,12 @@ export default class UpgradePage extends Component {
                 flex: 0 0 auto;
                 width: 100%;
                 height: 48px;
+            }
+
+            [data-component="StatusBar"] {
+                flex: 0 0 auto;
+                width: 100%;
+                height: 24px;
             }
 
             .upgrade-page-content {
@@ -121,6 +129,7 @@ export default class UpgradePage extends Component {
             this.element.querySelector('[data-component="ToolBar"]'),
             {navigation: false, menu: true}
         );
+        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }

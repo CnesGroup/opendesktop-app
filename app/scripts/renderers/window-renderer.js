@@ -71,7 +71,22 @@ import Root from '../components/Root.js';
                 sendWebSocketMessage('', 'ItemHandler::metadataSet', []);
             }
             else if (data.func === 'ItemHandler::metadataSet') {
-                    console.log(data.data);
+                const keys = Object.keys(data.data[0]);
+                let message = '';
+                if (keys.length) {
+                    for (const key of keys) {
+                        message += `Downloading: ${data.data[0][key].filename}`;
+                        break;
+                    }
+                    if (keys.length > 1) {
+                        message += ` + ${keys.length - 1} files`;
+                    }
+                }
+                root.mainArea.browsePage.statusBar.update({message: message});
+                root.mainArea.downloadsPage.statusBar.update({message: message});
+                root.mainArea.installedItemsPage.statusBar.update({message: message});
+                root.mainArea.aboutPage.statusBar.update({message: message});
+                root.mainArea.upgradePage.statusBar.update({message: message});
             }
             else if (data.func === 'ItemHandler::downloadStarted') {
                 if (data.data[0].status !== 'success_downloadstart') {
@@ -84,7 +99,7 @@ import Root from '../components/Root.js';
                 }
             }
             else if (data.func === 'ItemHandler::downloadProgress') {
-                    console.log(data.data);
+                console.log(data.data);
             }
             else if (data.func === 'ItemHandler::saveStarted') {
                 if (data.data[0].status !== 'success_savestart') {
@@ -198,6 +213,8 @@ import Root from '../components/Root.js';
         statusManager.registerView('check-update', (state) => {
             root.mainArea.upgradePage.update(state);
             root.mainArea.browsePage.toolBar.showUpgradeButton();
+            root.mainArea.downloadsPage.toolBar.showUpgradeButton();
+            root.mainArea.installedItemsPage.toolBar.showUpgradeButton();
             root.mainArea.aboutPage.toolBar.showUpgradeButton();
             root.mainArea.upgradePage.toolBar.showUpgradeButton();
         });

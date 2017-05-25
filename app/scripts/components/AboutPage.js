@@ -3,6 +3,7 @@
 import Component from 'js/Component.js';
 
 import ToolBar from './ToolBar.js';
+import StatusBar from './StatusBar.js';
 
 import appConfig from '../../configs/application.json';
 
@@ -22,6 +23,7 @@ export default class AboutPage extends Component {
             <p>License: ${packageJson.license}</p>
             <p>Website: <a href="${packageJson.homepage}" target="_blank">${packageJson.homepage}</a></p>
             </div>
+            <footer data-component="StatusBar"></footer>
         `;
     }
 
@@ -31,6 +33,12 @@ export default class AboutPage extends Component {
                 flex: 0 0 auto;
                 width: 100%;
                 height: 48px;
+            }
+
+            [data-component="StatusBar"] {
+                flex: 0 0 auto;
+                width: 100%;
+                height: 24px;
             }
 
             .about-page-content {
@@ -63,6 +71,7 @@ export default class AboutPage extends Component {
             this.element.querySelector('[data-component="ToolBar"]'),
             {navigation: false, menu: true}
         );
+        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }
