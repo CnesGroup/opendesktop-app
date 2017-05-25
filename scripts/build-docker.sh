@@ -38,7 +38,7 @@ transfer_file() {
 }
 
 build_ubuntu() {
-    # docker-image: ubuntu:14.04
+    # docker-image: ubuntu:16.04
     apt update -qq
     apt -y install build-essential qt5-default libqt5svg5-dev qtdeclarative5-dev
     apt -y install git nodejs npm devscripts debhelper fakeroot
@@ -136,7 +136,7 @@ build_snap() {
 }
 
 build_appimage() {
-    # docker-image: ubuntu:14.04
+    # docker-image: ubuntu:16.04
     apt update -qq
     apt -y install build-essential qt5-default libqt5svg5-dev qtdeclarative5-dev
     apt -y install git nodejs npm fuse zsync desktop-file-utils
