@@ -9,8 +9,8 @@ URL: https://github.com/opendesktop/opendesktop-app
 #Source0: https://github.com/opendesktop/opendesktop-app/archive/release-%{version}.tar.gz
 Source0: %{name}.tar.gz
 
-Requires: libQt5Svg5 >= 5.2.0, libqt5-qtquickcontrols >= 5.2.0
-BuildRequires: make, automake, gcc, gcc-c++, libtool, libqt5-qtbase-devel >= 5.2.0, libqt5-qtsvg-devel >= 5.2.0, libqt5-qtdeclarative-devel >= 5.2.0, git, nodejs, npm, rpm-build
+Requires: libQt5Gui5 >= 5.3.0, libQt5WebSockets5 >= 5.3.0, libQt5DBus5 >= 5.3.0
+BuildRequires: make, automake, gcc, gcc-c++, libtool, libqt5-qtbase-devel >= 5.3.0, libQt5Gui-devel >= 5.3.0, libqt5-qtwebsockets-devel >= 5.3.0, libQt5DBus-devel >= 5.3.0, git, nodejs, npm, rpm-build
 
 %description
 The official Opendesktop.org App.
