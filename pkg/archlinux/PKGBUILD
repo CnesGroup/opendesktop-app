@@ -1,7 +1,7 @@
 # Maintainer: Akira Ohgaki <akiraohgaki@gmail.com>
 
 pkgname='opendesktop-app'
-pkgver='0.1.0'
+pkgver='0.2.0'
 pkgrel='1'
 pkgdesc='The official Opendesktop.org App.'
 arch=('i686' 'x86_64')
