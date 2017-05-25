@@ -22,18 +22,16 @@ export default class InstalledItemsPage extends Component {
                     const openFileParams = JSON.stringify({path: path});
                     const applyFileParams = JSON.stringify({path: path, installType: type});
                     const removeFileParams = JSON.stringify({itemKey: itemKey});
-                    let applyButton = '';
+                    let applyCell = '';
                     if (this.state.isApplicableType) {
-                        applyButton = `<button data-dispatch="apply-file" data-params='${applyFileParams}'>Apply</button>`;
+                        applyCell = `<td class="apply-file-cell"><button data-dispatch="apply-file" data-params='${applyFileParams}'>Apply</button></td>`;
                     }
                     list += `
-                        <li>
-                        <a href="#" data-dispatch="open-file" data-params='${openFileParams}'>
-                        ${file}
-                        ${applyButton}
-                        <button data-dispatch="remove-file" data-params='${removeFileParams}'>Remove</button>
-                        </a>
-                        </li>
+                        <tr>
+                        <td class="open-file-cell"><a href="#" data-dispatch="open-file" data-params='${openFileParams}'>${file}</a></td>
+                        ${applyCell}
+                        <td class="remove-file-cell"><button data-dispatch="remove-file" data-params='${removeFileParams}'>Remove</button></td>
+                        </tr>
                     `;
                 }
             }
@@ -43,7 +41,7 @@ export default class InstalledItemsPage extends Component {
             <header data-component="ToolBar"></header>
             <div class="installeditems-page-content">
             <h1 class="title">${this.state.installTypes[type].name}</h1>
-            <ul class="installeditems">${list}</ul>
+            <table class="installeditems">${list}</table>
             </div>
             <footer data-component="StatusBar"></footer>
         `;
@@ -75,24 +73,26 @@ export default class InstalledItemsPage extends Component {
             }
 
             .installeditems-page-content .title {
-                margin: 2em 0;
+                margin: 1em 0;
             }
 
             .installeditems-page-content .installeditems {
-                width: 480px;
-                border: 2px solid rgba(0,0,0,0.1);
-                /*border-radius: 0.6em;*/
-                list-style: none;
+                width: 640px;
+                margin: 1em 0;
+                border-top: 1px solid rgba(0,0,0,0.1);
+                border-bottom: 1px solid rgba(0,0,0,0.1);
+                border-collapse: collapse;
             }
 
-            .installeditems-page-content .installeditems li {
-                border-top: 2px solid rgba(0,0,0,0.1);
-            }
-            .installeditems-page-content .installeditems li:first-child {
-                border-top-width: 0;
+            .installeditems-page-content .installeditems tr {
+                border-top: 1px solid rgba(0,0,0,0.1);
             }
 
-            .installeditems-page-content .installeditems li a {
+            .installeditems-page-content .installeditems .open-file-cell {
+                width: 100%;
+            }
+
+            .installeditems-page-content .installeditems a {
                 display: block;
                 padding: 0.6em;
                 background-color: transparent;
@@ -100,9 +100,13 @@ export default class InstalledItemsPage extends Component {
                 text-decoration: none;
                 transition: background-color 0.3s ease-out;
             }
-            .installeditems-page-content .installeditems li a:hover,
-            .installeditems-page-content .installeditems li a:active {
+            .installeditems-page-content .installeditems a:hover,
+            .installeditems-page-content .installeditems a:active {
                 background-color: #03a9f4;
+            }
+
+            .installeditems-page-content .installeditems button {
+                padding: 0.3em 0.5em;
             }
         `;
     }

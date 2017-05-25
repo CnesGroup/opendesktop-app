@@ -23,14 +23,14 @@ export default class DownloadsPage extends Component {
         let list = '';
         for (const type of Object.keys(installTypes)) {
             const params = JSON.stringify({installType: type});
-            list += `<li><a href="#" data-dispatch="installed-items" data-params='${params}'>${installTypes[type]}</a></li>`;
+            list += `<tr><td><a href="#" data-dispatch="installed-items" data-params='${params}'>${installTypes[type]}</a></td></tr>`;
         }
 
         return `
             <header data-component="ToolBar"></header>
             <div class="downloads-page-content">
             <h1 class="title">Downloads</h1>
-            <ul class="installtypes">${list}</ul>
+            <table class="installtypes">${list}</table>
             </div>
             <footer data-component="StatusBar"></footer>
         `;
@@ -62,24 +62,22 @@ export default class DownloadsPage extends Component {
             }
 
             .downloads-page-content .title {
-                margin: 2em 0;
+                margin: 1em 0;
             }
 
             .downloads-page-content .installtypes {
-                width: 480px;
-                border: 2px solid rgba(0,0,0,0.1);
-                /*border-radius: 0.6em;*/
-                list-style: none;
+                width: 640px;
+                margin: 1em 0;
+                border-top: 1px solid rgba(0,0,0,0.1);
+                border-bottom: 1px solid rgba(0,0,0,0.1);
+                border-collapse: collapse;
             }
 
-            .downloads-page-content .installtypes li {
-                border-top: 2px solid rgba(0,0,0,0.1);
-            }
-            .downloads-page-content .installtypes li:first-child {
-                border-top-width: 0;
+            .downloads-page-content .installtypes tr {
+                border-top: 1px solid rgba(0,0,0,0.1);
             }
 
-            .downloads-page-content .installtypes li a {
+            .downloads-page-content .installtypes a {
                 display: block;
                 padding: 0.6em;
                 background-color: transparent;
@@ -87,8 +85,8 @@ export default class DownloadsPage extends Component {
                 text-decoration: none;
                 transition: background-color 0.3s ease-out;
             }
-            .downloads-page-content .installtypes li a:hover,
-            .downloads-page-content .installtypes li a:active {
+            .downloads-page-content .installtypes a:hover,
+            .downloads-page-content .installtypes a:active {
                 background-color: #03a9f4;
             }
         `;
