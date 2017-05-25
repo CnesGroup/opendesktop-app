@@ -4,6 +4,8 @@ import Component from 'js/Component.js';
 
 import StartupPage from './StartupPage.js';
 import BrowsePage from './BrowsePage.js';
+import DownloadsPage from './DownloadsPage.js';
+import InstalledItemsPage from './InstalledItemsPage.js';
 import AboutPage from './AboutPage.js';
 import UpgradePage from './UpgradePage.js';
 
@@ -13,6 +15,8 @@ export default class Root extends Component {
         return `
             <article data-component="StartupPage"></article>
             <article data-component="BrowsePage"></article>
+            <article data-component="DownloadsPage"></article>
+            <article data-component="InstalledItemsPage"></article>
             <article data-component="AboutPage"></article>
             <article data-component="UpgradePage"></article>
         `;
@@ -36,6 +40,8 @@ export default class Root extends Component {
             }
 
             [data-component="BrowsePage"],
+            [data-component="DownloadsPage"],
+            [data-component="InstalledItemsPage"],
             [data-component="AboutPage"],
             [data-component="UpgradePage"] {
                 display: flex;
@@ -49,14 +55,24 @@ export default class Root extends Component {
     script() {
         this.startupPage = new StartupPage(this.element.querySelector('[data-component="StartupPage"]'));
         this.browsePage = new BrowsePage(this.element.querySelector('[data-component="BrowsePage"]'));
+        this.downloadsPage = new DownloadsPage(this.element.querySelector('[data-component="DownloadsPage"]'));
+        this.installedItemsPage = new InstalledItemsPage(this.element.querySelector('[data-component="InstalledItemsPage"]'));
         this.aboutPage = new AboutPage(this.element.querySelector('[data-component="AboutPage"]'));
         this.upgradePage = new UpgradePage(this.element.querySelector('[data-component="UpgradePage"]'));
-        this._hideAllPages();
+        this.hideAllPages();
+    }
+
+    hideAllPages() {
+        for (const key of Object.keys(this)) {
+            if (key.endsWith('Page') && this[key].element) {
+                this[key].element.style.display = 'none';
+            }
+        }
     }
 
     changePage(key) {
         if (this[key] && this[key].element) {
-            this._hideAllPages();
+            this.hideAllPages();
             this[key].element.style.display = 'flex';
         }
     }
@@ -67,14 +83,6 @@ export default class Root extends Component {
 
     hideStartupPage() {
         this.startupPage.element.style.display = 'none';
-    }
-
-    _hideAllPages() {
-        for (const key of Object.keys(this)) {
-            if (key.endsWith('Page') && this[key].element) {
-                this[key].element.style.display = 'none';
-            }
-        }
     }
 
 }

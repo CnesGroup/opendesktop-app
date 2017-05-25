@@ -16,7 +16,6 @@ export default class MenuArea extends Component {
             </header>
 
             <ul class="menu-items">
-            <li><button class="menu-item" data-dispatch="browse">Browse</button></li>
             <li>
             <select class="menu-item" name="startPage">
             <option value="https://www.opendesktop.org/">opendesktop.org</option>
@@ -27,6 +26,8 @@ export default class MenuArea extends Component {
             <option value="https://www.enlightenment-themes.org/">enlightenment-themes.org</option>
             </select>
             </li>
+            <li><button class="menu-item" data-dispatch="browse">Browse</button></li>
+            <li><button class="menu-item" data-dispatch="downloads">Downloads</button></li>
             </ul>
 
             <ul class="menu-items-footer">
