@@ -102,10 +102,11 @@ export default class InstalledItemsPage extends Component {
             }
             .installeditems-page-content .installeditems a:hover,
             .installeditems-page-content .installeditems a:active {
-                background-color: #03a9f4;
+                background-color: #e0e0e0;
             }
 
             .installeditems-page-content .installeditems button {
+                margin: 0 0.2em;
                 padding: 0.3em 0.5em;
             }
         `;

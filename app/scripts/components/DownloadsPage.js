@@ -87,7 +87,7 @@ export default class DownloadsPage extends Component {
             }
             .downloads-page-content .installtypes a:hover,
             .downloads-page-content .installtypes a:active {
-                background-color: #03a9f4;
+                background-color: #e0e0e0;
             }
         `;
     }
