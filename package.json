@@ -1,7 +1,7 @@
 {
   "name": "opendesktop-app",
   "productName": "Opendesktop.org App",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "The official Opendesktop.org App.",
   "keywords": [
     "Opendesktop",

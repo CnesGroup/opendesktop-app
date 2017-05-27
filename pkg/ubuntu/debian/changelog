@@ -1,9 +1,10 @@
-opendesktop-app (0.2.0-0ubuntu1) xenial; urgency=low
+opendesktop-app (1.0.0-0ubuntu1) xenial; urgency=low
 
   * Removed ocs-url
   * Bundled ocs-manager
+  * Added Collection section
 
- -- Akira Ohgaki <akiraohgaki@gmail.com>  Thu, 25 May 2017 22:46:05 +0000
+ -- Akira Ohgaki <akiraohgaki@gmail.com>  Sat, 27 May 2017 06:37:12 +0000
 
 opendesktop-app (0.1.0-0ubuntu1) xenial; urgency=low
 
