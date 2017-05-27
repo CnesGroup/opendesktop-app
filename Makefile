@@ -4,7 +4,7 @@ TARGET = opendesktop-app
 srcdir = .
 
 build_tmpdir = ./build_tmp
-ocsurl_version = 3.0.0
+ocsmanager_version = 0.1.0
 
 DESTDIR =
 prefix = /usr/local
@@ -52,17 +52,17 @@ uninstall:
 $(TARGET): app
 	install -m 755 $(srcdir)/launcher/$(TARGET).sh ./$(TARGET)
 
-app: ocsurl
+app: ocsmanager
 	cd $(srcdir); \
 		npm install; \
 		npm run package
 	cp -Rpf $(srcdir)/out/$(TARGET)-linux-x64 ./
 
-ocsurl:
+ocsmanager:
 	mkdir -p $(build_tmpdir)
-	git clone https://github.com/opendesktop/ocs-url.git -b release-$(ocsurl_version) --single-branch --depth=1 $(build_tmpdir)/ocs-url
-	cd $(build_tmpdir)/ocs-url; \
+	git clone https://github.com/opendesktop/ocs-manager.git -b release-$(ocsmanager_version) --single-branch --depth=1 $(build_tmpdir)/ocs-manager
+	cd $(build_tmpdir)/ocs-manager; \
 		sh ./scripts/import.sh; \
-		qmake ./ocs-url.pro; \
+		qmake ./ocs-manager.pro; \
 		make
-	install -D -m 755 $(build_tmpdir)/ocs-url/ocs-url $(srcdir)/bin/ocs-url
+	install -D -m 755 $(build_tmpdir)/ocs-manager/ocs-manager $(srcdir)/bin/ocs-manager

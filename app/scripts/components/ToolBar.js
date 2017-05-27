@@ -7,17 +7,32 @@ export default class ToolBar extends Component {
     init() {
         if (!this.state) {
             this.state = {
-                navigation: true,
-                menu: true
+                backAction: '',
+                forwardAction: '',
+                homeAction: '',
+                collectionAction: ''
             };
         }
     }
 
     html() {
+        let navigation = '';
+        if (this.state.backAction) {
+            navigation += `<button class="tool-button icon-chevron-left" data-dispatch="${this.state.backAction}"></button>`;
+        }
+        if (this.state.forwardAction) {
+            navigation += `<button class="tool-button icon-chevron-right" data-dispatch="${this.state.forwardAction}"></button>`;
+        }
+        if (this.state.homeAction) {
+            navigation += `<button class="tool-button icon-home" data-dispatch="${this.state.homeAction}"></button>`;
+        }
+        if (this.state.collectionAction) {
+            navigation += `<button class="tool-button icon-folder" data-dispatch="${this.state.collectionAction}"></button>`;
+        }
+
         return `
             <nav class="tool-bar">
-            <button class="tool-button icon-chevron-left" data-dispatch="browse-webview-back"></button>
-            <button class="tool-button icon-chevron-right" data-dispatch="browse-webview-forward"></button>
+            ${navigation}
             <span class="indicator icon-loading"></span>
             <span class="spacer"></span>
             <button class="tool-button icon-info" data-dispatch="upgrade"></button>
@@ -87,13 +102,6 @@ export default class ToolBar extends Component {
     script() {
         this.hideIndicator();
         this.hideUpgradeButton();
-        if (!this.state.navigation) {
-            this.element.querySelector('[data-dispatch="browse-webview-back"]').style.display = 'none';
-            this.element.querySelector('[data-dispatch="browse-webview-forward"]').style.display = 'none';
-        }
-        if (!this.state.menu) {
-            this.element.querySelector('[data-dispatch="menu"]').style.display = 'none';
-        }
     }
 
     showIndicator() {

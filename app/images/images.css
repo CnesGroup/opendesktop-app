@@ -20,12 +20,20 @@
         background-image: url(material-design-icons/ic_close_black_48px.svg);
     }
 
-    .icon-menu {
-        background-image: url(material-design-icons/ic_menu_black_48px.svg);
+    .icon-folder {
+        background-image: url(material-design-icons/ic_folder_black_48px.svg);
+    }
+
+    .icon-home {
+        background-image: url(material-design-icons/ic_home_black_48px.svg);
     }
 
     .icon-info {
         background-image: url(material-design-icons/ic_info_outline_white_48px.svg);
+    }
+
+    .icon-menu {
+        background-image: url(material-design-icons/ic_menu_black_48px.svg);
     }
 
     .icon-loading {

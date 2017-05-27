@@ -2,8 +2,11 @@
 
 const electron = require('electron');
 const electronConfig = require('electron-config');
+const childProcess = require('child_process');
 
 const appConfig = require('./configs/application.json');
+
+let ocsManager = null;
 
 let mainWindow = null;
 
@@ -13,9 +16,28 @@ let mainWindow = null;
 
     const debug = process.argv.indexOf('--debug') !== -1 ? true : false;
 
+    function startOcsManager() {
+        ocsManager = childProcess.execFile(
+            `${app.getAppPath()}/${appConfig.ocsManagerBin}`,
+            ['-p', appConfig.ocsManagerPort],
+            (error, stdout, stderr) => {
+                if (error) {
+                    console.error(error);
+                }
+            }
+        );
+    }
+
+    function stopOcsManager() {
+        if (ocsManager) {
+            ocsManager.kill();
+        }
+    }
+
     function createWindow() {
         const config = new electronConfig({name: 'application', defaults: appConfig.defaults});
         const windowBounds = config.get('windowBounds');
+
         mainWindow = new BrowserWindow({
             title: appConfig.title,
             icon: `${__dirname}/images/app-icons/opendesktop-app.png`,
@@ -44,7 +66,14 @@ let mainWindow = null;
         });
     }
 
-    app.on('ready', createWindow);
+    app.on('ready', () => {
+        startOcsManager();
+        createWindow();
+    });
+
+    app.on('quit', () => {
+        stopOcsManager();
+    });
 
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') {

@@ -2,14 +2,14 @@ pipelines:
   branches:
     master:
       - step:
-          image: ubuntu:14.04
+          image: ubuntu:16.04
           script:
             - sh scripts/build-docker.sh ubuntu
             - cat transfer.log
   custom:
     build-ubuntu:
       - step:
-          image: ubuntu:14.04
+          image: ubuntu:16.04
           script:
             - sh scripts/build-docker.sh ubuntu
             - cat transfer.log
@@ -41,7 +41,7 @@ pipelines:
             - cat transfer.log
     build-appimage:
       - step:
-          image: ubuntu:14.04
+          image: ubuntu:16.04
           script:
             - echo 'appimage build is disabled currently'
             - exit 1

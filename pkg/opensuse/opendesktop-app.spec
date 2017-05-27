@@ -1,6 +1,6 @@
 Summary: Opendesktop.org App
 Name: opendesktop-app
-Version: 0.1.0
+Version: 1.0.0
 Release: 1%{?dist}
 License: GPLv3+
 Group: Applications/Internet
@@ -9,8 +9,8 @@ URL: https://github.com/opendesktop/opendesktop-app
 #Source0: https://github.com/opendesktop/opendesktop-app/archive/release-%{version}.tar.gz
 Source0: %{name}.tar.gz
 
-Requires: libQt5Svg5 >= 5.2.0, libqt5-qtquickcontrols >= 5.2.0
-BuildRequires: make, automake, gcc, gcc-c++, libtool, libqt5-qtbase-devel >= 5.2.0, libqt5-qtsvg-devel >= 5.2.0, libqt5-qtdeclarative-devel >= 5.2.0, git, nodejs, npm, rpm-build
+Requires: libQt5Gui5 >= 5.3.0, libQt5WebSockets5 >= 5.3.0, libQt5DBus5 >= 5.3.0
+BuildRequires: make, automake, gcc, gcc-c++, libtool, libqt5-qtbase-devel >= 5.3.0, libQt5Gui-devel >= 5.3.0, libqt5-qtwebsockets-devel >= 5.3.0, libQt5DBus-devel >= 5.3.0, git, nodejs, npm, rpm-build
 
 %description
 The official Opendesktop.org App.
@@ -37,5 +37,10 @@ make DESTDIR="%{buildroot}" prefix="/usr" install
 rm -rf %{buildroot}
 
 %changelog
+* Sat May 27 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 1.0.0-1
+- Removed ocs-url
+- Bundled ocs-manager
+- Added Collection section
+
 * Wed Apr 19 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 0.1.0-1
 - Initial release

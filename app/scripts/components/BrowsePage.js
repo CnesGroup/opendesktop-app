@@ -3,15 +3,17 @@
 import Component from 'js/Component.js';
 
 import ToolBar from './ToolBar.js';
-//import StatusBar from './StatusBar.js';
+import StatusBar from './StatusBar.js';
 
 export default class BrowsePage extends Component {
 
     html() {
         return `
             <header data-component="ToolBar"></header>
+
             <webview data-webview="browse"></webview>
-            <!--<footer data-component="StatusBar"></footer>-->
+
+            <footer data-component="StatusBar"></footer>
         `;
     }
 
@@ -23,26 +25,28 @@ export default class BrowsePage extends Component {
                 height: 48px;
             }
 
-            [data-webview="browse"] {
-                flex: 1 1 auto;
-                width: 100%;
-                height: 100%;
-            }
-
             [data-component="StatusBar"] {
                 flex: 0 0 auto;
                 width: 100%;
                 height: 24px;
             }
+
+            [data-webview="browse"] {
+                flex: 1 1 auto;
+                width: 100%;
+                height: 100%;
+            }
         `;
     }
 
     script() {
-        this.toolBar = new ToolBar(
-            this.element.querySelector('[data-component="ToolBar"]'),
-            {navigation: true, menu: true}
-        );
-        //this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
+        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
+            backAction: 'browse-webview-back',
+            forwardAction: 'browse-webview-forward',
+            homeAction: 'start-page',
+            collectionAction: 'collection'
+        });
+        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }
