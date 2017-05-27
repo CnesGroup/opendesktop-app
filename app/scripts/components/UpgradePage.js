@@ -30,6 +30,7 @@ export default class UpgradePage extends Component {
 
         return `
             <header data-component="ToolBar"></header>
+
             <div class="upgrade-page-content">
             <div class="banner icon-opendesktop-app"></div>
             <h1 class="title">${appConfig.title}</h1>
@@ -38,6 +39,7 @@ export default class UpgradePage extends Component {
             <dl class="releasefiles">${list}</dl>
             <p>Visit <a href="${this.state.releasepage}" target="_blank">${this.state.releasepage}</a> for more details.</p>
             </div>
+
             <footer data-component="StatusBar"></footer>
         `;
     }
@@ -81,7 +83,7 @@ export default class UpgradePage extends Component {
             }
 
             .upgrade-page-content .releasefiles {
-                width: 480px;
+                width: 640px;
                 margin: 2em 0;
                 border: 2px solid rgba(0,0,0,0.1);
                 border-radius: 0.6em;
@@ -126,7 +128,10 @@ export default class UpgradePage extends Component {
     }
 
     script() {
-        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'));
+        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
+            homeAction: 'browse',
+            collectionAction: 'collection'
+        });
         this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 

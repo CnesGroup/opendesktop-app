@@ -8,7 +8,9 @@ export default class ToolBar extends Component {
         if (!this.state) {
             this.state = {
                 backAction: '',
-                forwardAction: ''
+                forwardAction: '',
+                homeAction: '',
+                collectionAction: ''
             };
         }
     }
@@ -20,6 +22,12 @@ export default class ToolBar extends Component {
         }
         if (this.state.forwardAction) {
             navigation += `<button class="tool-button icon-chevron-right" data-dispatch="${this.state.forwardAction}"></button>`;
+        }
+        if (this.state.homeAction) {
+            navigation += `<button class="tool-button icon-home" data-dispatch="${this.state.homeAction}"></button>`;
+        }
+        if (this.state.collectionAction) {
+            navigation += `<button class="tool-button icon-folder" data-dispatch="${this.state.collectionAction}"></button>`;
         }
 
         return `

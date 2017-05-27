@@ -39,10 +39,12 @@ export default class InstalledItemsPage extends Component {
 
         return `
             <header data-component="ToolBar"></header>
+
             <div class="installeditems-page-content">
             <h1 class="title">${this.state.installTypes[type].name}</h1>
             <table class="installeditems">${list}</table>
             </div>
+
             <footer data-component="StatusBar"></footer>
         `;
     }
@@ -113,10 +115,10 @@ export default class InstalledItemsPage extends Component {
     }
 
     script() {
-        this.toolBar = new ToolBar(
-            this.element.querySelector('[data-component="ToolBar"]'),
-            {backAction: 'collection'}
-        );
+        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
+            homeAction: 'browse',
+            collectionAction: 'collection'
+        });
         this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 

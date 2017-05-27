@@ -14,6 +14,7 @@ export default class AboutPage extends Component {
     html() {
         return `
             <header data-component="ToolBar"></header>
+
             <div class="about-page-content">
             <div class="banner icon-opendesktop-app"></div>
             <h1 class="title">${appConfig.title}</h1>
@@ -23,6 +24,7 @@ export default class AboutPage extends Component {
             <p>License: ${packageJson.license}</p>
             <p>Website: <a href="${packageJson.homepage}" target="_blank">${packageJson.homepage}</a></p>
             </div>
+
             <footer data-component="StatusBar"></footer>
         `;
     }
@@ -68,7 +70,10 @@ export default class AboutPage extends Component {
     }
 
     script() {
-        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'));
+        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
+            homeAction: 'browse',
+            collectionAction: 'collection'
+        });
         this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 

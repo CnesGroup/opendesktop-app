@@ -229,8 +229,11 @@ import Root from '../components/Root.js';
 
         statusManager.registerAction('start-page', (resolve, reject, params) => {
             const config = new electronConfig({name: 'application'});
-            config.set('startPage', params.startPage);
-            browseWebview.setAttribute('src', params.startPage);
+            if (params.startPage) {
+                config.set('startPage', params.startPage);
+            }
+            browseWebview.setAttribute('src', config.get('startPage'));
+            root.mainArea.changePage('browsePage');
         });
 
         statusManager.registerAction('browse-webview-back', () => {

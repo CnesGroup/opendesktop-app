@@ -28,10 +28,12 @@ export default class CollectionPage extends Component {
 
         return `
             <header data-component="ToolBar"></header>
+
             <div class="collection-page-content">
             <h1 class="title">My Collection</h1>
             <table class="installtypes">${list}</table>
             </div>
+
             <footer data-component="StatusBar"></footer>
         `;
     }
@@ -93,7 +95,10 @@ export default class CollectionPage extends Component {
     }
 
     script() {
-        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'));
+        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
+            homeAction: 'browse',
+            collectionAction: 'collection'
+        });
         this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
