@@ -26,10 +26,7 @@ export default class MenuArea extends Component {
             <option value="https://www.enlightenment-themes.org/">enlightenment-themes.org</option>
             </select>
             </li>
-            <!--
-            <li><button class="menu-item" data-dispatch="browse">Browse</button></li>
             <li><button class="menu-item" data-dispatch="collection">My Collection</button></li>
-            -->
             </ul>
 
             <ul class="menu-items-footer">
