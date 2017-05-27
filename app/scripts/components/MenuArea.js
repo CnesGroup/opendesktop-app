@@ -27,7 +27,7 @@ export default class MenuArea extends Component {
             </select>
             </li>
             <li><button class="menu-item" data-dispatch="browse">Browse</button></li>
-            <li><button class="menu-item" data-dispatch="downloads">Downloads</button></li>
+            <li><button class="menu-item" data-dispatch="collection">My Collection</button></li>
             </ul>
 
             <ul class="menu-items-footer">

@@ -45,7 +45,7 @@ import Root from '../components/Root.js';
             }
             else if (data.func === 'ConfigHandler::getUsrConfigInstalledItems') {
                 installedItems = data.data[0];
-                root.mainArea.downloadsPage.update({
+                root.mainArea.collectionPage.update({
                     installTypes: installTypes,
                     installedItems: installedItems
                 });
@@ -83,7 +83,7 @@ import Root from '../components/Root.js';
                     }
                 }
                 root.mainArea.browsePage.statusBar.update({message: message});
-                root.mainArea.downloadsPage.statusBar.update({message: message});
+                root.mainArea.collectionPage.statusBar.update({message: message});
                 root.mainArea.installedItemsPage.statusBar.update({message: message});
                 root.mainArea.aboutPage.statusBar.update({message: message});
                 root.mainArea.upgradePage.statusBar.update({message: message});
@@ -213,7 +213,7 @@ import Root from '../components/Root.js';
         statusManager.registerView('check-update', (state) => {
             root.mainArea.upgradePage.update(state);
             root.mainArea.browsePage.toolBar.showUpgradeButton();
-            root.mainArea.downloadsPage.toolBar.showUpgradeButton();
+            root.mainArea.collectionPage.toolBar.showUpgradeButton();
             root.mainArea.installedItemsPage.toolBar.showUpgradeButton();
             root.mainArea.aboutPage.toolBar.showUpgradeButton();
             root.mainArea.upgradePage.toolBar.showUpgradeButton();
@@ -249,8 +249,8 @@ import Root from '../components/Root.js';
             root.mainArea.changePage('browsePage');
         });
 
-        statusManager.registerAction('downloads', () => {
-            root.mainArea.changePage('downloadsPage');
+        statusManager.registerAction('collection', () => {
+            root.mainArea.changePage('collectionPage');
         });
 
         statusManager.registerAction('installed-items', (resolve, reject, params) => {

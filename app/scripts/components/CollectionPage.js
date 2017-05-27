@@ -5,7 +5,7 @@ import Component from 'js/Component.js';
 import ToolBar from './ToolBar.js';
 import StatusBar from './StatusBar.js';
 
-export default class DownloadsPage extends Component {
+export default class CollectionPage extends Component {
 
     html() {
         if (!this.state) {
@@ -28,8 +28,8 @@ export default class DownloadsPage extends Component {
 
         return `
             <header data-component="ToolBar"></header>
-            <div class="downloads-page-content">
-            <h1 class="title">Downloads</h1>
+            <div class="collection-page-content">
+            <h1 class="title">My Collection</h1>
             <table class="installtypes">${list}</table>
             </div>
             <footer data-component="StatusBar"></footer>
@@ -50,7 +50,7 @@ export default class DownloadsPage extends Component {
                 height: 24px;
             }
 
-            .downloads-page-content {
+            .collection-page-content {
                 flex: 1 1 auto;
                 width: 100%;
                 height: 100%;
@@ -61,11 +61,11 @@ export default class DownloadsPage extends Component {
                 overflow: auto;
             }
 
-            .downloads-page-content .title {
+            .collection-page-content .title {
                 margin: 1em 0;
             }
 
-            .downloads-page-content .installtypes {
+            .collection-page-content .installtypes {
                 width: 640px;
                 margin: 1em 0;
                 border-top: 1px solid rgba(0,0,0,0.1);
@@ -73,11 +73,11 @@ export default class DownloadsPage extends Component {
                 border-collapse: collapse;
             }
 
-            .downloads-page-content .installtypes tr {
+            .collection-page-content .installtypes tr {
                 border-top: 1px solid rgba(0,0,0,0.1);
             }
 
-            .downloads-page-content .installtypes a {
+            .collection-page-content .installtypes a {
                 display: block;
                 padding: 0.6em;
                 background-color: transparent;
@@ -85,8 +85,8 @@ export default class DownloadsPage extends Component {
                 text-decoration: none;
                 transition: background-color 0.3s ease-out;
             }
-            .downloads-page-content .installtypes a:hover,
-            .downloads-page-content .installtypes a:active {
+            .collection-page-content .installtypes a:hover,
+            .collection-page-content .installtypes a:active {
                 background-color: #e0e0e0;
             }
         `;
