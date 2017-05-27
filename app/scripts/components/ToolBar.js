@@ -17,17 +17,33 @@ export default class ToolBar extends Component {
 
     html() {
         let navigation = '';
+
         if (this.state.backAction) {
             navigation += `<button class="tool-button icon-chevron-left" data-dispatch="${this.state.backAction}"></button>`;
         }
+        else {
+            navigation += `<button class="tool-button icon-chevron-left" disabled></button>`;
+        }
+
         if (this.state.forwardAction) {
             navigation += `<button class="tool-button icon-chevron-right" data-dispatch="${this.state.forwardAction}"></button>`;
         }
+        else {
+            navigation += `<button class="tool-button icon-chevron-right" disabled></button>`;
+        }
+
         if (this.state.homeAction) {
             navigation += `<button class="tool-button icon-home" data-dispatch="${this.state.homeAction}"></button>`;
         }
+        else {
+            navigation += `<button class="tool-button icon-home" disabled></button>`;
+        }
+
         if (this.state.collectionAction) {
             navigation += `<button class="tool-button icon-folder" data-dispatch="${this.state.collectionAction}"></button>`;
+        }
+        else {
+            navigation += `<button class="tool-button icon-folder" disabled></button>`;
         }
 
         return `
@@ -87,6 +103,10 @@ export default class ToolBar extends Component {
             .tool-button:hover,
             .tool-button:active {
                 background-color: #c7c7c7;
+            }
+
+            .tool-button[disabled] {
+                opacity: 0.5;
             }
 
             .tool-button[data-dispatch="upgrade"] {
