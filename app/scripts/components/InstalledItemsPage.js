@@ -116,8 +116,7 @@ export default class InstalledItemsPage extends Component {
 
     script() {
         this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
-            homeAction: 'browse',
-            collectionAction: 'collection'
+            backAction: 'collection'
         });
         this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
