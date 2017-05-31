@@ -23,6 +23,9 @@ export default class Root extends Component {
     }
 
     style() {
+        this.element.style.flex = '1 1 auto';
+        this.element.style.width = '100%';
+        this.element.style.height = 'auto';
         this.element.style.background = '#ffffff';
 
         return `
@@ -53,12 +56,13 @@ export default class Root extends Component {
     }
 
     script() {
-        this.startupPage = new StartupPage(this.element.querySelector('[data-component="StartupPage"]'));
-        this.browsePage = new BrowsePage(this.element.querySelector('[data-component="BrowsePage"]'));
-        this.collectionPage = new CollectionPage(this.element.querySelector('[data-component="CollectionPage"]'));
-        this.installedItemsPage = new InstalledItemsPage(this.element.querySelector('[data-component="InstalledItemsPage"]'));
-        this.aboutPage = new AboutPage(this.element.querySelector('[data-component="AboutPage"]'));
-        this.upgradePage = new UpgradePage(this.element.querySelector('[data-component="UpgradePage"]'));
+        this.startupPage = new StartupPage('[data-component="StartupPage"]');
+        this.browsePage = new BrowsePage('[data-component="BrowsePage"]');
+        this.collectionPage = new CollectionPage('[data-component="CollectionPage"]');
+        this.installedItemsPage = new InstalledItemsPage('[data-component="InstalledItemsPage"]');
+        this.aboutPage = new AboutPage('[data-component="AboutPage"]');
+        this.upgradePage = new UpgradePage('[data-component="UpgradePage"]');
+
         this.hideAllPages();
     }
 
