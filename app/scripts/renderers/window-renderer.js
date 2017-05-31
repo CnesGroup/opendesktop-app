@@ -14,7 +14,7 @@ import Root from '../components/Root.js';
 
     const webSocket = new WebSocket(`ws://localhost:${appConfig.ocsManagerPort}`);
     const statusManager = new StatusManager();
-    const root = new Root(document.querySelector('[data-component="Root"]'));
+    const root = new Root('[data-component="Root"]');
     const browseWebview = root.mainArea.browsePage.element.querySelector('[data-webview="browse"]');
 
     let isStartup = true;
@@ -82,11 +82,7 @@ import Root from '../components/Root.js';
                         message += ` + ${keys.length - 1} files`;
                     }
                 }
-                root.mainArea.browsePage.statusBar.update({message: message});
-                root.mainArea.collectionPage.statusBar.update({message: message});
-                root.mainArea.installedItemsPage.statusBar.update({message: message});
-                root.mainArea.aboutPage.statusBar.update({message: message});
-                root.mainArea.upgradePage.statusBar.update({message: message});
+                root.statusBar.update({message: message});
             }
             else if (data.func === 'ItemHandler::downloadStarted') {
                 if (data.data[0].status !== 'success_downloadstart') {
@@ -160,12 +156,12 @@ import Root from '../components/Root.js';
 
         browseWebview.addEventListener('did-start-loading', () => {
             console.log('did-start-loading');
-            root.mainArea.browsePage.toolBar.showIndicator();
+            root.toolBar.showIndicator();
         });
 
         browseWebview.addEventListener('did-stop-loading', () => {
             console.log('did-stop-loading');
-            root.mainArea.browsePage.toolBar.hideIndicator();
+            root.toolBar.hideIndicator();
         });
 
         browseWebview.addEventListener('dom-ready', () => {
@@ -212,11 +208,7 @@ import Root from '../components/Root.js';
 
         statusManager.registerView('check-update', (state) => {
             root.mainArea.upgradePage.update(state);
-            root.mainArea.browsePage.toolBar.showUpgradeButton();
-            root.mainArea.collectionPage.toolBar.showUpgradeButton();
-            root.mainArea.installedItemsPage.toolBar.showUpgradeButton();
-            root.mainArea.aboutPage.toolBar.showUpgradeButton();
-            root.mainArea.upgradePage.toolBar.showUpgradeButton();
+            root.toolBar.showUpgradeButton();
         });
 
         statusManager.registerAction('ocs-url', (resolve, reject, params) => {
@@ -224,7 +216,7 @@ import Root from '../components/Root.js';
         });
 
         statusManager.registerAction('menu', () => {
-            root.toggleMenuArea();
+            root.menuArea.toggle();
         });
 
         statusManager.registerAction('start-page', (resolve, reject, params) => {
