@@ -38,7 +38,8 @@ export default class MenuArea extends Component {
     style() {
         this.element.style.display = 'flex';
         this.element.style.flexFlow = 'column nowrap';
-        this.element.style.borderRight = '1px solid #cccccc';
+        this.element.style.width = '100%';
+        this.element.style.height = '100%';
         this.element.style.background = '#007ac1';
 
         return `
@@ -68,17 +69,17 @@ export default class MenuArea extends Component {
                 list-style: none;
             }
 
-            .menu-items-header .title {
-                display: none;
-                /*padding: 0.4em;
-                color: rgba(255,255,255,0.9);*/
-            }
             .menu-items-header .banner {
                 width: 48px;
                 height: 48px;
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-size: contain;
+            }
+            .menu-items-header .title {
+                display: none;
+                /*padding: 0.4em;
+                color: rgba(255,255,255,0.9);*/
             }
 
             .menu-items li,
@@ -112,6 +113,8 @@ export default class MenuArea extends Component {
     }
 
     script() {
+        this.toggle();
+
         const config = new electronConfig({name: 'application'});
         this.element.querySelector(`.menu-item[name="startPage"] option[value="${config.get('startPage')}"]`).setAttribute('selected', 'selected');
 
@@ -120,6 +123,10 @@ export default class MenuArea extends Component {
             event.stopPropagation();
             document.dispatchEvent(new CustomEvent('start-page', {detail: {startPage: event.target.value}}));
         }, false);
+    }
+
+    toggle() {
+        this.element.style.display = this.element.style.display === 'flex' ? 'none' : 'flex';
     }
 
 }
