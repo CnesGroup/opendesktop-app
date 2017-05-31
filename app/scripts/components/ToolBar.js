@@ -16,78 +16,37 @@ export default class ToolBar extends Component {
     }
 
     html() {
-        let navigation = '';
-
-        if (this.state.backAction) {
-            navigation += `<button class="tool-button icon-chevron-left" data-dispatch="${this.state.backAction}"></button>`;
-        }
-        else {
-            navigation += `<button class="tool-button icon-chevron-left" disabled></button>`;
-        }
-
-        if (this.state.forwardAction) {
-            navigation += `<button class="tool-button icon-chevron-right" data-dispatch="${this.state.forwardAction}"></button>`;
-        }
-        else {
-            navigation += `<button class="tool-button icon-chevron-right" disabled></button>`;
-        }
-
-        if (this.state.homeAction) {
-            navigation += `<button class="tool-button icon-home" data-dispatch="${this.state.homeAction}"></button>`;
-        }
-        else {
-            navigation += `<button class="tool-button icon-home" disabled></button>`;
-        }
-
-        if (this.state.collectionAction) {
-            navigation += `<button class="tool-button icon-folder" data-dispatch="${this.state.collectionAction}"></button>`;
-        }
-        else {
-            navigation += `<button class="tool-button icon-folder" disabled></button>`;
-        }
+        const backButtonAttr = this.state.backAction ? `data-dispatch="${this.state.backAction}"` : 'disabled';
+        const forwardButtonAttr = this.state.forwardAction ? `data-dispatch="${this.state.forwardAction}"` : 'disabled';
+        const homeButtonAttr = this.state.homeAction ? `data-dispatch="${this.state.homeAction}"` : 'disabled';
+        const collectionButtonAttr = this.state.collectionAction ? `data-dispatch="${this.state.collectionAction}"` : 'disabled';
 
         return `
-            <nav class="tool-bar">
-            ${navigation}
-            <span class="indicator icon-loading"></span>
-            <span class="spacer"></span>
-            <button class="tool-button icon-info" data-dispatch="upgrade"></button>
-            <button class="tool-button icon-menu" data-dispatch="menu"></button>
-            </nav>
+            <button class="toolbar-button icon-chevron-left" ${backButtonAttr}></button>
+            <button class="toolbar-button icon-chevron-right" ${forwardButtonAttr}></button>
+            <button class="toolbar-button icon-home" ${homeButtonAttr}></button>
+            <button class="toolbar-button icon-folder" ${collectionButtonAttr}></button>
+            <span class="toolbar-indicator icon-loading"></span>
+            <span class="toolbar-spacer"></span>
+            <button class="toolbar-button icon-info" data-dispatch="upgrade"></button>
+            <button class="toolbar-button icon-menu" data-dispatch="menu"></button>
         `;
     }
 
     style() {
+        this.element.style.display = 'flex';
+        this.element.style.flexFlow = 'row nowrap';
+        this.element.style.alignItems = 'center';
+        this.element.style.flex = '0 0 auto';
+        this.element.style.width = '100%';
+        this.element.style.height = '48px';
         this.element.style.borderBottom = '1px solid #cccccc';
         this.element.style.background = '#e0e0e0';
 
         return `
-            .tool-bar {
-                display: flex;
-                flex-flow: row nowrap;
-                align-items: center;
-                height: 100%;
-            }
-
-            .tool-bar .spacer {
+            .toolbar-button {
                 display: inline-block;
-                flex: 1 1 auto;
-            }
-
-            .tool-bar .indicator {
                 flex: 0 0 auto;
-                display: inline-block;
-                width: 24px;
-                height: 24px;
-                margin: 0 0.4em;
-                background-position: center center;
-                background-repeat: no-repeat;
-                background-size: contain;
-            }
-
-            .tool-button {
-                flex: 0 0 auto;
-                display: inline-block;
                 width: 32px;
                 height: 32px;
                 margin: 0 0.2em;
@@ -100,21 +59,37 @@ export default class ToolBar extends Component {
                 background-size: contain;
                 transition: background-color 0.3s ease-out;
             }
-            .tool-button:hover,
-            .tool-button:active {
+            .toolbar-button:hover,
+            .toolbar-button:active {
                 background-color: #c7c7c7;
             }
 
-            .tool-button[disabled] {
+            .toolbar-button[disabled] {
                 opacity: 0.5;
             }
 
-            .tool-button[data-dispatch="upgrade"] {
+            .toolbar-button[data-dispatch="upgrade"] {
                 background-color: #ec407a;
             }
-            .tool-button[data-dispatch="upgrade"]:hover,
-            .tool-button[data-dispatch="upgrade"]:active {
+            .toolbar-button[data-dispatch="upgrade"]:hover,
+            .toolbar-button[data-dispatch="upgrade"]:active {
                 background-color: #d81b60;
+            }
+
+            .toolbar-indicator {
+                display: inline-block;
+                flex: 0 0 auto;
+                width: 24px;
+                height: 24px;
+                margin: 0 0.4em;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: contain;
+            }
+
+            .toolbar-spacer {
+                display: inline-block;
+                flex: 1 1 auto;
             }
         `;
     }
@@ -125,11 +100,11 @@ export default class ToolBar extends Component {
     }
 
     showIndicator() {
-        this.element.querySelector('.indicator').style.display = 'inline-block';
+        this.element.querySelector('.toolbar-indicator').style.display = 'inline-block';
     }
 
     hideIndicator() {
-        this.element.querySelector('.indicator').style.display = 'none';
+        this.element.querySelector('.toolbar-indicator').style.display = 'none';
     }
 
     showUpgradeButton() {
