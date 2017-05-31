@@ -2,6 +2,8 @@
 
 import Component from 'js/Component.js';
 
+import ToolBar from './ToolBar.js';
+import StatusBar from './StatusBar.js';
 import MainArea from './MainArea.js';
 import MenuArea from './MenuArea.js';
 
@@ -17,8 +19,15 @@ export default class Root extends Component {
 
     html() {
         return `
+            <div class="main-view">
+            <nav data-component="ToolBar"></nav>
             <main data-component="MainArea" role="main"></main>
+            <nav data-component="StatusBar"></nav>
+            </div>
+
+            <div class="side-panel">
             <aside data-component="MenuArea"></aside>
+            </div>
         `;
     }
 
@@ -29,34 +38,32 @@ export default class Root extends Component {
         this.element.style.height = '100%';
 
         return `
-            [data-component="MainArea"] {
+            .main-view {
+                display: flex;
+                flex-flow: column nowrap;
+
                 flex: 1 1 auto;
                 width: auto;
                 height: 100%;
             }
 
-            [data-component="MenuArea"] {
+            .side-panel {
+                display: flex;
+                flex-flow: column nowrap;
+
                 flex: 0 0 auto;
                 width: 300px;
                 height: 100%;
+                border-left: 1px solid #cccccc;
             }
         `;
     }
 
     script() {
-        this.mainArea = new MainArea(this.element.querySelector('[data-component="MainArea"]'));
-        this.menuArea = new MenuArea(this.element.querySelector('[data-component="MenuArea"]'));
-
-        this.menuArea.element.style.display = 'none';
-    }
-
-    toggleMenuArea() {
-        if (this.menuArea.element.style.display === 'none') {
-            this.menuArea.element.style.display = 'flex';
-        }
-        else {
-            this.menuArea.element.style.display = 'none';
-        }
+        this.toolBar = new ToolBar('[data-component="ToolBar"]');
+        this.statusBar = new StatusBar('[data-component="StatusBar"]');
+        this.mainArea = new MainArea('[data-component="MainArea"]');
+        this.menuArea = new MenuArea('[data-component="MenuArea"]');
     }
 
 }
