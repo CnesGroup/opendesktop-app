@@ -2,9 +2,6 @@
 
 import Component from 'js/Component.js';
 
-import ToolBar from './ToolBar.js';
-import StatusBar from './StatusBar.js';
-
 export default class CollectionPage extends Component {
 
     html() {
@@ -27,31 +24,20 @@ export default class CollectionPage extends Component {
         }
 
         return `
-            <header data-component="ToolBar"></header>
-
             <div class="collection-page-content">
             <h1 class="title">My Collection</h1>
             <table class="installtypes">${list}</table>
             </div>
-
-            <footer data-component="StatusBar"></footer>
         `;
     }
 
     style() {
+        this.element.style.display = 'flex';
+        this.element.style.flexFlow = 'column nowrap';
+        this.element.style.width = '100%';
+        this.element.style.height = '100%';
+
         return `
-            [data-component="ToolBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 48px;
-            }
-
-            [data-component="StatusBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 24px;
-            }
-
             .collection-page-content {
                 flex: 1 1 auto;
                 width: 100%;
@@ -92,14 +78,6 @@ export default class CollectionPage extends Component {
                 background-color: #e0e0e0;
             }
         `;
-    }
-
-    script() {
-        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
-            homeAction: 'browse',
-            collectionAction: 'collection'
-        });
-        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }
