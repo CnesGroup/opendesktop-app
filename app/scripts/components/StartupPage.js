@@ -15,12 +15,23 @@ export default class StartupPage extends Component {
     }
 
     style() {
+        this.element.style.zIndex = '999';
+        this.element.style.position = 'absolute';
+        this.element.style.left = '0';
+        this.element.style.top = '0';
+        this.element.style.display = 'flex';
+        this.element.style.flexFlow = 'column nowrap';
+        this.element.style.justifyContent = 'center';
+        this.element.style.alignItems = 'center';
+        this.element.style.width = '100%';
+        this.element.style.height = '100%';
+
         return `
             .startup-page-content {
                 display: flex;
+                flex-flow: column nowrap;
                 justify-content: center;
                 align-items: center;
-                flex-flow: column nowrap;
                 width: 460px;
                 height: 300px;
                 padding: 2em;
@@ -50,6 +61,18 @@ export default class StartupPage extends Component {
                 background-size: 16px 16px;
             }
         `;
+    }
+
+    script() {
+        this.hide();
+    }
+
+    show() {
+        this.element.style.display = 'flex';
+    }
+
+    hide() {
+        this.element.style.display = 'none';
     }
 
 }
