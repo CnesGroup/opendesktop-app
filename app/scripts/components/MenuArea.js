@@ -38,8 +38,10 @@ export default class MenuArea extends Component {
     style() {
         this.element.style.display = 'flex';
         this.element.style.flexFlow = 'column nowrap';
-        this.element.style.width = '100%';
+        this.element.style.flex = '0 0 auto';
+        this.element.style.width = '300px';
         this.element.style.height = '100%';
+        this.element.style.borderLeft = '1px solid #cccccc';
         this.element.style.background = '#007ac1';
 
         return `

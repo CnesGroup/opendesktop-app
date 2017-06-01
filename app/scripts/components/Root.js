@@ -25,9 +25,7 @@ export default class Root extends Component {
             <nav data-component="StatusBar"></nav>
             </div>
 
-            <div class="side-panel">
             <aside data-component="MenuArea"></aside>
-            </div>
         `;
     }
 
@@ -45,16 +43,6 @@ export default class Root extends Component {
                 flex: 1 1 auto;
                 width: auto;
                 height: 100%;
-            }
-
-            .side-panel {
-                display: flex;
-                flex-flow: column nowrap;
-
-                flex: 0 0 auto;
-                width: 300px;
-                height: 100%;
-                border-left: 1px solid #cccccc;
             }
         `;
     }
