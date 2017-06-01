@@ -2,9 +2,6 @@
 
 import Component from 'js/Component.js';
 
-import ToolBar from './ToolBar.js';
-import StatusBar from './StatusBar.js';
-
 export default class InstalledItemsPage extends Component {
 
     html() {
@@ -38,31 +35,20 @@ export default class InstalledItemsPage extends Component {
         }
 
         return `
-            <header data-component="ToolBar"></header>
-
             <div class="installeditems-page-content">
             <h1 class="title">${this.state.installTypes[type].name}</h1>
             <table class="installeditems">${list}</table>
             </div>
-
-            <footer data-component="StatusBar"></footer>
         `;
     }
 
     style() {
+        this.element.style.display = 'flex';
+        this.element.style.flexFlow = 'column nowrap';
+        this.element.style.width = '100%';
+        this.element.style.height = '100%';
+
         return `
-            [data-component="ToolBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 48px;
-            }
-
-            [data-component="StatusBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 24px;
-            }
-
             .installeditems-page-content {
                 flex: 1 1 auto;
                 width: 100%;
@@ -112,15 +98,6 @@ export default class InstalledItemsPage extends Component {
                 padding: 0.3em 0.5em;
             }
         `;
-    }
-
-    script() {
-        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
-            backAction: 'collection',
-            homeAction: 'browse',
-            collectionAction: 'collection'
-        });
-        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }
