@@ -2,9 +2,6 @@
 
 import Component from 'js/Component.js';
 
-import ToolBar from './ToolBar.js';
-import StatusBar from './StatusBar.js';
-
 import appConfig from '../../configs/application.json';
 
 import packageJson from '../../../package.json';
@@ -13,8 +10,6 @@ export default class AboutPage extends Component {
 
     html() {
         return `
-            <header data-component="ToolBar"></header>
-
             <div class="about-page-content">
             <div class="banner icon-opendesktop-app"></div>
             <h1 class="title">${appConfig.title}</h1>
@@ -24,25 +19,16 @@ export default class AboutPage extends Component {
             <p>License: ${packageJson.license}</p>
             <p>Website: <a href="${packageJson.homepage}" target="_blank">${packageJson.homepage}</a></p>
             </div>
-
-            <footer data-component="StatusBar"></footer>
         `;
     }
 
     style() {
+        this.element.style.display = 'flex';
+        this.element.style.flexFlow = 'column nowrap';
+        this.element.style.width = '100%';
+        this.element.style.height = '100%';
+
         return `
-            [data-component="ToolBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 48px;
-            }
-
-            [data-component="StatusBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 24px;
-            }
-
             .about-page-content {
                 flex: 1 1 auto;
                 width: 100%;
@@ -67,14 +53,6 @@ export default class AboutPage extends Component {
                 margin: 1em 0;
             }
         `;
-    }
-
-    script() {
-        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
-            homeAction: 'browse',
-            collectionAction: 'collection'
-        });
-        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }
