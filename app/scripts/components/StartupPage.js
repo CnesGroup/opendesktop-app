@@ -25,6 +25,7 @@ export default class StartupPage extends Component {
         this.element.style.alignItems = 'center';
         this.element.style.width = '100%';
         this.element.style.height = '100%';
+        this.element.style.overflow = 'hidden';
 
         return `
             .startup-page-content {

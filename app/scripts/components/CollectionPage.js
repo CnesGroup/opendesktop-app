@@ -32,30 +32,23 @@ export default class CollectionPage extends Component {
     }
 
     style() {
-        this.element.style.display = 'flex';
-        this.element.style.flexFlow = 'column nowrap';
         this.element.style.width = '100%';
         this.element.style.height = '100%';
+        this.element.style.overflow = 'auto';
 
         return `
             .collection-page-content {
-                flex: 1 1 auto;
-                width: 100%;
-                height: 100%;
-
-                display: flex;
-                flex-flow: column nowrap;
-                align-items: center;
-                overflow: auto;
+                width: 640px;
+                margin: 2em auto;
             }
 
             .collection-page-content .title {
-                margin: 1em 0;
+                margin-bottom: 1em;
+                text-align: center;
             }
 
             .collection-page-content .installtypes {
-                width: 640px;
-                margin: 1em 0;
+                width: 100%;
                 border-top: 1px solid rgba(0,0,0,0.1);
                 border-bottom: 1px solid rgba(0,0,0,0.1);
                 border-collapse: collapse;

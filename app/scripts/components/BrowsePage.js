@@ -11,14 +11,12 @@ export default class BrowsePage extends Component {
     }
 
     style() {
-        this.element.style.display = 'flex';
-        this.element.style.flexFlow = 'column nowrap';
         this.element.style.width = '100%';
         this.element.style.height = '100%';
+        this.element.style.overflow = 'hidden';
 
         return `
             [data-webview="browse"] {
-                flex: 1 1 auto;
                 width: 100%;
                 height: 100%;
             }

@@ -39,10 +39,10 @@ export default class Root extends Component {
             .main-view {
                 display: flex;
                 flex-flow: column nowrap;
-
                 flex: 1 1 auto;
                 width: auto;
                 height: 100%;
+                overflow: hidden;
             }
         `;
     }

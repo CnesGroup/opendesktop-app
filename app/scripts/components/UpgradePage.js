@@ -17,11 +17,15 @@ export default class UpgradePage extends Component {
         for (const releasefile of this.state.releasefiles) {
             const params = JSON.stringify({ocsUrl: `ocs://download?url=${encodeURIComponent(releasefile.url)}&type=downloads`});
             list += `
-                <dt>
-                <h4 class="file-name">${releasefile.name}</h4>
-                <button class="download-button" data-dispatch="ocs-url" data-params='${params}'>Download</button>
-                </dt>
-                <dd>${releasefile.description}</dd>
+                <tr>
+                <td class="file-description-cell">
+                <h4>${releasefile.name}</h4>
+                <p>${releasefile.description}</p>
+                </td>
+                <td class="file-download-cell">
+                <button data-dispatch="ocs-url" data-params='${params}'>Download</button>
+                </td>
+                </tr>
             `;
         }
 
@@ -31,34 +35,32 @@ export default class UpgradePage extends Component {
             <h1 class="title">${appConfig.title}</h1>
             <h3 class="version">Version ${this.state.versionname} available</h3>
             <p class="description">Current version ${packageJson.version}</p>
-            <dl class="releasefiles">${list}</dl>
+            <table class="releasefiles">${list}</table>
             <p>Visit <a href="${this.state.releasepage}" target="_blank">${this.state.releasepage}</a> for more details.</p>
             </div>
         `;
     }
 
     style() {
-        this.element.style.display = 'flex';
-        this.element.style.flexFlow = 'column nowrap';
         this.element.style.width = '100%';
         this.element.style.height = '100%';
+        this.element.style.overflow = 'auto';
 
         return `
             .upgrade-page-content {
-                flex: 1 1 auto;
-                width: 100%;
-                height: 100%;
+                width: 640px;
+                margin: 2em auto;
+            }
 
-                display: flex;
-                flex-flow: column nowrap;
-                align-items: center;
-                overflow: auto;
+            .upgrade-page-content > h1,
+            .upgrade-page-content > h3,
+            .upgrade-page-content > p {
+                text-align: center;
             }
 
             .upgrade-page-content .banner {
-                width: 128px;
                 height: 128px;
-                margin: 2em 0;
+                margin-bottom: 2em;
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-size: contain;
@@ -69,46 +71,25 @@ export default class UpgradePage extends Component {
             }
 
             .upgrade-page-content .releasefiles {
-                width: 640px;
-                margin: 2em 0;
-                border: 2px solid rgba(0,0,0,0.1);
-                border-radius: 0.6em;
-            }
-
-            .upgrade-page-content .releasefiles dt {
-                display: flex;
-                flex-flow: row nowrap;
-                align-items: center;
                 width: 100%;
-                padding: 0.6em 0.6em 0 0.6em;
-                border-top: 2px solid rgba(0,0,0,0.1);
-            }
-            .upgrade-page-content .releasefiles dt:first-child {
-                border-top-width: 0;
-            }
-            .upgrade-page-content .releasefiles dd {
-                padding: 0 0.6em 0.6em 0.6em;
+                margin-bottom: 1em;
+                border-top: 1px solid rgba(0,0,0,0.1);
+                border-bottom: 1px solid rgba(0,0,0,0.1);
+                border-collapse: collapse;
             }
 
-            .upgrade-page-content .releasefiles dt .file-name {
-                flex: 1 1 auto;
-                width: auto;
+            .upgrade-page-content .releasefiles tr {
+                border-top: 1px solid rgba(0,0,0,0.1);
             }
-            .upgrade-page-content .releasefiles dt .download-button {
-                display: block;
-                flex: 0 0 auto;
+
+            .upgrade-page-content .releasefiles .file-description-cell {
+                width: 100%;
                 padding: 0.6em;
-                border: 2px solid rgba(255,255,255,0.1);
-                border-radius: 0.6em;
-                outline: none;
-                background-color: #ec407a;
-                color: #ffffff;
-                font-weight: bold;
-                transition: background-color 0.3s ease-out;
             }
-            .upgrade-page-content .releasefiles dt .download-button:hover,
-            .upgrade-page-content .releasefiles dt .download-button:active {
-                background-color: #d81b60;
+
+            .upgrade-page-content .releasefiles button {
+                margin: 0 0.2em;
+                padding: 0.3em 0.5em;
             }
         `;
     }

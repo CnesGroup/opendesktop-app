@@ -25,7 +25,7 @@ export default class Root extends Component {
     style() {
         this.element.style.flex = '1 1 auto';
         this.element.style.width = '100%';
-        this.element.style.height = 'auto';
+        this.element.style.height = '0';
         this.element.style.background = '#ffffff';
 
         return `
