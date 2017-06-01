@@ -29,29 +29,6 @@ export default class Root extends Component {
         this.element.style.background = '#ffffff';
 
         return `
-            [data-component="StartupPage"] {
-                z-index: 999;
-                position: absolute;
-                left: 0;
-                top: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-flow: column nowrap;
-                width: 100%;
-                height: 100%;
-            }
-
-            [data-component="BrowsePage"],
-            [data-component="CollectionPage"],
-            [data-component="InstalledItemsPage"],
-            [data-component="AboutPage"],
-            [data-component="UpgradePage"] {
-                display: flex;
-                flex-flow: column nowrap;
-                width: 100%;
-                height: 100%;
-            }
         `;
     }
 
@@ -79,14 +56,6 @@ export default class Root extends Component {
             this.hideAllPages();
             this[key].element.style.display = 'flex';
         }
-    }
-
-    showStartupPage() {
-        this.startupPage.element.style.display = 'flex';
-    }
-
-    hideStartupPage() {
-        this.startupPage.element.style.display = 'none';
     }
 
 }
