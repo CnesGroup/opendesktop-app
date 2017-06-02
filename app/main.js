@@ -46,6 +46,7 @@ let mainWindow = null;
             width: windowBounds.width,
             height: windowBounds.height
         });
+
         //mainWindow.setBounds(config.get('windowBounds'));
         mainWindow.loadURL(`file://${__dirname}/index.html`);
 

@@ -10,7 +10,9 @@ export default class ToolBar extends Component {
                 backAction: '',
                 forwardAction: '',
                 homeAction: '',
-                collectionAction: ''
+                collectionAction: '',
+                indicator: false,
+                upgrade: false
             };
         }
     }
@@ -95,23 +97,27 @@ export default class ToolBar extends Component {
     }
 
     script() {
-        this.hideIndicator();
-        this.hideUpgradeButton();
+        this.state.indicator ? this.showIndicator() : this.hideIndicator();
+        this.state.upgrade ? this.showUpgradeButton() : this.hideUpgradeButton();
     }
 
     showIndicator() {
+        this.state.indicator = true;
         this.element.querySelector('.toolbar-indicator').style.display = 'inline-block';
     }
 
     hideIndicator() {
+        this.state.indicator = false;
         this.element.querySelector('.toolbar-indicator').style.display = 'none';
     }
 
     showUpgradeButton() {
+        this.state.upgrade = true;
         this.element.querySelector('[data-dispatch="upgrade-page"]').style.display = 'inline-block';
     }
 
     hideUpgradeButton() {
+        this.state.upgrade = false;
         this.element.querySelector('[data-dispatch="upgrade-page"]').style.display = 'none';
     }
 

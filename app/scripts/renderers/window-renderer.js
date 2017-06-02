@@ -45,10 +45,12 @@ import Root from '../components/Root.js';
             }
             else if (data.func === 'ConfigHandler::getUsrConfigInstalledItems') {
                 installedItems = data.data[0];
+
                 root.mainArea.collectionPage.update({
                     installTypes: installTypes,
                     installedItems: installedItems
                 });
+
                 if (root.mainArea.installedItemsPage.state) {
                     root.mainArea.installedItemsPage.update({
                         installType: root.mainArea.installedItemsPage.state.installType,
@@ -59,12 +61,22 @@ import Root from '../components/Root.js';
                 }
             }
             else if (data.func === 'SystemHandler::isApplicableType') {
+                root.toolBar.update({
+                    backAction: 'collection-page',
+                    forwardAction: '',
+                    homeAction: 'browse-page',
+                    collectionAction: 'collection-page',
+                    indicator: root.toolBar.state.indicator,
+                    upgrade: root.toolBar.state.upgrade
+                });
+
                 root.mainArea.installedItemsPage.update({
                     installType: data.id,
                     isApplicableType: data.data[0],
                     installTypes: installTypes,
                     installedItems: installedItems
                 });
+
                 root.mainArea.changePage('installedItemsPage');
             }
             else if (data.func === 'ItemHandler::metadataSetChanged') {
@@ -73,6 +85,7 @@ import Root from '../components/Root.js';
             else if (data.func === 'ItemHandler::metadataSet') {
                 const keys = Object.keys(data.data[0]);
                 let message = '';
+
                 if (keys.length) {
                     for (const key of keys) {
                         message += `Downloading: ${data.data[0][key].filename}`;
@@ -82,6 +95,7 @@ import Root from '../components/Root.js';
                         message += ` + ${keys.length - 1} files`;
                     }
                 }
+
                 root.statusBar.update({message: message});
             }
             else if (data.func === 'ItemHandler::downloadStarted') {
@@ -117,6 +131,7 @@ import Root from '../components/Root.js';
                     console.error(data.data[0].message);
                     return;
                 }
+
                 sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
             }
             else if (data.func === 'ItemHandler::uninstallStarted') {
@@ -129,6 +144,7 @@ import Root from '../components/Root.js';
                     console.error(data.data[0].message);
                     return;
                 }
+
                 sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
             }
         };
@@ -139,11 +155,20 @@ import Root from '../components/Root.js';
     }
 
     function setupComponent() {
-        root.mainArea.changePage('browsePage');
-
         if (isStartup) {
             root.mainArea.startupDialog.show();
         }
+
+        root.toolBar.update({
+            backAction: 'main-webview-back',
+            forwardAction: 'main-webview-forward',
+            homeAction: 'start-page',
+            collectionAction: 'collection-page',
+            indicator: root.toolBar.state.indicator,
+            upgrade: root.toolBar.state.upgrade
+        });
+
+        root.mainArea.changePage('browsePage');
     }
 
     function setupWebView() {
@@ -192,15 +217,36 @@ import Root from '../components/Root.js';
         });
 
         statusManager.registerAction('browse-page', () => {
+            root.toolBar.update({
+                backAction: 'main-webview-back',
+                forwardAction: 'main-webview-forward',
+                homeAction: 'start-page',
+                collectionAction: 'collection-page',
+                indicator: root.toolBar.state.indicator,
+                upgrade: root.toolBar.state.upgrade
+            });
+
             root.mainArea.changePage('browsePage');
         });
 
         statusManager.registerAction('start-page', (resolve, reject, params) => {
             const config = new electronConfig({name: 'application'});
+
             if (params.startPage) {
                 config.set('startPage', params.startPage);
             }
+
             mainWebview.setAttribute('src', config.get('startPage'));
+
+            root.toolBar.update({
+                backAction: 'main-webview-back',
+                forwardAction: 'main-webview-forward',
+                homeAction: 'start-page',
+                collectionAction: 'collection-page',
+                indicator: root.toolBar.state.indicator,
+                upgrade: root.toolBar.state.upgrade
+            });
+
             root.mainArea.changePage('browsePage');
         });
 
@@ -221,6 +267,15 @@ import Root from '../components/Root.js';
         });
 
         statusManager.registerAction('collection-page', () => {
+            root.toolBar.update({
+                backAction: '',
+                forwardAction: '',
+                homeAction: 'browse-page',
+                collectionAction: 'collection-page',
+                indicator: root.toolBar.state.indicator,
+                upgrade: root.toolBar.state.upgrade
+            });
+
             root.mainArea.changePage('collectionPage');
         });
 
@@ -242,15 +297,34 @@ import Root from '../components/Root.js';
         });
 
         statusManager.registerAction('about-page', () => {
+            root.toolBar.update({
+                backAction: '',
+                forwardAction: '',
+                homeAction: 'browse-page',
+                collectionAction: 'collection-page',
+                indicator: root.toolBar.state.indicator,
+                upgrade: root.toolBar.state.upgrade
+            });
+
             root.mainArea.changePage('aboutPage');
         });
 
         statusManager.registerAction('upgrade-page', () => {
+            root.toolBar.update({
+                backAction: '',
+                forwardAction: '',
+                homeAction: 'browse-page',
+                collectionAction: 'collection-page',
+                indicator: root.toolBar.state.indicator,
+                upgrade: root.toolBar.state.upgrade
+            });
+
             root.mainArea.changePage('upgradePage');
         });
 
         statusManager.registerAction('check-update', (resolve, reject) => {
             console.log('Checking for update');
+
             fetch(releaseMeta.releasemeta)
             .then((response) => {
                 if (response.ok) {
@@ -282,28 +356,35 @@ import Root from '../components/Root.js';
             if (event.target.closest('button[data-dispatch]')) {
                 event.preventDefault();
                 event.stopPropagation();
+
                 const targetElement = event.target.closest('button[data-dispatch]');
                 const type = targetElement.getAttribute('data-dispatch');
+
                 let params = {};
                 if (targetElement.getAttribute('data-params')) {
                     params = JSON.parse(targetElement.getAttribute('data-params'));
                 }
+
                 statusManager.dispatch(type, params);
             }
             else if (event.target.closest('a[data-dispatch]')) {
                 event.preventDefault();
                 event.stopPropagation();
+
                 const targetElement = event.target.closest('a[data-dispatch]');
                 const type = targetElement.getAttribute('data-dispatch');
+
                 let params = {};
                 if (targetElement.getAttribute('data-params')) {
                     params = JSON.parse(targetElement.getAttribute('data-params'));
                 }
+
                 statusManager.dispatch(type, params);
             }
             else if (event.target.closest('a[target]')) {
                 event.preventDefault();
                 event.stopPropagation();
+
                 sendWebSocketMessage('', 'SystemHandler::openUrl', [event.target.closest('a[target]').getAttribute('href')]);
             }
         }, false);
