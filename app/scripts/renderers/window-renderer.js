@@ -21,7 +21,19 @@ import Root from '../components/Root.js';
     let installTypes = null;
     let installedItems = null;
 
-    document.title = appConfig.title;
+    function setup() {
+        document.title = appConfig.title;
+
+        setupWebSocket();
+        setupStatusManager();
+        setupWebView();
+        setupEvent();
+
+        if (isStartup) {
+            root.mainArea.startupDialog.show();
+        }
+        statusManager.dispatch('browse-page');
+    }
 
     function setupWebSocket() {
         webSocket.onopen = () => {
@@ -226,6 +238,10 @@ import Root from '../components/Root.js';
             sendWebSocketMessage(params.installType, 'SystemHandler::isApplicableType', [params.installType]);
         });
 
+        statusManager.registerAction('open-url', (resolve, reject, params) => {
+            sendWebSocketMessage(params.url, 'SystemHandler::openUrl', [params.url]);
+        });
+
         statusManager.registerAction('open-file', (resolve, reject, params) => {
             const url = `file://${params.path}`;
             sendWebSocketMessage(url, 'SystemHandler::openUrl', [url]);
@@ -294,14 +310,6 @@ import Root from '../components/Root.js';
         statusManager.dispatch('check-update');
     }
 
-    function setupComponent() {
-        if (isStartup) {
-            root.mainArea.startupDialog.show();
-        }
-
-        statusManager.dispatch('browse-page');
-    }
-
     function setupWebView() {
         const config = new electronConfig({name: 'application'});
 
@@ -337,7 +345,7 @@ import Root from '../components/Root.js';
                 statusManager.dispatch('ocs-url-dialog', {ocsUrl: event.args[0]});
             }
             else if (event.channel === 'external-url') {
-                sendWebSocketMessage('', 'SystemHandler::openUrl', [event.args[0]]);
+                statusManager.dispatch('open-url', {url: event.args[0]});
             }
         });
     }
@@ -376,7 +384,7 @@ import Root from '../components/Root.js';
                 event.preventDefault();
                 event.stopPropagation();
 
-                sendWebSocketMessage('', 'SystemHandler::openUrl', [event.target.closest('a[target]').getAttribute('href')]);
+                statusManager.dispatch('open-url', {url: event.target.closest('a[target]').getAttribute('href')});
             }
         }, false);
     }
@@ -389,9 +397,5 @@ import Root from '../components/Root.js';
         }));
     }
 
-    setupWebSocket();
-    setupStatusManager();
-    setupComponent();
-    setupWebView();
-    setupEvent();
+    setup();
 }
