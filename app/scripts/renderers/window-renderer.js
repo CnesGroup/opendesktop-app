@@ -215,8 +215,8 @@ import Root from '../components/Root.js';
             sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
         });
 
-        statusManager.registerAction('menu', () => {
-            root.menuArea.toggle();
+        statusManager.registerAction('side-panel', () => {
+            root.sidePanel.toggle();
         });
 
         statusManager.registerAction('start-page', (resolve, reject, params) => {

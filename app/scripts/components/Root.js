@@ -5,7 +5,7 @@ import Component from 'js/Component.js';
 import ToolBar from './ToolBar.js';
 import StatusBar from './StatusBar.js';
 import MainArea from './MainArea.js';
-import MenuArea from './MenuArea.js';
+import SidePanel from './SidePanel.js';
 
 export default class Root extends Component {
 
@@ -25,7 +25,7 @@ export default class Root extends Component {
             <nav data-component="StatusBar"></nav>
             </div>
 
-            <aside data-component="MenuArea"></aside>
+            <aside data-component="SidePanel"></aside>
         `;
     }
 
@@ -51,7 +51,7 @@ export default class Root extends Component {
         this.toolBar = new ToolBar('[data-component="ToolBar"]');
         this.statusBar = new StatusBar('[data-component="StatusBar"]');
         this.mainArea = new MainArea('[data-component="MainArea"]');
-        this.menuArea = new MenuArea('[data-component="MenuArea"]');
+        this.sidePanel = new SidePanel('[data-component="SidePanel"]');
     }
 
 }

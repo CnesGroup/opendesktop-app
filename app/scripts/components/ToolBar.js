@@ -29,7 +29,7 @@ export default class ToolBar extends Component {
             <span class="toolbar-indicator icon-loading"></span>
             <span class="toolbar-spacer"></span>
             <button class="toolbar-button icon-info" data-dispatch="upgrade"></button>
-            <button class="toolbar-button icon-menu" data-dispatch="menu"></button>
+            <button class="toolbar-button icon-menu" data-dispatch="side-panel"></button>
         `;
     }
 

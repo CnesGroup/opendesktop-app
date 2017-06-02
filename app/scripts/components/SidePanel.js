@@ -6,7 +6,7 @@ import Component from 'js/Component.js';
 
 import appConfig from '../../configs/application.json';
 
-export default class MenuArea extends Component {
+export default class SidePanel extends Component {
 
     html() {
         return `
