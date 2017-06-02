@@ -15,7 +15,7 @@ import Root from '../components/Root.js';
     const webSocket = new WebSocket(`ws://localhost:${appConfig.ocsManagerPort}`);
     const statusManager = new StatusManager();
     const root = new Root('[data-component="Root"]');
-    const browseWebview = root.mainArea.browsePage.element.querySelector('[data-webview="browse"]');
+    const mainWebview = root.mainArea.browsePage.element.querySelector('[data-webview="main"]');
 
     let isStartup = true;
 
@@ -149,24 +149,24 @@ import Root from '../components/Root.js';
     function setupWebView() {
         const config = new electronConfig({name: 'application'});
 
-        browseWebview.setAttribute('src', config.get('startPage'));
-        browseWebview.setAttribute('preload', './scripts/renderers/ipc-renderer.js');
-        browseWebview.setAttribute('autosize', 'on');
-        browseWebview.setAttribute('allowpopups', 'false');
+        mainWebview.setAttribute('src', config.get('startPage'));
+        mainWebview.setAttribute('preload', './scripts/renderers/ipc-renderer.js');
+        mainWebview.setAttribute('autosize', 'on');
+        mainWebview.setAttribute('allowpopups', 'false');
 
-        browseWebview.addEventListener('did-start-loading', () => {
+        mainWebview.addEventListener('did-start-loading', () => {
             console.log('did-start-loading');
             root.toolBar.showIndicator();
         });
 
-        browseWebview.addEventListener('did-stop-loading', () => {
+        mainWebview.addEventListener('did-stop-loading', () => {
             console.log('did-stop-loading');
             root.toolBar.hideIndicator();
         });
 
-        browseWebview.addEventListener('dom-ready', () => {
+        mainWebview.addEventListener('dom-ready', () => {
             console.log('dom-ready');
-            browseWebview.send('dom-modify');
+            mainWebview.send('dom-modify');
 
             if (isStartup) {
                 isStartup = false;
@@ -174,7 +174,7 @@ import Root from '../components/Root.js';
             }
         });
 
-        browseWebview.addEventListener('ipc-message', (event) => {
+        mainWebview.addEventListener('ipc-message', (event) => {
             console.log(['ipc-message', event.channel, event.args]);
             if (event.channel === 'ocs-url') {
                 sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [event.args[0]]);
@@ -224,19 +224,19 @@ import Root from '../components/Root.js';
             if (params.startPage) {
                 config.set('startPage', params.startPage);
             }
-            browseWebview.setAttribute('src', config.get('startPage'));
+            mainWebview.setAttribute('src', config.get('startPage'));
             root.mainArea.changePage('browsePage');
         });
 
         statusManager.registerAction('browse-webview-back', () => {
-            if (browseWebview.canGoBack()) {
-                browseWebview.goBack();
+            if (mainWebview.canGoBack()) {
+                mainWebview.goBack();
             }
         });
 
         statusManager.registerAction('browse-webview-forward', () => {
-            if (browseWebview.canGoForward()) {
-                browseWebview.goForward();
+            if (mainWebview.canGoForward()) {
+                mainWebview.goForward();
             }
         });
 
