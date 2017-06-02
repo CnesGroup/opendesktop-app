@@ -6,7 +6,7 @@ export default class StartupDialog extends Component {
 
     html() {
         return `
-            <div class="startup-page-dialog">
+            <div class="startup-dialog-content">
             <div class="banner icon-opendesktop-app"></div>
             <h1 class="title">Welcome to Opendesktop.org</h1>
             <span class="indicator icon-loading">Starting</span>
@@ -28,7 +28,7 @@ export default class StartupDialog extends Component {
         this.element.style.overflow = 'hidden';
 
         return `
-            .startup-page-dialog {
+            .startup-dialog-content {
                 display: flex;
                 flex-flow: column nowrap;
                 justify-content: center;
@@ -41,7 +41,7 @@ export default class StartupDialog extends Component {
                 box-shadow: 0 0 2em 0.6em rgba(0,0,0,0.2);
             }
 
-            .startup-page-dialog .banner {
+            .startup-dialog-content .banner {
                 width: 128px;
                 height: 128px;
                 background-position: center center;
@@ -49,12 +49,12 @@ export default class StartupDialog extends Component {
                 background-size: contain;
             }
 
-            .startup-page-dialog .title {
+            .startup-dialog-content .title {
                 margin: 2em 0;
                 font-size: 100%;
             }
 
-            .startup-page-dialog .indicator {
+            .startup-dialog-content .indicator {
                 display: inline-block;
                 padding-left: 24px;
                 background-position: left center;
