@@ -2,11 +2,11 @@
 
 import Component from 'js/Component.js';
 
-export default class StartupPage extends Component {
+export default class StartupDialog extends Component {
 
     html() {
         return `
-            <div class="startup-page-content">
+            <div class="startup-page-dialog">
             <div class="banner icon-opendesktop-app"></div>
             <h1 class="title">Welcome to Opendesktop.org</h1>
             <span class="indicator icon-loading">Starting</span>
@@ -28,7 +28,7 @@ export default class StartupPage extends Component {
         this.element.style.overflow = 'hidden';
 
         return `
-            .startup-page-content {
+            .startup-page-dialog {
                 display: flex;
                 flex-flow: column nowrap;
                 justify-content: center;
@@ -41,7 +41,7 @@ export default class StartupPage extends Component {
                 box-shadow: 0 0 2em 0.6em rgba(0,0,0,0.2);
             }
 
-            .startup-page-content .banner {
+            .startup-page-dialog .banner {
                 width: 128px;
                 height: 128px;
                 background-position: center center;
@@ -49,12 +49,12 @@ export default class StartupPage extends Component {
                 background-size: contain;
             }
 
-            .startup-page-content .title {
+            .startup-page-dialog .title {
                 margin: 2em 0;
                 font-size: 100%;
             }
 
-            .startup-page-content .indicator {
+            .startup-page-dialog .indicator {
                 display: inline-block;
                 padding-left: 24px;
                 background-position: left center;

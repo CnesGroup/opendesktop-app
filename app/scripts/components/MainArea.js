@@ -2,7 +2,7 @@
 
 import Component from 'js/Component.js';
 
-import StartupPage from './StartupPage.js';
+import StartupDialog from './StartupDialog.js';
 import BrowsePage from './BrowsePage.js';
 import CollectionPage from './CollectionPage.js';
 import InstalledItemsPage from './InstalledItemsPage.js';
@@ -13,7 +13,7 @@ export default class Root extends Component {
 
     html() {
         return `
-            <article data-component="StartupPage"></article>
+            <article data-component="StartupDialog"></article>
             <article data-component="BrowsePage"></article>
             <article data-component="CollectionPage"></article>
             <article data-component="InstalledItemsPage"></article>
@@ -28,12 +28,11 @@ export default class Root extends Component {
         this.element.style.height = '0';
         this.element.style.background = '#ffffff';
 
-        return `
-        `;
+        return '';
     }
 
     script() {
-        this.startupPage = new StartupPage('[data-component="StartupPage"]');
+        this.startupDialog = new StartupDialog('[data-component="StartupDialog"]');
         this.browsePage = new BrowsePage('[data-component="BrowsePage"]');
         this.collectionPage = new CollectionPage('[data-component="CollectionPage"]');
         this.installedItemsPage = new InstalledItemsPage('[data-component="InstalledItemsPage"]');

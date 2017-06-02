@@ -142,7 +142,7 @@ import Root from '../components/Root.js';
         root.mainArea.changePage('browsePage');
 
         if (isStartup) {
-            root.mainArea.startupPage.show();
+            root.mainArea.startupDialog.show();
         }
     }
 
@@ -170,7 +170,7 @@ import Root from '../components/Root.js';
 
             if (isStartup) {
                 isStartup = false;
-                root.mainArea.startupPage.hide();
+                root.mainArea.startupDialog.hide();
             }
         });
 
