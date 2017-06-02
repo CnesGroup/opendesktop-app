@@ -18,7 +18,6 @@ import Root from '../components/Root.js';
     const mainWebview = root.mainArea.browsePage.element.querySelector('[data-webview="main"]');
 
     let isStartup = true;
-
     let installTypes = null;
     let installedItems = null;
 
@@ -37,7 +36,8 @@ import Root from '../components/Root.js';
         webSocket.onmessage = (event) => {
             const data = JSON.parse(event.data);
 
-            console.log(['WebSocket message received', data]);
+            console.log('WebSocket message received');
+            console.log(data);
 
             if (data.func === 'ConfigHandler::getAppConfigInstallTypes') {
                 installTypes = data.data[0];
@@ -175,7 +175,8 @@ import Root from '../components/Root.js';
         });
 
         mainWebview.addEventListener('ipc-message', (event) => {
-            console.log(['ipc-message', event.channel, event.args]);
+            console.log('IPC message received');
+            console.log([event.channel, event.args]);
             if (event.channel === 'ocs-url') {
                 sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [event.args[0]]);
             }
@@ -186,37 +187,12 @@ import Root from '../components/Root.js';
     }
 
     function setupStatusManager() {
-        statusManager.registerAction('check-update', (resolve, reject) => {
-            console.log('Checking for update');
-            fetch(releaseMeta.releasemeta)
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                }
-                return Promise.reject(new Error('Network response was not ok'));
-            })
-            .then((data) => {
-                if (data.versioncode > releaseMeta.versioncode) {
-                    console.log('Found newer version');
-                    resolve(data);
-                }
-            })
-            .catch((error) => {
-                reject(error);
-            });
-        });
-
-        statusManager.registerView('check-update', (state) => {
-            root.mainArea.upgradePage.update(state);
-            root.toolBar.showUpgradeButton();
-        });
-
-        statusManager.registerAction('ocs-url', (resolve, reject, params) => {
-            sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
-        });
-
         statusManager.registerAction('side-panel', () => {
             root.sidePanel.toggle();
+        });
+
+        statusManager.registerAction('browse-page', () => {
+            root.mainArea.changePage('browsePage');
         });
 
         statusManager.registerAction('start-page', (resolve, reject, params) => {
@@ -240,8 +216,8 @@ import Root from '../components/Root.js';
             }
         });
 
-        statusManager.registerAction('browse-page', () => {
-            root.mainArea.changePage('browsePage');
+        statusManager.registerAction('ocs-url', (resolve, reject, params) => {
+            sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
         });
 
         statusManager.registerAction('collection-page', () => {
@@ -271,6 +247,31 @@ import Root from '../components/Root.js';
 
         statusManager.registerAction('upgrade-page', () => {
             root.mainArea.changePage('upgradePage');
+        });
+
+        statusManager.registerAction('check-update', (resolve, reject) => {
+            console.log('Checking for update');
+            fetch(releaseMeta.releasemeta)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                return Promise.reject(new Error('Network response was not ok'));
+            })
+            .then((data) => {
+                if (data.versioncode > releaseMeta.versioncode) {
+                    console.log('Found newer version');
+                    resolve(data);
+                }
+            })
+            .catch((error) => {
+                reject(error);
+            });
+        });
+
+        statusManager.registerView('check-update', (state) => {
+            root.mainArea.upgradePage.update(state);
+            root.toolBar.showUpgradeButton();
         });
 
         statusManager.dispatch('check-update');
