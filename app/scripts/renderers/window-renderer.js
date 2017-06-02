@@ -203,7 +203,7 @@ import Root from '../components/Root.js';
             console.log('IPC message received');
             console.log([event.channel, event.args]);
             if (event.channel === 'ocs-url') {
-                sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [event.args[0]]);
+                statusManager.dispatch('ocs-url-dialog', {ocsUrl: event.args[0]});
             }
             else if (event.channel === 'external-url') {
                 sendWebSocketMessage('', 'SystemHandler::openUrl', [event.args[0]]);
@@ -214,6 +214,19 @@ import Root from '../components/Root.js';
     function setupStatusManager() {
         statusManager.registerAction('side-panel', () => {
             root.sidePanel.toggle();
+        });
+
+        statusManager.registerAction('ocs-url-dialog', (resolve, reject, params) => {
+            root.mainArea.ocsUrlDialog.update({
+                ocsUrl: params.ocsUrl,
+                installTypes: installTypes
+            });
+            root.mainArea.ocsUrlDialog.show();
+        });
+
+        statusManager.registerAction('process-ocs-url', (resolve, reject, params) => {
+            root.mainArea.ocsUrlDialog.hide();
+            sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
         });
 
         statusManager.registerAction('browse-page', () => {
@@ -260,10 +273,6 @@ import Root from '../components/Root.js';
             if (mainWebview.canGoForward()) {
                 mainWebview.goForward();
             }
-        });
-
-        statusManager.registerAction('ocs-url', (resolve, reject, params) => {
-            sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
         });
 
         statusManager.registerAction('collection-page', () => {
