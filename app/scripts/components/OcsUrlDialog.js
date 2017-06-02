@@ -75,27 +75,31 @@ export default class OcsUrlDialog extends Component {
                 flex-flow: column nowrap;
                 width: 460px;
                 height: 200px;
-                padding: 2em;
                 border-radius: 0.6em;
-                background-color: #eeeeee;
+                background-color: #ffffff;
                 box-shadow: 0 0 2em 0.6em rgba(0,0,0,0.2);
             }
 
             .ocsurl-dialog-content .title {
                 flex: 0 0 auto;
                 height: auto;
-                margin-bottom: 1em;
+                padding: 2em;
                 font-size: 100%;
             }
 
             .ocsurl-dialog-content .description {
                 flex: 1 1 auto;
                 height: 100%;
+                padding: 0 2em;
             }
 
             .ocsurl-dialog-content .control {
                 flex: 0 0 auto;
                 height: auto;
+                padding: 1em 2em;
+                border-bottom-left-radius: 0.6em;
+                border-bottom-right-radius: 0.6em;
+                background-color: #eeeeee;
                 text-align: right;
             }
 
