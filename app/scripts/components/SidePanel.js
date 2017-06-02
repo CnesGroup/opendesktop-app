@@ -6,7 +6,7 @@ import Component from 'js/Component.js';
 
 import appConfig from '../../configs/application.json';
 
-export default class MenuArea extends Component {
+export default class SidePanel extends Component {
 
     html() {
         return `
@@ -26,11 +26,11 @@ export default class MenuArea extends Component {
             <option value="https://www.enlightenment-themes.org/">enlightenment-themes.org</option>
             </select>
             </li>
-            <li><button class="menu-item" data-dispatch="collection">My Collection</button></li>
+            <li><button class="menu-item" data-dispatch="collection-page">My Collection</button></li>
             </ul>
 
             <ul class="menu-items-footer">
-            <li><button class="menu-item" data-dispatch="about">About This App</button></li>
+            <li><button class="menu-item" data-dispatch="about-page">About This App</button></li>
             </ul>
         `;
     }
@@ -38,47 +38,47 @@ export default class MenuArea extends Component {
     style() {
         this.element.style.display = 'flex';
         this.element.style.flexFlow = 'column nowrap';
-        this.element.style.borderRight = '1px solid #cccccc';
+        this.element.style.flex = '0 0 auto';
+        this.element.style.width = '300px';
+        this.element.style.height = '100%';
+        this.element.style.borderLeft = '1px solid #cccccc';
         this.element.style.background = '#007ac1';
 
         return `
             .menu-items-header {
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: center;
-                align-items: center;
-
                 flex: 0 0 auto;
-                height: 64px;
-                padding: 0.4em;
+                width: 100%;
+                height: 48px;
+                padding: 4px;
                 background-color: #006db3;
             }
 
             .menu-items {
                 flex: 1 1 auto;
+                width: 80%;
                 height: 100%;
+                margin: 0 auto;
                 padding: 0.4em;
                 list-style: none;
             }
 
             .menu-items-footer {
                 flex: 1 1 auto;
+                width: 80%;
                 height: auto;
+                margin: 0 auto;
                 padding: 0.4em;
                 list-style: none;
             }
 
-            .menu-items-header .title {
-                display: none;
-                /*padding: 0.4em;
-                color: rgba(255,255,255,0.9);*/
-            }
             .menu-items-header .banner {
-                width: 48px;
-                height: 48px;
+                height: 40px;
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-size: contain;
+            }
+            .menu-items-header .title {
+                display: none;
             }
 
             .menu-items li,
@@ -88,8 +88,7 @@ export default class MenuArea extends Component {
 
             .menu-item {
                 display: block;
-                width: 80%;
-                margin: 0 auto;
+                width: 100%;
                 padding: 0.6em;
                 border: 2px solid rgba(255,255,255,0.1);
                 border-radius: 0.6em;
@@ -112,6 +111,8 @@ export default class MenuArea extends Component {
     }
 
     script() {
+        this.toggle();
+
         const config = new electronConfig({name: 'application'});
         this.element.querySelector(`.menu-item[name="startPage"] option[value="${config.get('startPage')}"]`).setAttribute('selected', 'selected');
 
@@ -120,6 +121,10 @@ export default class MenuArea extends Component {
             event.stopPropagation();
             document.dispatchEvent(new CustomEvent('start-page', {detail: {startPage: event.target.value}}));
         }, false);
+    }
+
+    toggle() {
+        this.element.style.display = this.element.style.display === 'flex' ? 'none' : 'flex';
     }
 
 }

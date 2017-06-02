@@ -2,7 +2,7 @@
 
 import Component from 'js/Component.js';
 
-import StartupPage from './StartupPage.js';
+import StartupDialog from './StartupDialog.js';
 import BrowsePage from './BrowsePage.js';
 import CollectionPage from './CollectionPage.js';
 import InstalledItemsPage from './InstalledItemsPage.js';
@@ -13,7 +13,7 @@ export default class Root extends Component {
 
     html() {
         return `
-            <article data-component="StartupPage"></article>
+            <article data-component="StartupDialog"></article>
             <article data-component="BrowsePage"></article>
             <article data-component="CollectionPage"></article>
             <article data-component="InstalledItemsPage"></article>
@@ -23,42 +23,22 @@ export default class Root extends Component {
     }
 
     style() {
+        this.element.style.flex = '1 1 auto';
+        this.element.style.width = '100%';
+        this.element.style.height = '0';
         this.element.style.background = '#ffffff';
 
-        return `
-            [data-component="StartupPage"] {
-                z-index: 999;
-                position: absolute;
-                left: 0;
-                top: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-flow: column nowrap;
-                width: 100%;
-                height: 100%;
-            }
-
-            [data-component="BrowsePage"],
-            [data-component="CollectionPage"],
-            [data-component="InstalledItemsPage"],
-            [data-component="AboutPage"],
-            [data-component="UpgradePage"] {
-                display: flex;
-                flex-flow: column nowrap;
-                width: 100%;
-                height: 100%;
-            }
-        `;
+        return '';
     }
 
     script() {
-        this.startupPage = new StartupPage(this.element.querySelector('[data-component="StartupPage"]'));
-        this.browsePage = new BrowsePage(this.element.querySelector('[data-component="BrowsePage"]'));
-        this.collectionPage = new CollectionPage(this.element.querySelector('[data-component="CollectionPage"]'));
-        this.installedItemsPage = new InstalledItemsPage(this.element.querySelector('[data-component="InstalledItemsPage"]'));
-        this.aboutPage = new AboutPage(this.element.querySelector('[data-component="AboutPage"]'));
-        this.upgradePage = new UpgradePage(this.element.querySelector('[data-component="UpgradePage"]'));
+        this.startupDialog = new StartupDialog('[data-component="StartupDialog"]');
+        this.browsePage = new BrowsePage('[data-component="BrowsePage"]');
+        this.collectionPage = new CollectionPage('[data-component="CollectionPage"]');
+        this.installedItemsPage = new InstalledItemsPage('[data-component="InstalledItemsPage"]');
+        this.aboutPage = new AboutPage('[data-component="AboutPage"]');
+        this.upgradePage = new UpgradePage('[data-component="UpgradePage"]');
+
         this.hideAllPages();
     }
 
@@ -73,16 +53,8 @@ export default class Root extends Component {
     changePage(key) {
         if (this[key] && this[key].element) {
             this.hideAllPages();
-            this[key].element.style.display = 'flex';
+            this[key].element.style.display = 'block';
         }
-    }
-
-    showStartupPage() {
-        this.startupPage.element.style.display = 'flex';
-    }
-
-    hideStartupPage() {
-        this.startupPage.element.style.display = 'none';
     }
 
 }

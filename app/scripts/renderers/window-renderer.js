@@ -14,11 +14,10 @@ import Root from '../components/Root.js';
 
     const webSocket = new WebSocket(`ws://localhost:${appConfig.ocsManagerPort}`);
     const statusManager = new StatusManager();
-    const root = new Root(document.querySelector('[data-component="Root"]'));
-    const browseWebview = root.mainArea.browsePage.element.querySelector('[data-webview="browse"]');
+    const root = new Root('[data-component="Root"]');
+    const mainWebview = root.mainArea.browsePage.element.querySelector('[data-webview="main"]');
 
     let isStartup = true;
-
     let installTypes = null;
     let installedItems = null;
 
@@ -37,7 +36,8 @@ import Root from '../components/Root.js';
         webSocket.onmessage = (event) => {
             const data = JSON.parse(event.data);
 
-            console.log(['WebSocket message received', data]);
+            console.log('WebSocket message received');
+            console.log(data);
 
             if (data.func === 'ConfigHandler::getAppConfigInstallTypes') {
                 installTypes = data.data[0];
@@ -82,11 +82,7 @@ import Root from '../components/Root.js';
                         message += ` + ${keys.length - 1} files`;
                     }
                 }
-                root.mainArea.browsePage.statusBar.update({message: message});
-                root.mainArea.collectionPage.statusBar.update({message: message});
-                root.mainArea.installedItemsPage.statusBar.update({message: message});
-                root.mainArea.aboutPage.statusBar.update({message: message});
-                root.mainArea.upgradePage.statusBar.update({message: message});
+                root.statusBar.update({message: message});
             }
             else if (data.func === 'ItemHandler::downloadStarted') {
                 if (data.data[0].status !== 'success_downloadstart') {
@@ -146,40 +142,41 @@ import Root from '../components/Root.js';
         root.mainArea.changePage('browsePage');
 
         if (isStartup) {
-            root.mainArea.showStartupPage();
+            root.mainArea.startupDialog.show();
         }
     }
 
     function setupWebView() {
         const config = new electronConfig({name: 'application'});
 
-        browseWebview.setAttribute('src', config.get('startPage'));
-        browseWebview.setAttribute('preload', './scripts/renderers/ipc-renderer.js');
-        browseWebview.setAttribute('autosize', 'on');
-        browseWebview.setAttribute('allowpopups', 'false');
+        mainWebview.setAttribute('src', config.get('startPage'));
+        mainWebview.setAttribute('preload', './scripts/renderers/ipc-renderer.js');
+        mainWebview.setAttribute('autosize', 'on');
+        mainWebview.setAttribute('allowpopups', 'false');
 
-        browseWebview.addEventListener('did-start-loading', () => {
+        mainWebview.addEventListener('did-start-loading', () => {
             console.log('did-start-loading');
-            root.mainArea.browsePage.toolBar.showIndicator();
+            root.toolBar.showIndicator();
         });
 
-        browseWebview.addEventListener('did-stop-loading', () => {
+        mainWebview.addEventListener('did-stop-loading', () => {
             console.log('did-stop-loading');
-            root.mainArea.browsePage.toolBar.hideIndicator();
+            root.toolBar.hideIndicator();
         });
 
-        browseWebview.addEventListener('dom-ready', () => {
+        mainWebview.addEventListener('dom-ready', () => {
             console.log('dom-ready');
-            browseWebview.send('dom-modify');
+            mainWebview.send('dom-modify');
 
             if (isStartup) {
                 isStartup = false;
-                root.mainArea.hideStartupPage();
+                root.mainArea.startupDialog.hide();
             }
         });
 
-        browseWebview.addEventListener('ipc-message', (event) => {
-            console.log(['ipc-message', event.channel, event.args]);
+        mainWebview.addEventListener('ipc-message', (event) => {
+            console.log('IPC message received');
+            console.log([event.channel, event.args]);
             if (event.channel === 'ocs-url') {
                 sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [event.args[0]]);
             }
@@ -190,6 +187,68 @@ import Root from '../components/Root.js';
     }
 
     function setupStatusManager() {
+        statusManager.registerAction('side-panel', () => {
+            root.sidePanel.toggle();
+        });
+
+        statusManager.registerAction('browse-page', () => {
+            root.mainArea.changePage('browsePage');
+        });
+
+        statusManager.registerAction('start-page', (resolve, reject, params) => {
+            const config = new electronConfig({name: 'application'});
+            if (params.startPage) {
+                config.set('startPage', params.startPage);
+            }
+            mainWebview.setAttribute('src', config.get('startPage'));
+            root.mainArea.changePage('browsePage');
+        });
+
+        statusManager.registerAction('main-webview-back', () => {
+            if (mainWebview.canGoBack()) {
+                mainWebview.goBack();
+            }
+        });
+
+        statusManager.registerAction('main-webview-forward', () => {
+            if (mainWebview.canGoForward()) {
+                mainWebview.goForward();
+            }
+        });
+
+        statusManager.registerAction('ocs-url', (resolve, reject, params) => {
+            sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
+        });
+
+        statusManager.registerAction('collection-page', () => {
+            root.mainArea.changePage('collectionPage');
+        });
+
+        statusManager.registerAction('installed-items-page', (resolve, reject, params) => {
+            sendWebSocketMessage(params.installType, 'SystemHandler::isApplicableType', [params.installType]);
+        });
+
+        statusManager.registerAction('open-file', (resolve, reject, params) => {
+            const url = `file://${params.path}`;
+            sendWebSocketMessage(url, 'SystemHandler::openUrl', [url]);
+        });
+
+        statusManager.registerAction('apply-file', (resolve, reject, params) => {
+            sendWebSocketMessage(params.path, 'SystemHandler::applyFile', [params.path, params.installType]);
+        });
+
+        statusManager.registerAction('remove-file', (resolve, reject, params) => {
+            sendWebSocketMessage(params.itemKey, 'ItemHandler::uninstall', [params.itemKey]);
+        });
+
+        statusManager.registerAction('about-page', () => {
+            root.mainArea.changePage('aboutPage');
+        });
+
+        statusManager.registerAction('upgrade-page', () => {
+            root.mainArea.changePage('upgradePage');
+        });
+
         statusManager.registerAction('check-update', (resolve, reject) => {
             console.log('Checking for update');
             fetch(releaseMeta.releasemeta)
@@ -212,73 +271,7 @@ import Root from '../components/Root.js';
 
         statusManager.registerView('check-update', (state) => {
             root.mainArea.upgradePage.update(state);
-            root.mainArea.browsePage.toolBar.showUpgradeButton();
-            root.mainArea.collectionPage.toolBar.showUpgradeButton();
-            root.mainArea.installedItemsPage.toolBar.showUpgradeButton();
-            root.mainArea.aboutPage.toolBar.showUpgradeButton();
-            root.mainArea.upgradePage.toolBar.showUpgradeButton();
-        });
-
-        statusManager.registerAction('ocs-url', (resolve, reject, params) => {
-            sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
-        });
-
-        statusManager.registerAction('menu', () => {
-            root.toggleMenuArea();
-        });
-
-        statusManager.registerAction('start-page', (resolve, reject, params) => {
-            const config = new electronConfig({name: 'application'});
-            if (params.startPage) {
-                config.set('startPage', params.startPage);
-            }
-            browseWebview.setAttribute('src', config.get('startPage'));
-            root.mainArea.changePage('browsePage');
-        });
-
-        statusManager.registerAction('browse-webview-back', () => {
-            if (browseWebview.canGoBack()) {
-                browseWebview.goBack();
-            }
-        });
-
-        statusManager.registerAction('browse-webview-forward', () => {
-            if (browseWebview.canGoForward()) {
-                browseWebview.goForward();
-            }
-        });
-
-        statusManager.registerAction('browse', () => {
-            root.mainArea.changePage('browsePage');
-        });
-
-        statusManager.registerAction('collection', () => {
-            root.mainArea.changePage('collectionPage');
-        });
-
-        statusManager.registerAction('installed-items', (resolve, reject, params) => {
-            sendWebSocketMessage(params.installType, 'SystemHandler::isApplicableType', [params.installType]);
-        });
-
-        statusManager.registerAction('open-file', (resolve, reject, params) => {
-            const url = `file://${params.path}`;
-            sendWebSocketMessage(url, 'SystemHandler::openUrl', [url]);
-        });
-
-        statusManager.registerAction('apply-file', (resolve, reject, params) => {
-            sendWebSocketMessage(params.path, 'SystemHandler::applyFile', [params.path, params.installType]);
-        });
-
-        statusManager.registerAction('remove-file', (resolve, reject, params) => {
-            sendWebSocketMessage(params.itemKey, 'ItemHandler::uninstall', [params.itemKey]);
-        });
-
-        statusManager.registerAction('about', () => {
-            root.mainArea.changePage('aboutPage');
-        });
-
-        statusManager.registerAction('upgrade', () => {
-            root.mainArea.changePage('upgradePage');
+            root.toolBar.showUpgradeButton();
         });
 
         statusManager.dispatch('check-update');

@@ -2,9 +2,6 @@
 
 import Component from 'js/Component.js';
 
-import ToolBar from './ToolBar.js';
-import StatusBar from './StatusBar.js';
-
 import appConfig from '../../configs/application.json';
 
 import packageJson from '../../../package.json';
@@ -13,8 +10,6 @@ export default class AboutPage extends Component {
 
     html() {
         return `
-            <header data-component="ToolBar"></header>
-
             <div class="about-page-content">
             <div class="banner icon-opendesktop-app"></div>
             <h1 class="title">${appConfig.title}</h1>
@@ -24,40 +19,29 @@ export default class AboutPage extends Component {
             <p>License: ${packageJson.license}</p>
             <p>Website: <a href="${packageJson.homepage}" target="_blank">${packageJson.homepage}</a></p>
             </div>
-
-            <footer data-component="StatusBar"></footer>
         `;
     }
 
     style() {
+        this.element.style.width = '100%';
+        this.element.style.height = '100%';
+        this.element.style.overflow = 'auto';
+
         return `
-            [data-component="ToolBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 48px;
-            }
-
-            [data-component="StatusBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 24px;
-            }
-
             .about-page-content {
-                flex: 1 1 auto;
-                width: 100%;
-                height: 100%;
+                width: 640px;
+                margin: 2em auto;
+            }
 
-                display: flex;
-                flex-flow: column nowrap;
-                align-items: center;
-                overflow: auto;
+            .about-page-content > h1,
+            .about-page-content > h3,
+            .about-page-content > p {
+                text-align: center;
             }
 
             .about-page-content .banner {
-                width: 128px;
                 height: 128px;
-                margin: 2em 0;
+                margin-bottom: 2em;
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-size: contain;
@@ -67,14 +51,6 @@ export default class AboutPage extends Component {
                 margin: 1em 0;
             }
         `;
-    }
-
-    script() {
-        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
-            homeAction: 'browse',
-            collectionAction: 'collection'
-        });
-        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }

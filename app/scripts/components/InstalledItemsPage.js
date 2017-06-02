@@ -2,9 +2,6 @@
 
 import Component from 'js/Component.js';
 
-import ToolBar from './ToolBar.js';
-import StatusBar from './StatusBar.js';
-
 export default class InstalledItemsPage extends Component {
 
     html() {
@@ -38,49 +35,31 @@ export default class InstalledItemsPage extends Component {
         }
 
         return `
-            <header data-component="ToolBar"></header>
-
             <div class="installeditems-page-content">
             <h1 class="title">${this.state.installTypes[type].name}</h1>
             <table class="installeditems">${list}</table>
             </div>
-
-            <footer data-component="StatusBar"></footer>
         `;
     }
 
     style() {
+        this.element.style.width = '100%';
+        this.element.style.height = '100%';
+        this.element.style.overflow = 'auto';
+
         return `
-            [data-component="ToolBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 48px;
-            }
-
-            [data-component="StatusBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 24px;
-            }
-
             .installeditems-page-content {
-                flex: 1 1 auto;
-                width: 100%;
-                height: 100%;
-
-                display: flex;
-                flex-flow: column nowrap;
-                align-items: center;
-                overflow: auto;
+                width: 640px;
+                margin: 2em auto;
             }
 
             .installeditems-page-content .title {
-                margin: 1em 0;
+                margin-bottom: 1em;
+                text-align: center;
             }
 
             .installeditems-page-content .installeditems {
-                width: 640px;
-                margin: 1em 0;
+                width: 100%;
                 border-top: 1px solid rgba(0,0,0,0.1);
                 border-bottom: 1px solid rgba(0,0,0,0.1);
                 border-collapse: collapse;
@@ -112,15 +91,6 @@ export default class InstalledItemsPage extends Component {
                 padding: 0.3em 0.5em;
             }
         `;
-    }
-
-    script() {
-        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
-            backAction: 'collection',
-            homeAction: 'browse',
-            collectionAction: 'collection'
-        });
-        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
     }
 
 }
