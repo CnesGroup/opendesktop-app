@@ -154,63 +154,6 @@ import Root from '../components/Root.js';
         };
     }
 
-    function setupComponent() {
-        if (isStartup) {
-            root.mainArea.startupDialog.show();
-        }
-
-        root.toolBar.update({
-            backAction: 'main-webview-back',
-            forwardAction: 'main-webview-forward',
-            homeAction: 'start-page',
-            collectionAction: 'collection-page',
-            indicator: root.toolBar.state.indicator,
-            upgrade: root.toolBar.state.upgrade
-        });
-
-        root.mainArea.changePage('browsePage');
-    }
-
-    function setupWebView() {
-        const config = new electronConfig({name: 'application'});
-
-        mainWebview.setAttribute('src', config.get('startPage'));
-        mainWebview.setAttribute('preload', './scripts/renderers/ipc-renderer.js');
-        mainWebview.setAttribute('autosize', 'on');
-        mainWebview.setAttribute('allowpopups', 'false');
-
-        mainWebview.addEventListener('did-start-loading', () => {
-            console.log('did-start-loading');
-            root.toolBar.showIndicator();
-        });
-
-        mainWebview.addEventListener('did-stop-loading', () => {
-            console.log('did-stop-loading');
-            root.toolBar.hideIndicator();
-        });
-
-        mainWebview.addEventListener('dom-ready', () => {
-            console.log('dom-ready');
-            mainWebview.send('dom-modify');
-
-            if (isStartup) {
-                isStartup = false;
-                root.mainArea.startupDialog.hide();
-            }
-        });
-
-        mainWebview.addEventListener('ipc-message', (event) => {
-            console.log('IPC message received');
-            console.log([event.channel, event.args]);
-            if (event.channel === 'ocs-url') {
-                statusManager.dispatch('ocs-url-dialog', {ocsUrl: event.args[0]});
-            }
-            else if (event.channel === 'external-url') {
-                sendWebSocketMessage('', 'SystemHandler::openUrl', [event.args[0]]);
-            }
-        });
-    }
-
     function setupStatusManager() {
         statusManager.registerAction('side-panel', () => {
             root.sidePanel.toggle();
@@ -251,16 +194,7 @@ import Root from '../components/Root.js';
 
             mainWebview.setAttribute('src', config.get('startPage'));
 
-            root.toolBar.update({
-                backAction: 'main-webview-back',
-                forwardAction: 'main-webview-forward',
-                homeAction: 'start-page',
-                collectionAction: 'collection-page',
-                indicator: root.toolBar.state.indicator,
-                upgrade: root.toolBar.state.upgrade
-            });
-
-            root.mainArea.changePage('browsePage');
+            statusManager.dispatch('browse-page');
         });
 
         statusManager.registerAction('main-webview-back', () => {
@@ -353,11 +287,59 @@ import Root from '../components/Root.js';
         });
 
         statusManager.registerView('check-update', (state) => {
-            root.mainArea.upgradePage.update(state);
             root.toolBar.showUpgradeButton();
+            root.mainArea.upgradePage.update(state);
         });
 
         statusManager.dispatch('check-update');
+    }
+
+    function setupComponent() {
+        if (isStartup) {
+            root.mainArea.startupDialog.show();
+        }
+
+        statusManager.dispatch('browse-page');
+    }
+
+    function setupWebView() {
+        const config = new electronConfig({name: 'application'});
+
+        mainWebview.setAttribute('src', config.get('startPage'));
+        mainWebview.setAttribute('preload', './scripts/renderers/ipc-renderer.js');
+        mainWebview.setAttribute('autosize', 'on');
+        mainWebview.setAttribute('allowpopups', 'false');
+
+        mainWebview.addEventListener('did-start-loading', () => {
+            console.log('did-start-loading');
+            root.toolBar.showIndicator();
+        });
+
+        mainWebview.addEventListener('did-stop-loading', () => {
+            console.log('did-stop-loading');
+            root.toolBar.hideIndicator();
+        });
+
+        mainWebview.addEventListener('dom-ready', () => {
+            console.log('dom-ready');
+            mainWebview.send('dom-modify');
+
+            if (isStartup) {
+                isStartup = false;
+                root.mainArea.startupDialog.hide();
+            }
+        });
+
+        mainWebview.addEventListener('ipc-message', (event) => {
+            console.log('IPC message received');
+            console.log([event.channel, event.args]);
+            if (event.channel === 'ocs-url') {
+                statusManager.dispatch('ocs-url-dialog', {ocsUrl: event.args[0]});
+            }
+            else if (event.channel === 'external-url') {
+                sendWebSocketMessage('', 'SystemHandler::openUrl', [event.args[0]]);
+            }
+        });
     }
 
     function setupEvent() {
@@ -408,8 +390,8 @@ import Root from '../components/Root.js';
     }
 
     setupWebSocket();
+    setupStatusManager();
     setupComponent();
     setupWebView();
-    setupStatusManager();
     setupEvent();
 }
