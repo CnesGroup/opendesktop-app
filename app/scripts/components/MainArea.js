@@ -54,7 +54,7 @@ export default class Root extends Component {
     changePage(key) {
         if (this[key] && this[key].element) {
             this.hideAllPages();
-            this[key].element.style.display = 'flex';
+            this[key].element.style.display = 'block';
         }
     }
 
