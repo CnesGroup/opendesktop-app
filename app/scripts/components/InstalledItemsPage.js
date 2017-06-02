@@ -10,11 +10,13 @@ export default class InstalledItemsPage extends Component {
         }
 
         const type = this.state.installType;
+        let totalFiles = 0;
 
         let list = '';
         for (const itemKey of Object.keys(this.state.installedItems)) {
             if (this.state.installedItems[itemKey].install_type === type) {
                 for (const file of this.state.installedItems[itemKey].files) {
+                    totalFiles++;
                     const path = `${this.state.installTypes[type].destination}/${file}`;
                     const openFileParams = JSON.stringify({path: path});
                     const applyFileParams = JSON.stringify({path: path, installType: type});
@@ -36,7 +38,7 @@ export default class InstalledItemsPage extends Component {
 
         return `
             <div class="installeditems-page-content">
-            <h1 class="title">${this.state.installTypes[type].name}</h1>
+            <h1 class="title">${this.state.installTypes[type].name} (${totalFiles})</h1>
             <table class="installeditems">${list}</table>
             </div>
         `;

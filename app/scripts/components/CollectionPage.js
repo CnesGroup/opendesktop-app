@@ -9,23 +9,33 @@ export default class CollectionPage extends Component {
             return '';
         }
 
-        let installTypes = {};
+        let totalFiles = 0;
+        const installTypes = {};
         for (const key of Object.keys(this.state.installedItems)) {
             const type = this.state.installedItems[key].install_type;
             if (!installTypes[type]) {
-                installTypes[type] = this.state.installTypes[type].name;
+                installTypes[type] = {
+                    name: this.state.installTypes[type].name,
+                    files: 0
+                };
             }
+            installTypes[type].files += this.state.installedItems[key].files.length;
+            totalFiles += this.state.installedItems[key].files.length;
         }
 
         let list = '';
         for (const type of Object.keys(installTypes)) {
             const params = JSON.stringify({installType: type});
-            list += `<tr><td><a href="#" data-dispatch="installed-items-page" data-params='${params}'>${installTypes[type]}</a></td></tr>`;
+            list += `
+                <tr>
+                <td><a href="#" data-dispatch="installed-items-page" data-params='${params}'>${installTypes[type].name} (${installTypes[type].files})</a></td>
+                </tr>
+            `;
         }
 
         return `
             <div class="collection-page-content">
-            <h1 class="title">My Collection</h1>
+            <h1 class="title">My Collection (${totalFiles})</h1>
             <table class="installtypes">${list}</table>
             </div>
         `;
