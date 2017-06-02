@@ -228,27 +228,27 @@ import Root from '../components/Root.js';
             root.mainArea.changePage('browsePage');
         });
 
-        statusManager.registerAction('browse-webview-back', () => {
+        statusManager.registerAction('main-webview-back', () => {
             if (mainWebview.canGoBack()) {
                 mainWebview.goBack();
             }
         });
 
-        statusManager.registerAction('browse-webview-forward', () => {
+        statusManager.registerAction('main-webview-forward', () => {
             if (mainWebview.canGoForward()) {
                 mainWebview.goForward();
             }
         });
 
-        statusManager.registerAction('browse', () => {
+        statusManager.registerAction('browse-page', () => {
             root.mainArea.changePage('browsePage');
         });
 
-        statusManager.registerAction('collection', () => {
+        statusManager.registerAction('collection-page', () => {
             root.mainArea.changePage('collectionPage');
         });
 
-        statusManager.registerAction('installed-items', (resolve, reject, params) => {
+        statusManager.registerAction('installed-items-page', (resolve, reject, params) => {
             sendWebSocketMessage(params.installType, 'SystemHandler::isApplicableType', [params.installType]);
         });
 
@@ -265,11 +265,11 @@ import Root from '../components/Root.js';
             sendWebSocketMessage(params.itemKey, 'ItemHandler::uninstall', [params.itemKey]);
         });
 
-        statusManager.registerAction('about', () => {
+        statusManager.registerAction('about-page', () => {
             root.mainArea.changePage('aboutPage');
         });
 
-        statusManager.registerAction('upgrade', () => {
+        statusManager.registerAction('upgrade-page', () => {
             root.mainArea.changePage('upgradePage');
         });
 

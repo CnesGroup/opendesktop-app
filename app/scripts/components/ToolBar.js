@@ -28,7 +28,7 @@ export default class ToolBar extends Component {
             <button class="toolbar-button icon-folder" ${collectionButtonAttr}></button>
             <span class="toolbar-indicator icon-loading"></span>
             <span class="toolbar-spacer"></span>
-            <button class="toolbar-button icon-info" data-dispatch="upgrade"></button>
+            <button class="toolbar-button icon-info" data-dispatch="upgrade-page"></button>
             <button class="toolbar-button icon-menu" data-dispatch="side-panel"></button>
         `;
     }
@@ -68,11 +68,11 @@ export default class ToolBar extends Component {
                 opacity: 0.5;
             }
 
-            .toolbar-button[data-dispatch="upgrade"] {
+            .toolbar-button[data-dispatch="upgrade-page"] {
                 background-color: #ec407a;
             }
-            .toolbar-button[data-dispatch="upgrade"]:hover,
-            .toolbar-button[data-dispatch="upgrade"]:active {
+            .toolbar-button[data-dispatch="upgrade-page"]:hover,
+            .toolbar-button[data-dispatch="upgrade-page"]:active {
                 background-color: #d81b60;
             }
 
@@ -108,11 +108,11 @@ export default class ToolBar extends Component {
     }
 
     showUpgradeButton() {
-        this.element.querySelector('[data-dispatch="upgrade"]').style.display = 'inline-block';
+        this.element.querySelector('[data-dispatch="upgrade-page"]').style.display = 'inline-block';
     }
 
     hideUpgradeButton() {
-        this.element.querySelector('[data-dispatch="upgrade"]').style.display = 'none';
+        this.element.querySelector('[data-dispatch="upgrade-page"]').style.display = 'none';
     }
 
 }

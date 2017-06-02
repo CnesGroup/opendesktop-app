@@ -20,7 +20,7 @@ export default class CollectionPage extends Component {
         let list = '';
         for (const type of Object.keys(installTypes)) {
             const params = JSON.stringify({installType: type});
-            list += `<tr><td><a href="#" data-dispatch="installed-items" data-params='${params}'>${installTypes[type]}</a></td></tr>`;
+            list += `<tr><td><a href="#" data-dispatch="installed-items-page" data-params='${params}'>${installTypes[type]}</a></td></tr>`;
         }
 
         return `
