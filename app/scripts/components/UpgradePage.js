@@ -23,7 +23,7 @@ export default class UpgradePage extends Component {
                 <p>${releasefile.description}</p>
                 </td>
                 <td class="file-download-cell">
-                <button data-dispatch="ocs-url" data-params='${params}'>Download</button>
+                <button data-dispatch="ocs-url-dialog" data-params='${params}'>Download</button>
                 </td>
                 </tr>
             `;

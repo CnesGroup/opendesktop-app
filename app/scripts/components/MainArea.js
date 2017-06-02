@@ -3,6 +3,8 @@
 import Component from 'js/Component.js';
 
 import StartupDialog from './StartupDialog.js';
+import OcsUrlDialog from './OcsUrlDialog.js';
+
 import BrowsePage from './BrowsePage.js';
 import CollectionPage from './CollectionPage.js';
 import InstalledItemsPage from './InstalledItemsPage.js';
@@ -14,6 +16,8 @@ export default class Root extends Component {
     html() {
         return `
             <article data-component="StartupDialog"></article>
+            <article data-component="OcsUrlDialog"></article>
+
             <article data-component="BrowsePage"></article>
             <article data-component="CollectionPage"></article>
             <article data-component="InstalledItemsPage"></article>
@@ -33,6 +37,8 @@ export default class Root extends Component {
 
     script() {
         this.startupDialog = new StartupDialog('[data-component="StartupDialog"]');
+        this.ocsUrlDialog = new OcsUrlDialog('[data-component="OcsUrlDialog"]');
+
         this.browsePage = new BrowsePage('[data-component="BrowsePage"]');
         this.collectionPage = new CollectionPage('[data-component="CollectionPage"]');
         this.installedItemsPage = new InstalledItemsPage('[data-component="InstalledItemsPage"]');
