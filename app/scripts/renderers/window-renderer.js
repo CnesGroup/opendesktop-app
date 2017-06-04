@@ -91,7 +91,7 @@ import Root from '../components/Root.js';
 
                 root.mainArea.changePage('installedItemsPage');
             }
-            else if (data.func === 'ItemHandler::metadataSetChanged') {
+            /*else if (data.func === 'ItemHandler::metadataSetChanged') {
                 sendWebSocketMessage('', 'ItemHandler::metadataSet', []);
             }
             else if (data.func === 'ItemHandler::metadataSet') {
@@ -109,41 +109,47 @@ import Root from '../components/Root.js';
                 }
 
                 root.statusBar.update({message: message});
-            }
+            }*/
             else if (data.func === 'ItemHandler::downloadStarted') {
                 if (data.data[0].status !== 'success_downloadstart') {
                     console.error(data.data[0].message);
                 }
+                root.statusBar.addItem(data.data[0]);
             }
             else if (data.func === 'ItemHandler::downloadFinished') {
                 if (data.data[0].status !== 'success_download') {
                     console.error(data.data[0].message);
                 }
+                root.statusBar.updateItem(data.data[0]);
             }
             else if (data.func === 'ItemHandler::downloadProgress') {
-                console.log(data.data);
+                //console.log(data.data);
+                //root.statusBar.updateItemProgress(data.data);
             }
             else if (data.func === 'ItemHandler::saveStarted') {
                 if (data.data[0].status !== 'success_savestart') {
                     console.error(data.data[0].message);
                 }
+                root.statusBar.updateItem(data.data[0]);
             }
             else if (data.func === 'ItemHandler::saveFinished') {
                 if (data.data[0].status !== 'success_save') {
                     console.error(data.data[0].message);
                 }
+                root.statusBar.updateItem(data.data[0]);
             }
             else if (data.func === 'ItemHandler::installStarted') {
                 if (data.data[0].status !== 'success_installstart') {
                     console.error(data.data[0].message);
                 }
+                root.statusBar.updateItem(data.data[0]);
             }
             else if (data.func === 'ItemHandler::installFinished') {
                 if (data.data[0].status !== 'success_install') {
                     console.error(data.data[0].message);
                     return;
                 }
-
+                root.statusBar.updateItem(data.data[0]);
                 sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
             }
             else if (data.func === 'ItemHandler::uninstallStarted') {
@@ -156,7 +162,6 @@ import Root from '../components/Root.js';
                     console.error(data.data[0].message);
                     return;
                 }
-
                 sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
             }
         };
@@ -182,6 +187,15 @@ import Root from '../components/Root.js';
         statusManager.registerAction('process-ocs-url', (resolve, reject, params) => {
             root.mainArea.ocsUrlDialog.hide();
             sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
+        });
+
+        statusManager.registerAction('open-destination', (resolve, reject, params) => {
+            const url = `file://${installTypes[params.installType].destination}`;
+            sendWebSocketMessage(url, 'SystemHandler::openUrl', [url]);
+        });
+
+        statusManager.registerAction('remove-statusbar-item', (resolve, reject, params) => {
+            root.statusBar.removeItem(params);
         });
 
         statusManager.registerAction('browse-page', () => {

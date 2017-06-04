@@ -2,15 +2,17 @@
 
 import Component from 'js/Component.js';
 
+import StatusBarItem from './StatusBarItem.js';
+
 export default class StatusBar extends Component {
 
-    html() {
-        if (!this.state) {
-            return '';
-        }
+    init() {
+        this.items = {};
+    }
 
+    html() {
         return `
-            <p class="statusbar-message">${this.state.message}</p>
+            <div class="statusbar-spacer"></div>
         `;
     }
 
@@ -23,13 +25,41 @@ export default class StatusBar extends Component {
         this.element.style.height = '24px';
         this.element.style.borderTop = '1px solid #cccccc';
         this.element.style.background = '#e0e0e0';
+        this.element.style.overflow = 'hidden';
 
         return `
-            .statusbar-message {
-                margin: 0 0.2em;
-                font-size: 90%;
+            .statusbar-spacer {
+                flex: 1 1 auto;
+                width: auto;
+                height: 100%;
             }
         `;
+    }
+
+    addItem(data) {
+        if (this.items[data.metadata.url]) {
+            this.removeItem(data);
+        }
+        const item = document.createElement('div');
+        item.setAttribute('data-statusbaritem', data.metadata.url);
+        this.element.insertBefore(item, this.element.querySelector('.statusbar-spacer'));
+        this.items[data.metadata.url] = new StatusBarItem(item, data);
+    }
+
+    updateItem(data) {
+        if (this.items[data.metadata.url]) {
+            this.items[data.metadata.url].update(data);
+        }
+    }
+
+    updateItemProgress(data) {
+    }
+
+    removeItem(data) {
+        if (this.items[data.metadata.url]) {
+            this.element.removeChild(this.items[data.metadata.url].element);
+            delete this.items[data.metadata.url];
+        }
     }
 
 }
