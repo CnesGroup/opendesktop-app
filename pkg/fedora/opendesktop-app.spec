@@ -1,6 +1,6 @@
 Summary: Opendesktop.org App
 Name: opendesktop-app
-Version: 1.0.0
+Version: 1.0.1
 Release: 1%{?dist}
 License: GPLv3+
 Group: Applications/Internet
@@ -37,6 +37,11 @@ make DESTDIR="%{buildroot}" prefix="/usr" install
 rm -rf %{buildroot}
 
 %changelog
+* Sun Jun 04 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 1.0.1-1
+- Added confirm dialog for download/install
+- Added statusbar items
+- Show number of installed items
+
 * Sat May 27 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 1.0.0-1
 - Removed ocs-url
 - Bundled ocs-manager
