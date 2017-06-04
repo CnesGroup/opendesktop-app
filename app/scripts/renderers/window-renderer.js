@@ -123,7 +123,7 @@ import Root from '../components/Root.js';
                 root.statusBar.updateItem(data.data[0]);
             }
             else if (data.func === 'ItemHandler::downloadProgress') {
-                console.log(data.data);
+                //console.log(data.data);
                 //root.statusBar.updateItemProgress(data.data);
             }
             else if (data.func === 'ItemHandler::saveStarted') {
@@ -241,6 +241,11 @@ import Root from '../components/Root.js';
 
         statusManager.registerAction('installed-items-page', (resolve, reject, params) => {
             sendWebSocketMessage(params.installType, 'SystemHandler::isApplicableType', [params.installType]);
+        });
+
+        statusManager.registerAction('open-destination', (resolve, reject, params) => {
+            const url = `file://${installTypes[params.installType].destination}`;
+            sendWebSocketMessage(url, 'SystemHandler::openUrl', [url]);
         });
 
         statusManager.registerAction('open-url', (resolve, reject, params) => {
