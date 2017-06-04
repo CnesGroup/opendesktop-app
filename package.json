@@ -1,7 +1,7 @@
 {
   "name": "opendesktop-app",
   "productName": "Opendesktop.org App",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The official Opendesktop.org App.",
   "keywords": [
     "Opendesktop",
@@ -21,7 +21,7 @@
   "dependencies": {
     "electron-config": "^0.2.1",
     "import-export": "^1.0.1",
-    "js": "git://github.com/akiraohgaki/js.git#8ab77687598a807f510f4ce491bd516dc3bba0ed"
+    "js": "git://github.com/akiraohgaki/js.git#4fd4592fe0b4d4a107fbda6c1633f8bcd4e152b4"
   },
   "devDependencies": {
     "electron": "~1.6.2",

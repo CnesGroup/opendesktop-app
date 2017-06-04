@@ -2,9 +2,6 @@
 
 import Component from 'js/Component.js';
 
-import ToolBar from './ToolBar.js';
-import StatusBar from './StatusBar.js';
-
 export default class CollectionPage extends Component {
 
     html() {
@@ -12,64 +9,61 @@ export default class CollectionPage extends Component {
             return '';
         }
 
-        let installTypes = {};
+        let totalFiles = 0;
+        const installTypes = {};
         for (const key of Object.keys(this.state.installedItems)) {
             const type = this.state.installedItems[key].install_type;
             if (!installTypes[type]) {
-                installTypes[type] = this.state.installTypes[type].name;
+                installTypes[type] = {
+                    name: this.state.installTypes[type].name,
+                    files: 0
+                };
             }
+            installTypes[type].files += this.state.installedItems[key].files.length;
+            totalFiles += this.state.installedItems[key].files.length;
         }
 
         let list = '';
         for (const type of Object.keys(installTypes)) {
             const params = JSON.stringify({installType: type});
-            list += `<tr><td><a href="#" data-dispatch="installed-items" data-params='${params}'>${installTypes[type]}</a></td></tr>`;
+            list += `
+                <tr>
+                <td>
+                <a href="#" data-dispatch="installed-items-page" data-params='${params}'>
+                ${installTypes[type].name}
+                <span class="badge">${installTypes[type].files}</span>
+                </a>
+                </td>
+                </tr>
+            `;
         }
 
         return `
-            <header data-component="ToolBar"></header>
-
             <div class="collection-page-content">
-            <h1 class="title">My Collection</h1>
+            <h1 class="title">My Collection <span class="badge">${totalFiles}</span></h1>
             <table class="installtypes">${list}</table>
             </div>
-
-            <footer data-component="StatusBar"></footer>
         `;
     }
 
     style() {
+        this.element.style.width = '100%';
+        this.element.style.height = '100%';
+        this.element.style.overflow = 'auto';
+
         return `
-            [data-component="ToolBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 48px;
-            }
-
-            [data-component="StatusBar"] {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 24px;
-            }
-
             .collection-page-content {
-                flex: 1 1 auto;
-                width: 100%;
-                height: 100%;
-
-                display: flex;
-                flex-flow: column nowrap;
-                align-items: center;
-                overflow: auto;
+                width: 640px;
+                margin: 2em auto;
             }
 
             .collection-page-content .title {
-                margin: 1em 0;
+                margin-bottom: 1em;
+                text-align: center;
             }
 
             .collection-page-content .installtypes {
-                width: 640px;
-                margin: 1em 0;
+                width: 100%;
                 border-top: 1px solid rgba(0,0,0,0.1);
                 border-bottom: 1px solid rgba(0,0,0,0.1);
                 border-collapse: collapse;
@@ -91,15 +85,18 @@ export default class CollectionPage extends Component {
             .collection-page-content .installtypes a:active {
                 background-color: #e0e0e0;
             }
-        `;
-    }
 
-    script() {
-        this.toolBar = new ToolBar(this.element.querySelector('[data-component="ToolBar"]'), {
-            homeAction: 'browse',
-            collectionAction: 'collection'
-        });
-        this.statusBar = new StatusBar(this.element.querySelector('[data-component="StatusBar"]'));
+            .collection-page-content .badge {
+                padding: 0.2em 0.6em;
+                border-radius: 0.6em;
+                background-color: #cccccc;
+                color: #ffffff;
+                font-size: 80%;
+            }
+            .collection-page-content .installtypes .badge {
+                float: right;
+            }
+        `;
     }
 
 }

@@ -2,8 +2,10 @@
 
 import Component from 'js/Component.js';
 
+import ToolBar from './ToolBar.js';
+import StatusBar from './StatusBar.js';
 import MainArea from './MainArea.js';
-import MenuArea from './MenuArea.js';
+import SidePanel from './SidePanel.js';
 
 export default class Root extends Component {
 
@@ -17,8 +19,13 @@ export default class Root extends Component {
 
     html() {
         return `
+            <div class="main-view">
+            <nav data-component="ToolBar"></nav>
             <main data-component="MainArea" role="main"></main>
-            <aside data-component="MenuArea"></aside>
+            <nav data-component="StatusBar"></nav>
+            </div>
+
+            <aside data-component="SidePanel"></aside>
         `;
     }
 
@@ -29,34 +36,22 @@ export default class Root extends Component {
         this.element.style.height = '100%';
 
         return `
-            [data-component="MainArea"] {
+            .main-view {
+                display: flex;
+                flex-flow: column nowrap;
                 flex: 1 1 auto;
                 width: auto;
                 height: 100%;
-            }
-
-            [data-component="MenuArea"] {
-                flex: 0 0 auto;
-                width: 300px;
-                height: 100%;
+                overflow: hidden;
             }
         `;
     }
 
     script() {
-        this.mainArea = new MainArea(this.element.querySelector('[data-component="MainArea"]'));
-        this.menuArea = new MenuArea(this.element.querySelector('[data-component="MenuArea"]'));
-
-        this.menuArea.element.style.display = 'none';
-    }
-
-    toggleMenuArea() {
-        if (this.menuArea.element.style.display === 'none') {
-            this.menuArea.element.style.display = 'flex';
-        }
-        else {
-            this.menuArea.element.style.display = 'none';
-        }
+        this.toolBar = new ToolBar('[data-component="ToolBar"]');
+        this.statusBar = new StatusBar('[data-component="StatusBar"]');
+        this.mainArea = new MainArea('[data-component="MainArea"]');
+        this.sidePanel = new SidePanel('[data-component="SidePanel"]');
     }
 
 }
