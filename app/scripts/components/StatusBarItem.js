@@ -35,6 +35,7 @@ export default class StatusBarItem extends Component {
             const removeButtonParams = JSON.stringify(this.state);
             openButton = `<button class="statusbaritem-open-button icon-folder" data-dispatch="installed-items-page" data-params='${openButtonParams}'></button>`;
             removeButton = `<button class="statusbaritem-remove-button icon-close" data-dispatch="remove-statusbar-item" data-params='${removeButtonParams}'></button>`;
+            message = 'Installed';
         }
         else {
             const removeButtonParams = JSON.stringify(this.state);
