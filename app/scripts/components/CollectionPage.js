@@ -28,14 +28,19 @@ export default class CollectionPage extends Component {
             const params = JSON.stringify({installType: type});
             list += `
                 <tr>
-                <td><a href="#" data-dispatch="installed-items-page" data-params='${params}'>${installTypes[type].name} (${installTypes[type].files})</a></td>
+                <td>
+                <a href="#" data-dispatch="installed-items-page" data-params='${params}'>
+                ${installTypes[type].name}
+                <span class="badge">${installTypes[type].files}</span>
+                </a>
+                </td>
                 </tr>
             `;
         }
 
         return `
             <div class="collection-page-content">
-            <h1 class="title">My Collection (${totalFiles})</h1>
+            <h1 class="title">My Collection <span class="badge">${totalFiles}</span></h1>
             <table class="installtypes">${list}</table>
             </div>
         `;
@@ -79,6 +84,17 @@ export default class CollectionPage extends Component {
             .collection-page-content .installtypes a:hover,
             .collection-page-content .installtypes a:active {
                 background-color: #e0e0e0;
+            }
+
+            .collection-page-content .badge {
+                padding: 0.2em 0.6em;
+                border-radius: 0.6em;
+                background-color: #cccccc;
+                color: #ffffff;
+                font-size: 80%;
+            }
+            .collection-page-content .installtypes .badge {
+                float: right;
             }
         `;
     }

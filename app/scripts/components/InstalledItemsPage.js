@@ -38,7 +38,7 @@ export default class InstalledItemsPage extends Component {
 
         return `
             <div class="installeditems-page-content">
-            <h1 class="title">${this.state.installTypes[type].name} (${totalFiles})</h1>
+            <h1 class="title">${this.state.installTypes[type].name} <span class="badge">${totalFiles}</span></h1>
             <table class="installeditems">${list}</table>
             </div>
         `;
@@ -91,6 +91,14 @@ export default class InstalledItemsPage extends Component {
             .installeditems-page-content .installeditems button {
                 margin: 0 0.2em;
                 padding: 0.3em 0.5em;
+            }
+
+            .installeditems-page-content .badge {
+                padding: 0.2em 0.6em;
+                border-radius: 0.6em;
+                background-color: #cccccc;
+                color: #ffffff;
+                font-size: 80%;
             }
         `;
     }
