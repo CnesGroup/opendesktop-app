@@ -5,28 +5,28 @@
     "releasepage": "https://www.linux-apps.com/p/1175480/",
     "releasefiles": [
         {
-            "name": "opendesktop-app_1.0.0-0ubuntu1_amd64.deb",
+            "name": "opendesktop-app_1.0.1-0ubuntu1_amd64.deb",
             "description": "ubuntu",
-            "url": "https://dl.opendesktop.org/api/files/download/id/1495880028/opendesktop-app_1.0.0-0ubuntu1_amd64.deb",
-            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1495880028%2Fopendesktop-app_1.0.0-0ubuntu1_amd64.deb&type=bin&filename=opendesktop-app_1.0.0-0ubuntu1_amd64.deb"
+            "url": "https://dl.opendesktop.org/api/files/download/id/1496618209/opendesktop-app_1.0.1-0ubuntu1_amd64.deb",
+            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1496618209%2Fopendesktop-app_1.0.1-0ubuntu1_amd64.deb&type=bin&filename=opendesktop-app_1.0.1-0ubuntu1_amd64.deb"
         },
         {
-            "name": "opendesktop-app-1.0.0-1.fc20.x86_64.rpm",
+            "name": "opendesktop-app-1.0.1-1.fc20.x86_64.rpm",
             "description": "fedora",
-            "url": "https://dl.opendesktop.org/api/files/download/id/1495880136/opendesktop-app-1.0.0-1.fc20.x86_64.rpm",
-            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1495880136%2Fopendesktop-app-1.0.0-1.fc20.x86_64.rpm&type=bin&filename=opendesktop-app-1.0.0-1.fc20.x86_64.rpm"
+            "url": "https://dl.opendesktop.org/api/files/download/id/1496618381/opendesktop-app-1.0.1-1.fc20.x86_64.rpm",
+            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1496618381%2Fopendesktop-app-1.0.1-1.fc20.x86_64.rpm&type=bin&filename=opendesktop-app-1.0.1-1.fc20.x86_64.rpm"
         },
         {
-            "name": "opendesktop-app-1.0.0-1.x86_64.rpm",
+            "name": "opendesktop-app-1.0.1-1.x86_64.rpm",
             "description": "opensuse",
-            "url": "https://dl.opendesktop.org/api/files/download/id/1495880176/opendesktop-app-1.0.0-1.x86_64.rpm",
-            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1495880176%2Fopendesktop-app-1.0.0-1.x86_64.rpm&type=bin&filename=opendesktop-app-1.0.0-1.x86_64.rpm"
+            "url": "https://dl.opendesktop.org/api/files/download/id/1496618459/opendesktop-app-1.0.1-1.x86_64.rpm",
+            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1496618459%2Fopendesktop-app-1.0.1-1.x86_64.rpm&type=bin&filename=opendesktop-app-1.0.1-1.x86_64.rpm"
         },
         {
-            "name": "opendesktop-app-1.0.0-1-x86_64.pkg.tar.xz",
+            "name": "opendesktop-app-1.0.1-1-x86_64.pkg.tar.xz",
             "description": "archlinux",
-            "url": "https://dl.opendesktop.org/api/files/download/id/1495880069/opendesktop-app-1.0.0-1-x86_64.pkg.tar.xz",
-            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1495880069%2Fopendesktop-app-1.0.0-1-x86_64.pkg.tar.xz&type=bin&filename=opendesktop-app-1.0.0-1-x86_64.pkg.tar.xz"
+            "url": "https://dl.opendesktop.org/api/files/download/id/1496618298/opendesktop-app-1.0.1-1-x86_64.pkg.tar.xz",
+            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1496618298%2Fopendesktop-app-1.0.1-1-x86_64.pkg.tar.xz&type=bin&filename=opendesktop-app-1.0.1-1-x86_64.pkg.tar.xz"
         }
     ]
 }
