@@ -25,6 +25,7 @@ export default class StatusBar extends Component {
         this.element.style.height = '24px';
         this.element.style.borderTop = '1px solid #cccccc';
         this.element.style.background = '#e0e0e0';
+        this.element.style.overflow = 'hidden';
 
         return `
             .statusbar-spacer {
@@ -36,12 +37,13 @@ export default class StatusBar extends Component {
     }
 
     addItem(data) {
-        if (!this.items[data.metadata.url]) {
-            const item = document.createElement('div');
-            item.setAttribute('data-statusbaritem', data.metadata.url);
-            this.element.insertBefore(item, this.element.querySelector('.statusbar-spacer'));
-            this.items[data.metadata.url] = new StatusBarItem(item, data);
+        if (this.items[data.metadata.url]) {
+            this.removeItem(data);
         }
+        const item = document.createElement('div');
+        item.setAttribute('data-statusbaritem', data.metadata.url);
+        this.element.insertBefore(item, this.element.querySelector('.statusbar-spacer'));
+        this.items[data.metadata.url] = new StatusBarItem(item, data);
     }
 
     updateItem(data) {

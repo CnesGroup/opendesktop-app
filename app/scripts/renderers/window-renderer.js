@@ -189,6 +189,15 @@ import Root from '../components/Root.js';
             sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
         });
 
+        statusManager.registerAction('open-destination', (resolve, reject, params) => {
+            const url = `file://${installTypes[params.installType].destination}`;
+            sendWebSocketMessage(url, 'SystemHandler::openUrl', [url]);
+        });
+
+        statusManager.registerAction('remove-statusbar-item', (resolve, reject, params) => {
+            root.statusBar.removeItem(params);
+        });
+
         statusManager.registerAction('browse-page', () => {
             root.toolBar.update({
                 backAction: 'main-webview-back',
@@ -241,11 +250,6 @@ import Root from '../components/Root.js';
 
         statusManager.registerAction('installed-items-page', (resolve, reject, params) => {
             sendWebSocketMessage(params.installType, 'SystemHandler::isApplicableType', [params.installType]);
-        });
-
-        statusManager.registerAction('open-destination', (resolve, reject, params) => {
-            const url = `file://${installTypes[params.installType].destination}`;
-            sendWebSocketMessage(url, 'SystemHandler::openUrl', [url]);
         });
 
         statusManager.registerAction('open-url', (resolve, reject, params) => {
