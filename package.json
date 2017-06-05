@@ -2,6 +2,8 @@
   "name": "opendesktop-app",
   "productName": "Opendesktop.org App",
   "version": "1.0.1",
+  "_versioncode": 3,
+  "_releaseMeta": "https://github.com/opendesktop/opendesktop-app/raw/master/release.json",
   "description": "The official Opendesktop.org App.",
   "keywords": [
     "Opendesktop",

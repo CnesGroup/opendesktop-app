@@ -4,7 +4,7 @@ const electron = require('electron');
 const electronConfig = require('electron-config');
 
 const appConfig = require('../../configs/application.json');
-const releaseMeta = require('../../../release.json');
+const packageJson = require('../../../package.json');
 
 import StatusManager from 'js/StatusManager.js';
 import Root from '../components/Root.js';
@@ -298,7 +298,7 @@ import Root from '../components/Root.js';
         statusManager.registerAction('check-update', (resolve, reject) => {
             console.log('Checking for update');
 
-            fetch(releaseMeta.releasemeta)
+            fetch(packageJson._releaseMeta)
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -306,7 +306,7 @@ import Root from '../components/Root.js';
                 return Promise.reject(new Error('Network response was not ok'));
             })
             .then((data) => {
-                if (data.versioncode > releaseMeta.versioncode) {
+                if (data.versioncode > packageJson._versioncode) {
                     console.log('Found newer version');
                     resolve(data);
                 }
