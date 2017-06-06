@@ -18,15 +18,15 @@
     "start": "electron .",
     "debug": "electron . --debug",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "electron-packager . opendesktop-app --platform=linux --arch=x64 --out=out --overwrite --ignore='(\\.gitignore|\\.travis\\.yml|bitbucket-pipelines\\.yml|Makefile|desktop|launcher|pkg|scripts/.+\\.sh|debian|build_.+)($|/)'"
+    "package": "electron-packager . opendesktop-app --platform=linux --arch=x64 --out=out --overwrite --ignore='(\\.gitignore|\\.travis\\.yml|bitbucket-pipelines\\.yml|Makefile|package-lock\\.json|desktop|launcher|pkg|scripts/.+\\.sh|debian|build_.+)($|/)'"
   },
   "dependencies": {
-    "electron-config": "^0.2.1",
+    "electron-config": "^1.0.0",
     "import-export": "^1.0.1",
     "js": "git://github.com/akiraohgaki/js.git#4fd4592fe0b4d4a107fbda6c1633f8bcd4e152b4"
   },
   "devDependencies": {
-    "electron": "~1.6.2",
-    "electron-packager": "^8.6.0"
+    "electron": "^1.6.10",
+    "electron-packager": "^8.7.0"
   }
 }
