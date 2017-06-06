@@ -4,7 +4,7 @@ const electronConfig = require('electron-config');
 
 import Component from 'js/Component.js';
 
-import appConfig from '../../configs/application.json';
+import packageMeta from '../../../package.json';
 
 export default class SidePanel extends Component {
 
@@ -12,7 +12,7 @@ export default class SidePanel extends Component {
         return `
             <header class="menu-items-header">
             <div class="banner icon-opendesktop-app"></div>
-            <h1 class="title">${appConfig.title}</h1>
+            <h1 class="title">${packageMeta.productName}</h1>
             </header>
 
             <ul class="menu-items">

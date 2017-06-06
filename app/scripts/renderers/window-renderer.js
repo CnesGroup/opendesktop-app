@@ -4,7 +4,6 @@ const electron = require('electron');
 const electronConfig = require('electron-config');
 
 const packageMeta = require('../../../package.json');
-const appConfig = require('../../configs/application.json');
 const ocsManagerConfig = require('./configs/ocs-manager.json');
 
 import StatusManager from 'js/StatusManager.js';
@@ -23,7 +22,7 @@ import Root from '../components/Root.js';
     let installedItems = null;
 
     function setup() {
-        document.title = appConfig.title;
+        document.title = packageMeta.productName;
 
         setupWebSocket();
         setupStatusManager();

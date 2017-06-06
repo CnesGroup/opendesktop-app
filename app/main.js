@@ -4,6 +4,7 @@ const electron = require('electron');
 const electronConfig = require('electron-config');
 const childProcess = require('child_process');
 
+const packageMeta = require('../package.json');
 const appConfig = require('./configs/application.json');
 const ocsManagerConfig = require('./configs/ocs-manager.json');
 
@@ -39,7 +40,7 @@ let ocsManager = null;
         const windowBounds = config.get('windowBounds');
 
         mainWindow = new BrowserWindow({
-            title: appConfig.title,
+            title: packageMeta.productName,
             icon: `${__dirname}/images/app-icons/opendesktop-app.png`,
             x: windowBounds.x,
             y: windowBounds.y,

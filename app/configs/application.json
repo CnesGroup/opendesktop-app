@@ -1,5 +1,4 @@
 {
-    "title": "Opendesktop.org App",
     "defaults": {
         "startPage": "https://www.opendesktop.org/",
         "windowBounds": {
