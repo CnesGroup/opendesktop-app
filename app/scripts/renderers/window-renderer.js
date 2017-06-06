@@ -329,8 +329,6 @@ import Root from '../components/Root.js';
 
         mainWebview.setAttribute('src', config.get('startPage'));
         mainWebview.setAttribute('preload', './scripts/renderers/ipc-renderer.js');
-        mainWebview.setAttribute('autosize', 'on');
-        mainWebview.setAttribute('allowpopups', 'false');
 
         mainWebview.addEventListener('did-start-loading', () => {
             console.log('did-start-loading');
