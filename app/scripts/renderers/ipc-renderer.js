@@ -7,11 +7,9 @@ const url = require('url');
     const ipcRenderer = electron.ipcRenderer;
 
     function modifyDocument() {
-        // Do something, if we need.
     }
 
     function modifyStyle() {
-        document.body.querySelector('.metamenu').style.display = 'none';
     }
 
     function modifyEvent() {
@@ -38,8 +36,8 @@ const url = require('url');
     }
 
     ipcRenderer.on('dom-modify', () => {
-        modifyDocument();
-        modifyStyle();
+        //modifyDocument();
+        //modifyStyle();
         modifyEvent();
     });
 }
