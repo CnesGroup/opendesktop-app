@@ -4,7 +4,7 @@ const electron = require('electron');
 const electronConfig = require('electron-config');
 
 const packageMeta = require('../../../package.json');
-const ocsManagerConfig = require('./configs/ocs-manager.json');
+const ocsManagerConfig = require('../../configs/ocs-manager.json');
 
 import StatusManager from 'js/StatusManager.js';
 import Root from '../components/Root.js';
