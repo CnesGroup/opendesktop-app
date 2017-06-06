@@ -4,7 +4,7 @@ import Component from 'js/Component.js';
 
 import appConfig from '../../configs/application.json';
 
-import packageJson from '../../../package.json';
+import packageMeta from '../../../package.json';
 
 export default class AboutPage extends Component {
 
@@ -13,11 +13,11 @@ export default class AboutPage extends Component {
             <div class="about-page-content">
             <div class="banner icon-opendesktop-app"></div>
             <h1 class="title">${appConfig.title}</h1>
-            <h3 class="version">Version ${packageJson.version}</h3>
-            <p class="description">${packageJson.description}</p>
-            <p>Author: ${packageJson.author}</p>
-            <p>License: ${packageJson.license}</p>
-            <p>Website: <a href="${packageJson.homepage}" target="_blank">${packageJson.homepage}</a></p>
+            <h3 class="version">Version ${packageMeta.version}</h3>
+            <p class="description">${packageMeta.description}</p>
+            <p>Author: ${packageMeta.author}</p>
+            <p>License: ${packageMeta.license}</p>
+            <p>Website: <a href="${packageMeta.homepage}" target="_blank">${packageMeta.homepage}</a></p>
             </div>
         `;
     }
