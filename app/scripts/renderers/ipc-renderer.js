@@ -15,7 +15,18 @@ const url = require('url');
     function modifyEvent() {
         document.body.addEventListener('click', (event) => {
             if (event.target.closest('[href]')) {
-                const parsedUrl = url.parse(event.target.closest('[href]').getAttribute('href'));
+                const targetElement = event.target.closest('[href]');
+
+                let targetUrl = '';
+                if (targetElement.getAttribute('data-link-org')) {
+                    targetUrl = targetElement.getAttribute('data-link-org');
+                }
+                else {
+                    targetUrl = targetElement.getAttribute('href');
+                }
+
+                const parsedUrl = url.parse(targetUrl);
+
                 if (parsedUrl.protocol === 'ocs:' || parsedUrl.protocol === 'ocss:') {
                     event.preventDefault();
                     event.stopPropagation();
