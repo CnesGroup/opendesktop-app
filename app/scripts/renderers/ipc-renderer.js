@@ -7,17 +7,26 @@ const url = require('url');
     const ipcRenderer = electron.ipcRenderer;
 
     function modifyDocument() {
-        // Do something, if we need.
     }
 
     function modifyStyle() {
-        document.body.querySelector('.metamenu').style.display = 'none';
     }
 
     function modifyEvent() {
         document.body.addEventListener('click', (event) => {
             if (event.target.closest('[href]')) {
-                const parsedUrl = url.parse(event.target.closest('[href]').getAttribute('href'));
+                const targetElement = event.target.closest('[href]');
+
+                let targetUrl = '';
+                if (targetElement.getAttribute('data-link-org')) {
+                    targetUrl = targetElement.getAttribute('data-link-org');
+                }
+                else {
+                    targetUrl = targetElement.getAttribute('href');
+                }
+
+                const parsedUrl = url.parse(targetUrl);
+
                 if (parsedUrl.protocol === 'ocs:' || parsedUrl.protocol === 'ocss:') {
                     event.preventDefault();
                     event.stopPropagation();
@@ -38,8 +47,8 @@ const url = require('url');
     }
 
     ipcRenderer.on('dom-modify', () => {
-        modifyDocument();
-        modifyStyle();
+        //modifyDocument();
+        //modifyStyle();
         modifyEvent();
     });
 }

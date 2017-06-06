@@ -1,7 +1,4 @@
 {
-    "title": "Opendesktop.org App",
-    "ocsManagerBin": "bin/ocs-manager",
-    "ocsManagerPort": 49152,
     "defaults": {
         "startPage": "https://www.opendesktop.org/",
         "windowBounds": {

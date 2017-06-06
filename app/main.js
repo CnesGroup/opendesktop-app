@@ -4,11 +4,12 @@ const electron = require('electron');
 const electronConfig = require('electron-config');
 const childProcess = require('child_process');
 
+const packageMeta = require('../package.json');
 const appConfig = require('./configs/application.json');
-
-let ocsManager = null;
+const ocsManagerConfig = require('./configs/ocs-manager.json');
 
 let mainWindow = null;
+let ocsManager = null;
 
 {
     const app = electron.app;
@@ -18,8 +19,8 @@ let mainWindow = null;
 
     function startOcsManager() {
         ocsManager = childProcess.execFile(
-            `${app.getAppPath()}/${appConfig.ocsManagerBin}`,
-            ['-p', appConfig.ocsManagerPort],
+            `${app.getAppPath()}/${ocsManagerConfig.bin}`,
+            ['-p', ocsManagerConfig.port],
             (error, stdout, stderr) => {
                 if (error) {
                     console.error(error);
@@ -39,7 +40,7 @@ let mainWindow = null;
         const windowBounds = config.get('windowBounds');
 
         mainWindow = new BrowserWindow({
-            title: appConfig.title,
+            title: packageMeta.productName,
             icon: `${__dirname}/images/app-icons/opendesktop-app.png`,
             x: windowBounds.x,
             y: windowBounds.y,

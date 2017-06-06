@@ -2,9 +2,7 @@
 
 import Component from 'js/Component.js';
 
-import appConfig from '../../configs/application.json';
-
-import packageJson from '../../../package.json';
+import packageMeta from '../../../package.json';
 
 export default class UpgradePage extends Component {
 
@@ -32,9 +30,9 @@ export default class UpgradePage extends Component {
         return `
             <div class="upgrade-page-content">
             <div class="banner icon-opendesktop-app"></div>
-            <h1 class="title">${appConfig.title}</h1>
+            <h1 class="title">${packageMeta.productName}</h1>
             <h3 class="version">Version ${this.state.versionname} available</h3>
-            <p class="description">Current version ${packageJson.version}</p>
+            <p class="description">Current version ${packageMeta.version}</p>
             <table class="releasefiles">${list}</table>
             <p>Visit <a href="${this.state.releasepage}" target="_blank">${this.state.releasepage}</a> for more details.</p>
             </div>

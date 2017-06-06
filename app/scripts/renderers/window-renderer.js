@@ -3,8 +3,8 @@
 const electron = require('electron');
 const electronConfig = require('electron-config');
 
-const appConfig = require('../../configs/application.json');
-const releaseMeta = require('../../../release.json');
+const packageMeta = require('../../../package.json');
+const ocsManagerConfig = require('../../configs/ocs-manager.json');
 
 import StatusManager from 'js/StatusManager.js';
 import Root from '../components/Root.js';
@@ -12,7 +12,7 @@ import Root from '../components/Root.js';
 {
     const remote = electron.remote;
 
-    const webSocket = new WebSocket(`ws://localhost:${appConfig.ocsManagerPort}`);
+    const webSocket = new WebSocket(`ws://localhost:${ocsManagerConfig.port}`);
     const statusManager = new StatusManager();
     const root = new Root('[data-component="Root"]');
     const mainWebview = root.mainArea.browsePage.element.querySelector('[data-webview="main"]');
@@ -22,7 +22,7 @@ import Root from '../components/Root.js';
     let installedItems = null;
 
     function setup() {
-        document.title = appConfig.title;
+        document.title = packageMeta.productName;
 
         setupWebSocket();
         setupStatusManager();
@@ -298,7 +298,7 @@ import Root from '../components/Root.js';
         statusManager.registerAction('check-update', (resolve, reject) => {
             console.log('Checking for update');
 
-            fetch(releaseMeta.releasemeta)
+            fetch(packageMeta._releaseMeta)
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -306,7 +306,7 @@ import Root from '../components/Root.js';
                 return Promise.reject(new Error('Network response was not ok'));
             })
             .then((data) => {
-                if (data.versioncode > releaseMeta.versioncode) {
+                if (data.versioncode > packageMeta._versioncode) {
                     console.log('Found newer version');
                     resolve(data);
                 }
@@ -329,8 +329,6 @@ import Root from '../components/Root.js';
 
         mainWebview.setAttribute('src', config.get('startPage'));
         mainWebview.setAttribute('preload', './scripts/renderers/ipc-renderer.js');
-        mainWebview.setAttribute('autosize', 'on');
-        mainWebview.setAttribute('allowpopups', 'false');
 
         mainWebview.addEventListener('did-start-loading', () => {
             console.log('did-start-loading');

@@ -4,7 +4,7 @@ const electronConfig = require('electron-config');
 
 import Component from 'js/Component.js';
 
-import appConfig from '../../configs/application.json';
+import packageMeta from '../../../package.json';
 
 export default class SidePanel extends Component {
 
@@ -12,7 +12,7 @@ export default class SidePanel extends Component {
         return `
             <header class="menu-items-header">
             <div class="banner icon-opendesktop-app"></div>
-            <h1 class="title">${appConfig.title}</h1>
+            <h1 class="title">${packageMeta.productName}</h1>
             </header>
 
             <ul class="menu-items">
@@ -114,9 +114,15 @@ export default class SidePanel extends Component {
         this.toggle();
 
         const config = new electronConfig({name: 'application'});
-        this.element.querySelector(`.menu-item[name="startPage"] option[value="${config.get('startPage')}"]`).setAttribute('selected', 'selected');
 
-        this.element.querySelector('.menu-item[name="startPage"]').addEventListener('change', (event) => {
+        const selectElement = this.element.querySelector('.menu-item[name="startPage"]');
+        const targetElement = selectElement.querySelector(`option[value="${config.get('startPage')}"]`);
+
+        if (targetElement) {
+            targetElement.setAttribute('selected', 'selected');
+        }
+
+        selectElement.addEventListener('change', (event) => {
             event.preventDefault();
             event.stopPropagation();
             document.dispatchEvent(new CustomEvent('start-page', {detail: {startPage: event.target.value}}));
