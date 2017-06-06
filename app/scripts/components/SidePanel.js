@@ -114,9 +114,15 @@ export default class SidePanel extends Component {
         this.toggle();
 
         const config = new electronConfig({name: 'application'});
-        this.element.querySelector(`.menu-item[name="startPage"] option[value="${config.get('startPage')}"]`).setAttribute('selected', 'selected');
 
-        this.element.querySelector('.menu-item[name="startPage"]').addEventListener('change', (event) => {
+        const selectElement = this.element.querySelector('.menu-item[name="startPage"]');
+        const targetElement = selectElement.querySelector(`option[value="${config.get('startPage')}"]`);
+
+        if (targetElement) {
+            targetElement.setAttribute('selected', 'selected');
+        }
+
+        selectElement.addEventListener('change', (event) => {
             event.preventDefault();
             event.stopPropagation();
             document.dispatchEvent(new CustomEvent('start-page', {detail: {startPage: event.target.value}}));
