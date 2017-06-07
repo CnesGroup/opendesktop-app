@@ -10,13 +10,15 @@ export default class StatusBarItem extends Component {
         }
 
         let message = '';
-        let progress = '';
+        let progressBar = '';
+        let progressText = '';
         let openButton = '';
         let removeButton = '';
 
         if (this.state.status === 'success_downloadstart') {
             message = 'Downloading';
-            progress = '<progress class="statusbaritem-progress" value="" max="1"></progress>';
+            progressBar = '<progress class="statusbaritem-progress-bar" value="" max="1"></progress>';
+            progressText = '<span class="statusbaritem-progress-text"></span>';
         }
         else if (this.state.status === 'success_download') {
             message = 'Downloaded';
@@ -49,7 +51,8 @@ export default class StatusBarItem extends Component {
 
         return `
             <span class="statusbaritem-message">${message}: ${this.state.metadata.filename}</span>
-            ${progress} ${openButton} ${removeButton}
+            ${progressBar} ${progressText}
+            ${openButton} ${removeButton}
         `;
     }
 
@@ -76,12 +79,22 @@ export default class StatusBarItem extends Component {
                 text-overflow: ellipsis;
             }
 
-            .statusbaritem-progress {
+            .statusbaritem-progress-bar {
                 display: inline-block;
                 flex: 0 0 auto;
                 width: 100px;
                 height: 18px;
                 margin: 0 0.2em;
+            }
+
+            .statusbaritem-progress-text {
+                display: inline-block;
+                flex: 1 1 auto;
+                width: auto;
+                margin: 0 0.2em;
+                font-size: 14px;
+                overflow: hidden;
+                white-space: nowrap;
             }
 
             .statusbaritem-open-button,
@@ -109,9 +122,10 @@ export default class StatusBarItem extends Component {
 
     downloadProgress(bytesReceived, bytesTotal) {
         if (bytesReceived > 0 && bytesTotal > 0
-            && this.element.querySelector('.statusbaritem-progress')
+            && this.element.querySelector('.statusbaritem-progress-bar')
         ) {
-            this.element.querySelector('.statusbaritem-progress').value = bytesReceived / bytesTotal;
+            this.element.querySelector('.statusbaritem-progress-bar').value = bytesReceived / bytesTotal;
+            this.element.querySelector('.statusbaritem-progress-text').innerHTML = `${js.utility.utility.convertByteToHumanReadable(bytesReceived)} / ${js.utility.utility.convertByteToHumanReadable(bytesTotal)}`;
         }
     }
 
