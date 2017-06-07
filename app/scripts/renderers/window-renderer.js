@@ -91,25 +91,12 @@ import Root from '../components/Root.js';
 
                 root.mainArea.changePage('installedItemsPage');
             }
-            /*else if (data.func === 'ItemHandler::metadataSetChanged') {
-                sendWebSocketMessage('', 'ItemHandler::metadataSet', []);
+            else if (data.func === 'ItemHandler::metadataSetChanged') {
+                //sendWebSocketMessage('', 'ItemHandler::metadataSet', []);
             }
             else if (data.func === 'ItemHandler::metadataSet') {
-                const keys = Object.keys(data.data[0]);
-                let message = '';
-
-                if (keys.length) {
-                    for (const key of keys) {
-                        message += `Downloading: ${data.data[0][key].filename}`;
-                        break;
-                    }
-                    if (keys.length > 1) {
-                        message += ` + ${keys.length - 1} files`;
-                    }
-                }
-
-                root.statusBar.update({message: message});
-            }*/
+                //console.log(data.data[0]);
+            }
             else if (data.func === 'ItemHandler::downloadStarted') {
                 if (data.data[0].status !== 'success_downloadstart') {
                     console.error(data.data[0].message);
@@ -123,8 +110,7 @@ import Root from '../components/Root.js';
                 root.statusBar.updateItem(data.data[0]);
             }
             else if (data.func === 'ItemHandler::downloadProgress') {
-                //console.log(data.data);
-                //root.statusBar.updateItemProgress(data.data);
+                root.statusBar.updateItemDownloadProgress(data.data[0], data.data[1], data.data[2]);
             }
             else if (data.func === 'ItemHandler::saveStarted') {
                 if (data.data[0].status !== 'success_savestart') {
