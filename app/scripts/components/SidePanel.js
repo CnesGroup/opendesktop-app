@@ -27,7 +27,6 @@ export default class SidePanel extends Component {
             <option value="https://www.enlightenment-themes.org/">enlightenment-themes.org</option>
             </select>
             </li>
-            <li><button class="menu-item" data-dispatch="collection-page">My Collection</button></li>
             </ul>
 
             <ul class="menu-items-footer">
