@@ -15,7 +15,8 @@ export default class SidePanel extends Component {
             <h1 class="title">${packageMeta.productName}</h1>
             </header>
 
-            <ul class="menu-items">
+            <ul class="menu-items-main">
+            <li><span class="menu-label">Choose Startpage</span></li>
             <li>
             <select class="menu-item" name="startPage">
             <option value="https://www.opendesktop.org/">opendesktop.org</option>
@@ -26,7 +27,6 @@ export default class SidePanel extends Component {
             <option value="https://www.enlightenment-themes.org/">enlightenment-themes.org</option>
             </select>
             </li>
-            <li><button class="menu-item" data-dispatch="collection-page">My Collection</button></li>
             </ul>
 
             <ul class="menu-items-footer">
@@ -53,7 +53,7 @@ export default class SidePanel extends Component {
                 background-color: #006db3;
             }
 
-            .menu-items {
+            .menu-items-main {
                 flex: 1 1 auto;
                 width: 80%;
                 height: 100%;
@@ -81,9 +81,15 @@ export default class SidePanel extends Component {
                 display: none;
             }
 
-            .menu-items li,
+            .menu-items-main li,
             .menu-items-footer li {
                 padding: 0.4em;
+                text-align: center;
+            }
+
+            .menu-label {
+                color: rgba(255,255,255,0.7);
+                font-weight: bold;
             }
 
             .menu-item {

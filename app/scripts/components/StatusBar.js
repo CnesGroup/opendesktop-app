@@ -52,7 +52,10 @@ export default class StatusBar extends Component {
         }
     }
 
-    updateItemProgress(data) {
+    updateItemDownloadProgress(id, bytesReceived, bytesTotal) {
+        if (this.items[id]) {
+            this.items[id].downloadProgress(bytesReceived, bytesTotal);
+        }
     }
 
     removeItem(data) {

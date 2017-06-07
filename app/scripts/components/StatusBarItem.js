@@ -9,42 +9,50 @@ export default class StatusBarItem extends Component {
             return '';
         }
 
-        let indicator = '';
+        let message = '';
+        let progressBar = '';
+        let progressText = '';
         let openButton = '';
         let removeButton = '';
-        let message = this.state.message;
 
-        if (this.state.status === 'success_downloadstart'
-            || this.state.status === 'success_savestart'
-            || this.state.status === 'success_installstart'
-        ) {
-            indicator = '<span class="statusbaritem-indicator icon-loading"></span>';
+        if (this.state.status === 'success_downloadstart') {
+            message = 'Downloading';
+            progressBar = '<progress class="statusbaritem-progress-bar" value="" max="1"></progress>';
+            progressText = '<span class="statusbaritem-progress-text"></span>';
         }
         else if (this.state.status === 'success_download') {
             message = 'Downloaded';
         }
+        else if (this.state.status === 'success_savestart') {
+            message = 'Downloading';
+        }
         else if (this.state.status === 'success_save') {
+            message = 'Downloaded';
             const openButtonParams = JSON.stringify({installType: this.state.metadata.install_type});
             const removeButtonParams = JSON.stringify(this.state);
             openButton = `<button class="statusbaritem-open-button icon-folder" data-dispatch="open-destination" data-params='${openButtonParams}'></button>`;
             removeButton = `<button class="statusbaritem-remove-button icon-close" data-dispatch="remove-statusbar-item" data-params='${removeButtonParams}'></button>`;
-            message = 'Downloaded';
+        }
+        else if (this.state.status === 'success_installstart') {
+            message = 'Installing';
         }
         else if (this.state.status === 'success_install') {
+            message = 'Installed';
             const openButtonParams = JSON.stringify({installType: this.state.metadata.install_type});
             const removeButtonParams = JSON.stringify(this.state);
             openButton = `<button class="statusbaritem-open-button icon-folder" data-dispatch="installed-items-page" data-params='${openButtonParams}'></button>`;
             removeButton = `<button class="statusbaritem-remove-button icon-close" data-dispatch="remove-statusbar-item" data-params='${removeButtonParams}'></button>`;
-            message = 'Installed';
         }
         else {
+            message = this.state.message;
             const removeButtonParams = JSON.stringify(this.state);
             removeButton = `<button class="statusbaritem-remove-button icon-close" data-dispatch="remove-statusbar-item" data-params='${removeButtonParams}'></button>`;
         }
 
         return `
             <span class="statusbaritem-message">${message}: ${this.state.metadata.filename}</span>
-            ${indicator} ${openButton} ${removeButton}
+            ${progressBar} ${progressText}
+            ${openButton} ${removeButton}
         `;
     }
 
@@ -64,21 +72,29 @@ export default class StatusBarItem extends Component {
                 display: inline-block;
                 flex: 1 1 auto;
                 width: auto;
+                margin: 0 0.2em;
                 font-size: 14px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }
 
-            .statusbaritem-indicator {
+            .statusbaritem-progress-bar {
                 display: inline-block;
                 flex: 0 0 auto;
-                width: 14px;
-                height: 14px;
+                width: 100px;
+                height: 18px;
                 margin: 0 0.2em;
-                background-position: center center;
-                background-repeat: no-repeat;
-                background-size: contain;
+            }
+
+            .statusbaritem-progress-text {
+                display: inline-block;
+                flex: 1 1 auto;
+                width: auto;
+                margin: 0 0.2em;
+                font-size: 14px;
+                overflow: hidden;
+                white-space: nowrap;
             }
 
             .statusbaritem-open-button,
@@ -102,6 +118,15 @@ export default class StatusBarItem extends Component {
                 background-color: #c7c7c7;
             }
         `;
+    }
+
+    downloadProgress(bytesReceived, bytesTotal) {
+        if (bytesReceived > 0 && bytesTotal > 0
+            && this.element.querySelector('.statusbaritem-progress-bar')
+        ) {
+            this.element.querySelector('.statusbaritem-progress-bar').value = bytesReceived / bytesTotal;
+            this.element.querySelector('.statusbaritem-progress-text').innerHTML = `${js.utility.utility.convertByteToHumanReadable(bytesReceived)} / ${js.utility.utility.convertByteToHumanReadable(bytesTotal)}`;
+        }
     }
 
 }
