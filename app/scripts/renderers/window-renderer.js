@@ -165,6 +165,8 @@ import Root from '../components/Root.js';
         statusManager.registerAction('ocs-url-dialog', (resolve, reject, params) => {
             root.mainArea.ocsUrlDialog.update({
                 ocsUrl: params.ocsUrl,
+                providerKey: params.providerKey,
+                contentId: params.contentId,
                 installTypes: installTypes
             });
             root.mainArea.ocsUrlDialog.show();
@@ -172,7 +174,7 @@ import Root from '../components/Root.js';
 
         statusManager.registerAction('process-ocs-url', (resolve, reject, params) => {
             root.mainArea.ocsUrlDialog.hide();
-            sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl]);
+            sendWebSocketMessage('', 'ItemHandler::getItemByOcsUrl', [params.ocsUrl, params.providerKey, params.contentId]);
         });
 
         statusManager.registerAction('open-destination', (resolve, reject, params) => {
@@ -339,8 +341,13 @@ import Root from '../components/Root.js';
         mainWebview.addEventListener('ipc-message', (event) => {
             console.log('IPC message received');
             console.log([event.channel, event.args]);
+
             if (event.channel === 'ocs-url') {
-                statusManager.dispatch('ocs-url-dialog', {ocsUrl: event.args[0]});
+                statusManager.dispatch('ocs-url-dialog', {
+                    ocsUrl: event.args[0],
+                    providerKey: event.args[1],
+                    contentId: event.args[2]
+                });
             }
             else if (event.channel === 'external-url') {
                 statusManager.dispatch('open-url', {url: event.args[0]});

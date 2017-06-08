@@ -13,7 +13,11 @@ export default class UpgradePage extends Component {
 
         let list = '';
         for (const releasefile of this.state.releasefiles) {
-            const params = JSON.stringify({ocsUrl: `ocs://download?url=${encodeURIComponent(releasefile.url)}&type=downloads`});
+            const params = JSON.stringify({
+                ocsUrl: `ocs://download?url=${encodeURIComponent(releasefile.url)}&type=downloads`,
+                providerKey: '',
+                contentId: ''
+            });
             list += `
                 <tr>
                 <td class="file-description-cell">
