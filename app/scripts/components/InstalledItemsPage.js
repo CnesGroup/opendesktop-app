@@ -14,8 +14,13 @@ export default class InstalledItemsPage extends Component {
 
         let list = '';
         for (const itemKey of Object.keys(this.state.installedItems)) {
-            if (this.state.installedItems[itemKey].install_type === type) {
-                for (const file of this.state.installedItems[itemKey].files) {
+            const installedItem = this.state.installedItems[itemKey];
+            if (installedItem.install_type === type) {
+                let previewPic = '';
+                if (installedItem.provider && installedItem.content_id) {
+                    previewPic = `${installedItem.provider}content/previewpic/${installedItem.content_id}`;
+                }
+                for (const file of installedItem.files) {
                     totalFiles++;
                     const path = `${this.state.installTypes[type].destination}/${file}`;
                     const openFileParams = JSON.stringify({path: path});
@@ -23,13 +28,24 @@ export default class InstalledItemsPage extends Component {
                     const removeFileParams = JSON.stringify({itemKey: itemKey});
                     let applyCell = '';
                     if (this.state.isApplicableType) {
-                        applyCell = `<td class="apply-file-cell"><button data-dispatch="apply-file" data-params='${applyFileParams}'>Apply</button></td>`;
+                        applyCell = `
+                            <td class="apply-file-cell">
+                            <button data-dispatch="apply-file" data-params='${applyFileParams}'>Apply</button>
+                            </td>
+                        `;
                     }
                     list += `
                         <tr>
-                        <td class="open-file-cell"><a href="#" data-dispatch="open-file" data-params='${openFileParams}'>${file}</a></td>
+                        <td class="open-file-cell">
+                        <a href="#" data-dispatch="open-file" data-params='${openFileParams}'>
+                        <img src="${previewPic}" width="48" height="48" class="previewpic">
+                        ${file}
+                        </a>
+                        </td>
                         ${applyCell}
-                        <td class="remove-file-cell"><button data-dispatch="remove-file" data-params='${removeFileParams}'>Remove</button></td>
+                        <td class="remove-file-cell">
+                        <button data-dispatch="remove-file" data-params='${removeFileParams}'>Remove</button>
+                        </td>
                         </tr>
                     `;
                 }
@@ -73,6 +89,14 @@ export default class InstalledItemsPage extends Component {
 
             .installeditems-page-content .installeditems .open-file-cell {
                 width: 100%;
+            }
+
+            .installeditems-page-content .installeditems .previewpic {
+                width: 48px;
+                height: 48px;
+                margin-right: 0.2em;
+                border: 0;
+                vertical-align: middle;
             }
 
             .installeditems-page-content .installeditems a {
