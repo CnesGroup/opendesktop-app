@@ -39,13 +39,17 @@ export default class OcsUrlDialog extends Component {
             ocsUrlFilename = decodeURIComponent(ocsUrlUrl.split('/').pop());
         }
 
-        const params = JSON.stringify({ocsUrl: this.state.ocsUrl});
+        const params = JSON.stringify({
+            ocsUrl: this.state.ocsUrl,
+            providerKey: this.state.providerKey,
+            contentId: this.state.contentId
+        });
 
         return `
             <div class="ocsurl-dialog-content">
             <h1 class="title">${message}</h1>
             <p class="description">
-            Filename: ${ocsUrlFilename}<br>
+            File: ${ocsUrlFilename}<br>
             Type: ${ocsUrlType}
             </p>
             <p class="control">

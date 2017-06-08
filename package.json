@@ -1,8 +1,8 @@
 {
   "name": "opendesktop-app",
   "productName": "Opendesktop.org App",
-  "version": "1.0.1",
-  "_versioncode": 3,
+  "version": "1.0.2",
+  "_versioncode": 4,
   "_releaseMeta": "https://github.com/opendesktop/opendesktop-app/raw/master/release.json",
   "description": "The official Opendesktop.org App.",
   "keywords": [
@@ -18,7 +18,7 @@
     "start": "electron .",
     "debug": "electron . --debug",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "electron-packager . opendesktop-app --platform=linux --arch=x64 --out=out --overwrite --ignore='(\\.gitignore|\\.travis\\.yml|bitbucket-pipelines\\.yml|Makefile|package-lock\\.json|desktop|launcher|pkg|scripts/.+\\.sh|debian|build_.+)($|/)'"
+    "package": "electron-packager . opendesktop-app --platform=linux --arch=x64 --out=out --overwrite --ignore='(\\.gitignore|\\.travis\\.yml|Makefile|package-lock\\.json|release\\.json|desktop|launcher|pkg|scripts/.+\\.sh|debian|build_.+)($|/)'"
   },
   "dependencies": {
     "electron-config": "^1.0.0",
