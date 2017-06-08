@@ -1,6 +1,6 @@
 Summary: Opendesktop.org App
 Name: opendesktop-app
-Version: 1.0.1
+Version: 1.0.2
 Release: 1%{?dist}
 License: GPLv3+
 Group: Applications/Internet
@@ -37,6 +37,13 @@ make DESTDIR="%{buildroot}" prefix="/usr" install
 rm -rf %{buildroot}
 
 %changelog
+* Thu Jun 08 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 1.0.2-1
+- Show site meta header
+- Show preview picture in MyCollection
+- Added download progress bar in statusbar
+- Removed MyCollection button from sidebar
+- Fixed download links
+
 * Sun Jun 04 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 1.0.1-1
 - Added confirm dialog for download/install
 - Added statusbar items
