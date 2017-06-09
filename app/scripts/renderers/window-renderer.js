@@ -1,7 +1,11 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
+
 const electron = require('electron');
 const electronConfig = require('electron-config');
+const request = require('request');
 
 const packageMeta = require('../../../package.json');
 const ocsManagerConfig = require('../../configs/ocs-manager.json');
@@ -101,6 +105,24 @@ import Root from '../components/Root.js';
                 if (data.data[0].status !== 'success_downloadstart') {
                     console.error(data.data[0].message);
                 }
+                else if (data.data[0].metadata.command === 'install') {
+                    mainWebview.executeJavaScript(
+                        `document.querySelector('meta[property="og:image"]').getAttribute('content')`,
+                        false,
+                        (result) => {
+                            let previewPicUrl = '';
+                            if (result) {
+                                previewPicUrl = result;
+                            }
+                            else if (data.data[0].metadata.provider && data.data[0].metadata.content_id) {
+                                previewPicUrl = `${data.data[0].metadata.provider}content/previewpic/${data.data[0].metadata.content_id}`;
+                            }
+                            if (previewPicUrl) {
+                                downloadPreviewPic(previewPicUrl, btoa(data.data[0].metadata.url));
+                            }
+                        }
+                    );
+                }
                 root.statusBar.addItem(data.data[0]);
             }
             else if (data.func === 'ItemHandler::downloadFinished') {
@@ -133,10 +155,12 @@ import Root from '../components/Root.js';
             else if (data.func === 'ItemHandler::installFinished') {
                 if (data.data[0].status !== 'success_install') {
                     console.error(data.data[0].message);
-                    return;
                 }
                 root.statusBar.updateItem(data.data[0]);
                 sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
+            }
+            else if (data.func === 'ItemHandler::uninstall') {
+                removePreviewPic(btoa(data.id));
             }
             else if (data.func === 'ItemHandler::uninstallStarted') {
                 if (data.data[0].status !== 'success_uninstallstart') {
@@ -146,7 +170,6 @@ import Root from '../components/Root.js';
             else if (data.func === 'ItemHandler::uninstallFinished') {
                 if (data.data[0].status !== 'success_uninstall') {
                     console.error(data.data[0].message);
-                    return;
                 }
                 sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
             }
@@ -400,6 +423,55 @@ import Root from '../components/Root.js';
             func: func,
             data: data
         }));
+    }
+
+    function isFile(filePath) {
+        try {
+            const stats = fs.statSync(filePath);
+            if (stats.isFile()) {
+                return true;
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
+        return false;
+    }
+
+    function isDirectory(dirPath) {
+        try {
+            const stats = fs.statSync(dirPath);
+            if (stats.isDirectory()) {
+                return true;
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
+        return false;
+    }
+
+    function downloadPreviewPic(url, filename) {
+        const dirPath = path.join(remote.app.getPath('userData'), 'previewpic');
+        const filePath = path.join(dirPath, filename);
+
+        if (!isDirectory(dirPath)) {
+            fs.mkdirSync(dirPath);
+        }
+
+        request.get(url)
+        .on('error', (error) => {
+            console.error(error);
+        })
+        .pipe(fs.createWriteStream(filePath));
+    }
+
+    function removePreviewPic(filename) {
+        const filePath = path.join(remote.app.getPath('userData'), 'previewpic', filename);
+
+        if (isFile(filePath)) {
+            fs.unlinkSync(filePath);
+        }
     }
 
     setup();

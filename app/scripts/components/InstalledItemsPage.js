@@ -1,5 +1,7 @@
 'use strict';
 
+const electron = require('electron');
+
 import Component from 'js/Component.js';
 
 export default class InstalledItemsPage extends Component {
@@ -16,15 +18,12 @@ export default class InstalledItemsPage extends Component {
         for (const itemKey of Object.keys(this.state.installedItems)) {
             const installedItem = this.state.installedItems[itemKey];
             if (installedItem.install_type === type) {
-                let previewPic = '';
-                if (installedItem.provider && installedItem.content_id) {
-                    previewPic = `${installedItem.provider}content/previewpic/${installedItem.content_id}`;
-                }
+                const previewPic = `file://${electron.remote.app.getPath('userData')}/previewpic/${btoa(installedItem.url)}`;
                 for (const file of installedItem.files) {
                     totalFiles++;
-                    const path = `${this.state.installTypes[type].destination}/${file}`;
-                    const openFileParams = JSON.stringify({path: path});
-                    const applyFileParams = JSON.stringify({path: path, installType: type});
+                    const filePath = `${this.state.installTypes[type].destination}/${file}`;
+                    const openFileParams = JSON.stringify({path: filePath});
+                    const applyFileParams = JSON.stringify({path: filePath, installType: type});
                     const removeFileParams = JSON.stringify({itemKey: itemKey});
                     let applyCell = '';
                     if (this.state.isApplicableType) {
