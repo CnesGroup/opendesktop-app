@@ -133,7 +133,6 @@ import Root from '../components/Root.js';
             else if (data.func === 'ItemHandler::installFinished') {
                 if (data.data[0].status !== 'success_install') {
                     console.error(data.data[0].message);
-                    return;
                 }
                 root.statusBar.updateItem(data.data[0]);
                 sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
@@ -146,7 +145,6 @@ import Root from '../components/Root.js';
             else if (data.func === 'ItemHandler::uninstallFinished') {
                 if (data.data[0].status !== 'success_uninstall') {
                     console.error(data.data[0].message);
-                    return;
                 }
                 sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
             }
