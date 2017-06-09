@@ -7,21 +7,29 @@ const url = require('url');
     const ipcRenderer = electron.ipcRenderer;
 
     const memberSites = [
-        'opendesktop.org',
-        'www.opendesktop.org',
-        'gnome-look.org',
-        'www.gnome-look.org',
-        'store.kde.org',
-        'xfce-look.org',
-        'www.xfce-look.org',
-        'box-look.org',
-        'www.box-look.org',
-        'enlightenment-themes.org',
-        'www.enlightenment-themes.org',
-        'linux-apps.com',
-        'www.linux-apps.com',
+        'opendesktop.org', 'www.opendesktop.org',
+
+        'linux-apps.com', 'www.linux-apps.com',
+        'linux-appimages.org', 'www.linux-appimages.org',
+
+        'app-addons.org', 'www.app-addons.org',
         'addons.videolan.org',
-        'share.krita.org'
+        'share.krita.org',
+
+        'cinnamon-look.org', 'www.cinnamon-look.org',
+        'compiz-themes.org', 'www.compiz-themes.org',
+        'enlightenment-themes.org', 'www.enlightenment-themes.org',
+        'gnome-look.org', 'www.gnome-look.org',
+        'mate-look.org', 'www.mate-look.org',
+        'store.kde.org',
+        'trinity-look.org', 'www.trinity-look.org',
+        'xfce-look.org', 'www.xfce-look.org',
+        'box-look.org', 'www.box-look.org',
+
+        'cccliparts.org', 'www.cccliparts.org',
+        'free-artwork.org', 'www.free-artwork.org',
+
+        'historical-look.org', 'www.historical-look.org'
     ];
 
     function modifyDocument() {
