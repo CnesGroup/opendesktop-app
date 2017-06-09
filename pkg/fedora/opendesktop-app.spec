@@ -37,12 +37,13 @@ make DESTDIR="%{buildroot}" prefix="/usr" install
 rm -rf %{buildroot}
 
 %changelog
-* Thu Jun 08 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 1.0.2-1
+* Fri Jun 09 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 1.0.2-1
 - Show site meta header
 - Show preview picture in MyCollection
 - Added download progress bar in statusbar
 - Removed MyCollection button from sidebar
-- Fixed download links
+- Fix for download links
+- Fix for member site links
 
 * Sun Jun 04 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 1.0.1-1
 - Added confirm dialog for download/install
