@@ -159,6 +159,9 @@ import Root from '../components/Root.js';
                 root.statusBar.updateItem(data.data[0]);
                 sendWebSocketMessage('', 'ConfigHandler::getUsrConfigInstalledItems', []);
             }
+            else if (data.func === 'ItemHandler::uninstall') {
+                removePreviewPic(btoa(data.id));
+            }
             else if (data.func === 'ItemHandler::uninstallStarted') {
                 if (data.data[0].status !== 'success_uninstallstart') {
                     console.error(data.data[0].message);
