@@ -105,6 +105,24 @@ import Root from '../components/Root.js';
                 if (data.data[0].status !== 'success_downloadstart') {
                     console.error(data.data[0].message);
                 }
+                else if (data.data[0].metadata.command === 'install') {
+                    mainWebview.executeJavaScript(
+                        `document.querySelector('meta[property="og:image"]').getAttribute('content')`,
+                        false,
+                        (result) => {
+                            let previewPicUrl = '';
+                            if (result) {
+                                previewPicUrl = result;
+                            }
+                            else if (data.data[0].metadata.provider && data.data[0].metadata.content_id) {
+                                previewPicUrl = `${data.data[0].metadata.provider}content/previewpic/${data.data[0].metadata.content_id}`;
+                            }
+                            if (previewPicUrl) {
+                                downloadPreviewPic(previewPicUrl, btoa(data.data[0].metadata.url));
+                            }
+                        }
+                    );
+                }
                 root.statusBar.addItem(data.data[0]);
             }
             else if (data.func === 'ItemHandler::downloadFinished') {
