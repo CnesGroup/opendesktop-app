@@ -1,3 +1,13 @@
+opendesktop-app (2.0.0-0ubuntu1) xenial; urgency=low
+
+  * Update ocs-manager
+  * Apply themes for wallpapers, icons, cursors, plasma5_desktopthemes and aurorae_themes with KDE Plasma5 desktop
+  * Apply themes for wallpapers, icons, cursors, gtk3_themes and gnome_shell_themes with Gnome3/Unity desktop
+  * Apply themes for wallpapers, icons, cursors, gtk2_themes and xfwm4_themes with XFCE4 desktop
+  * Fix for conflicted filename
+
+ -- Akira Ohgaki <akiraohgaki@gmail.com>  Fri, 30 Jun 2017 11:09:43 +0000
+
 opendesktop-app (1.0.2-0ubuntu1) xenial; urgency=low
 
   * Show site meta header
