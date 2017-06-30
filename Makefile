@@ -4,7 +4,7 @@ TARGET = opendesktop-app
 srcdir = .
 
 build_tmpdir = ./build_tmp
-ocsmanager_version = 0.3.2
+ocsmanager_version = 0.4.0
 
 DESTDIR =
 prefix = /usr/local
