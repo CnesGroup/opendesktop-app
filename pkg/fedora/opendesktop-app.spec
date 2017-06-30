@@ -1,6 +1,6 @@
 Summary: Opendesktop.org App
 Name: opendesktop-app
-Version: 1.0.2
+Version: 2.0.0
 Release: 1%{?dist}
 License: GPLv3+
 Group: Applications/Internet
@@ -37,6 +37,13 @@ make DESTDIR="%{buildroot}" prefix="/usr" install
 rm -rf %{buildroot}
 
 %changelog
+* Fri Jun 30 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 2.0.0-1
+- Update ocs-manager
+- Apply themes for wallpapers, icons, cursors, plasma5_desktopthemes and aurorae_themes with KDE Plasma5 desktop
+- Apply themes for wallpapers, icons, cursors, gtk3_themes and gnome_shell_themes with Gnome3/Unity desktop
+- Apply themes for wallpapers, icons, cursors, gtk2_themes and xfwm4_themes with XFCE4 desktop
+- Fix for conflicted filename
+
 * Fri Jun 09 2017 Akira Ohgaki <akiraohgaki@gmail.com> - 1.0.2-1
 - Show site meta header
 - Show preview picture in MyCollection
