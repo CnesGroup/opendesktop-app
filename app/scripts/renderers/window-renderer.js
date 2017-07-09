@@ -76,7 +76,7 @@ import Root from '../components/Root.js';
                     });
                 }
             }
-            else if (data.func === 'SystemHandler::isApplicableType') {
+            else if (data.func === 'DesktopThemeHandler::isApplicableType') {
                 root.toolBar.update({
                     backAction: 'collection-page',
                     forwardAction: '',
@@ -260,7 +260,7 @@ import Root from '../components/Root.js';
         });
 
         statusManager.registerAction('installed-items-page', (resolve, reject, params) => {
-            sendWebSocketMessage(params.installType, 'SystemHandler::isApplicableType', [params.installType]);
+            sendWebSocketMessage(params.installType, 'DesktopThemeHandler::isApplicableType', [params.installType]);
         });
 
         statusManager.registerAction('open-url', (resolve, reject, params) => {
@@ -272,8 +272,8 @@ import Root from '../components/Root.js';
             sendWebSocketMessage(url, 'SystemHandler::openUrl', [url]);
         });
 
-        statusManager.registerAction('apply-file', (resolve, reject, params) => {
-            sendWebSocketMessage(params.path, 'SystemHandler::applyFile', [params.path, params.installType]);
+        statusManager.registerAction('apply-theme', (resolve, reject, params) => {
+            sendWebSocketMessage(params.path, 'DesktopThemeHandler::applyTheme', [params.path, params.installType]);
         });
 
         statusManager.registerAction('remove-file', (resolve, reject, params) => {

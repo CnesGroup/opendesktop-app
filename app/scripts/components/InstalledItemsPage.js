@@ -23,13 +23,13 @@ export default class InstalledItemsPage extends Component {
                     totalFiles++;
                     const filePath = `${this.state.installTypes[type].destination}/${file}`;
                     const openFileParams = JSON.stringify({path: filePath});
-                    const applyFileParams = JSON.stringify({path: filePath, installType: type});
+                    const applyThemeParams = JSON.stringify({path: filePath, installType: type});
                     const removeFileParams = JSON.stringify({itemKey: itemKey});
                     let applyCell = '';
                     if (this.state.isApplicableType) {
                         applyCell = `
-                            <td class="apply-file-cell">
-                            <button data-dispatch="apply-file" data-params='${applyFileParams}'>Apply</button>
+                            <td class="apply-theme-cell">
+                            <button data-dispatch="apply-theme" data-params='${applyThemeParams}'>Apply</button>
                             </td>
                         `;
                     }
