@@ -1,31 +1,31 @@
 {
-    "versionname": "2.1.0",
-    "versioncode": 6,
+    "versionname": "2.1.1",
+    "versioncode": 7,
     "releasepage": "https://www.linux-apps.com/p/1175480/",
     "releasefiles": [
         {
-            "name": "ocsstore_2.1.0-0ubuntu1_amd64.deb",
+            "name": "ocsstore_2.1.1-0ubuntu1_amd64.deb",
             "description": "ubuntu",
-            "url": "https://dl.opendesktop.org/api/files/download/id/1500039052/ocsstore_2.1.0-0ubuntu1_amd64.deb",
-            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1500039052%2Focsstore_2.1.0-0ubuntu1_amd64.deb&type=bin&filename=ocsstore_2.1.0-0ubuntu1_amd64.deb"
+            "url": "https://dl.opendesktop.org/api/files/download/id/1500427467/ocsstore_2.1.1-0ubuntu1_amd64.deb",
+            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1500427467%2Focsstore_2.1.1-0ubuntu1_amd64.deb&type=bin&filename=ocsstore_2.1.1-0ubuntu1_amd64.deb"
         },
         {
-            "name": "ocsstore-2.1.0-1.fc20.x86_64.rpm",
+            "name": "ocsstore-2.1.1-1.fc20.x86_64.rpm",
             "description": "fedora",
-            "url": "https://dl.opendesktop.org/api/files/download/id/1500039084/ocsstore-2.1.0-1.fc20.x86_64.rpm",
-            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1500039084%2Focsstore-2.1.0-1.fc20.x86_64.rpm&type=bin&filename=ocsstore-2.1.0-1.fc20.x86_64.rpm"
+            "url": "https://dl.opendesktop.org/api/files/download/id/1500427670/ocsstore-2.1.1-1.fc20.x86_64.rpm",
+            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1500427670%2Focsstore-2.1.1-1.fc20.x86_64.rpm&type=bin&filename=ocsstore-2.1.1-1.fc20.x86_64.rpm"
         },
         {
-            "name": "ocsstore-2.1.0-1.x86_64.rpm",
+            "name": "ocsstore-2.1.1-1.x86_64.rpm",
             "description": "opensuse",
-            "url": "https://dl.opendesktop.org/api/files/download/id/1500039100/ocsstore-2.1.0-1.x86_64.rpm",
-            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1500039100%2Focsstore-2.1.0-1.x86_64.rpm&type=bin&filename=ocsstore-2.1.0-1.x86_64.rpm"
+            "url": "https://dl.opendesktop.org/api/files/download/id/1500427759/ocsstore-2.1.1-1.x86_64.rpm",
+            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1500427759%2Focsstore-2.1.1-1.x86_64.rpm&type=bin&filename=ocsstore-2.1.1-1.x86_64.rpm"
         },
         {
-            "name": "ocsstore-2.1.0-1-x86_64.pkg.tar.xz",
+            "name": "ocsstore-2.1.1-1-x86_64.pkg.tar.xz",
             "description": "archlinux",
-            "url": "https://dl.opendesktop.org/api/files/download/id/1500039069/ocsstore-2.1.0-1-x86_64.pkg.tar.xz",
-            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1500039069%2Focsstore-2.1.0-1-x86_64.pkg.tar.xz&type=bin&filename=ocsstore-2.1.0-1-x86_64.pkg.tar.xz"
+            "url": "https://dl.opendesktop.org/api/files/download/id/1500427567/ocsstore-2.1.1-1-x86_64.pkg.tar.xz",
+            "ocsurl": "ocs://install?url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1500427567%2Focsstore-2.1.1-1-x86_64.pkg.tar.xz&type=bin&filename=ocsstore-2.1.1-1-x86_64.pkg.tar.xz"
         }
     ]
 }
